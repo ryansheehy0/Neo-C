@@ -1,6 +1,6 @@
 # Neo-C
 Neo-C is a programming language like C++, but tries to be pleasant to use. It compiles to C++ and can use C++ libraries. It isn't designed to be backwards compatible with C++.
-- This language is not done and everything is subject for change.
+- This language is not done and anything is subject for change.
 
 <img src="./neo_c_logo.svg" width=400>
 
@@ -128,17 +128,11 @@ Neo-C enforces a certain style to your code. This is to allow a common look and 
 - Spaces are required before any `()`s, but functions and classes cannot have spaces after it.
 	- `if ()`, `for ()`, `while ()`, etc.
 	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
-- Naming conventions
-	- When creating functions or variables you have to use camelCase.
-		- `int thisIsAVar`, `int thisIsAFunc()`
-	- When creating classes, enums you have to use PascalCase.
-		- `class ThisIsAClass()`
-	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
+- It is recommended to use camelCase for vars and funcs, and PascalCase for classes and enums.
+	- This is not enforced to allow you to keep consistency with other code in C/C++.
 
 ## For each loops
-C++ doesn't have a simple way to loop through an array and get each element. There are ranged based for loops, but you can't easily include the index and it cannot be used for C style arrays. In Neo-C there is a special for loop syntax for these operations.
-- You cannot use ranged based for loops in Neo-C. This for loop is used instead.
-- The index has to be included
+C++ doesn't have a simple way to loop through a C style array and get each element with its corresponding index. In Neo-C there is a special for loop syntax for these operations.
 
 ```C++
 // Neo-C
@@ -171,6 +165,20 @@ for (int i = 0; i < 26; i++){
 ```
 
 - This syntax is easy translated to english: for each `element` and `index` in `array` of size `size` do something.
+
+### Ranged based for loops
+You can still use ranged based for loops, but their syntax has been changed to better match the other ranged based for loop.
+
+```C++
+// Neo-C
+for (int el in vec)
+	// Do something
+
+// C++
+for (int el : vec) {
+	// Do something
+}
+```
 
 ## Classes
 In C++ it is often necessary to have arguments for your constructor where those arguments get automatically assigned to variables inside the class. It can be very annoying just reassigning variables. To solve this Neo-C has a different syntax for constructors and classes.
@@ -246,7 +254,7 @@ When you need to comment out a large chunk of code, but that code already has a 
 ```
 
 ## Do while loops
-In C++, `do` and `while` statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending `while` statement could easily be confused for a new while loop.
+In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could easily be confused for a new while loop.
 
 ```C++
 // Neo-C
