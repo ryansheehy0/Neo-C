@@ -128,6 +128,12 @@ Neo-C enforces a certain style to your code. This is to allow a common look and 
 - Spaces are required before any `()`s, but functions and classes cannot have spaces after it.
 	- `if ()`, `for ()`, `while ()`, etc.
 	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
+- Naming conventions
+	- When creating functions or variables you have to use camelCase.
+		- `int thisIsAVar`, `int thisIsAFunc()`
+	- When creating classes, enums you have to use PascalCase.
+		- `class ThisIsAClass()`
+	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
 
 ## For each loops
 C++ doesn't have a simple way to loop through an array and get each element. There are ranged based for loops, but you can't easily include the index and it cannot be used for C style arrays. In Neo-C there is a special for loop syntax for these operations.

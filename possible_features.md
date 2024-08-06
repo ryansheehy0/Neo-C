@@ -12,7 +12,9 @@ arr[arr.length() + var]
 ```
 - Standard namespaces automatically included when used?
 	- `using std::string`
-- enum classes?
+- Remove structs
+- Remove enum classes. Use namespaces and enums.
+	- You can achieve the same result by putting an enum inside a namespace.
 
 Bloat
 C++ includes many nice features over C, but it also includes a lot of bloat.
