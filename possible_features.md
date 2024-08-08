@@ -68,3 +68,77 @@ List of removed features:
 	- You can just use a class
 - Remove enum classes?
 - Use the C++ compiler for any error checking.
+
+## Breaking out of nested loops
+If you have a loop in a loop you can add an additional break statement to break out of both loops.
+
+```C++
+// Neo-C
+for (auto el in vec)
+	for (auto el2 in vec2)
+		for (auto el3 in vec3)
+			break break
+
+// C++
+for (auto el : vec) {
+	for (auto el2 : vec2) {
+		for (auto el3 : vec3) {
+			goto break_loops;
+		}
+	}
+	break_loops:
+}
+```
+
+- These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
+- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_2`
+
+- Remove labels and gotos
+
+- Are there any other use cases for labels besides gotos?
+	- Not really. Why not remove labels if you can remove gotos?
+		- Just keep it in incase it can be used somewhere. It doesn't hurt anything.
+- What are all the use cases of gotos?
+	- Breaking out of nested loops
+	- Exiting a loop in a switch statement.
+	- Goto an error condition
+
+```C++
+#include <stdlib.h>
+
+#define HEADER_LEN 1024
+
+int main(int argc, char *argv[]) {
+	int retval = 0;
+
+	int fd = open("./server.config", O_RDONLY);
+	if (fd == -1) {
+		perror("open");
+		return -1;
+	}
+	
+	void *filebuf = malloc(CONFIG_LEN);
+	if (filebuf == NULL) {
+		perror("malloc");
+		retval = -1;
+		goto leave_fd;
+	}
+	
+	int sfd = socket(AF_INET, SOCK_STREAM, NULL);
+	if (sfd == -1) {
+		perror("socket");
+		retval = -1;
+		goto leave_filebuf;
+	}
+	
+	retval = 0;
+	close(sfd);
+	
+	leave_filebuf:
+	free(filebuf);
+
+	leave_fd:
+	close(fd);
+}
+```
+- Use a separate function to handle clean up?

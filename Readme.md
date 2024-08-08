@@ -64,6 +64,27 @@ switch (var) {
 }
 ```
 
+### Breaks in match statements
+`break`s in switch statements cannot be used to break out of the loop containing the switch statement, but this can be done in match statements in Neo-C.
+
+```C++
+// Neo-C
+while (1)
+  match (1)
+    case 1:
+      break
+
+// C++
+while (1) {
+  switch (1) {
+    case 1:
+      goto break_loop;
+      break;
+  }
+}
+break_loop:
+```
+
 ### Strings
 C++ doesn't support using strings in switch statements, but Neo-C does for match statements.
 - Ranges(`...`) don't work for strings
@@ -172,11 +193,11 @@ You can still use ranged based for loops, but their syntax has been changed to b
 ```C++
 // Neo-C
 for (int el in vec)
-	// Do something
+  // Do something
 
 // C++
 for (int el : vec) {
-	// Do something
+  // Do something
 }
 ```
 
