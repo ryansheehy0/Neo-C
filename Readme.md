@@ -4,6 +4,23 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 
 <img src="./neo_c_logo.svg" width=400>
 
+## Table of Contents
+- [Match statements](#match-statements)
+  - [Ranges](#ranges)
+  - [Multiple cases](#multiple-cases)
+  - [Breaks in match statements](#breaks-in-match-statements)
+  - [Strings](#strings)
+- [Importing and Exporting](#importing-and-exporting)
+- [Automatic function hoisting](#automatic-function-hoisting)
+- [Code formatting](#code-formatting)
+- [For each loops](#for-each-loops)
+  - [Ranged based for loops](#ranged-based-for-loops)
+- [Classes](#classes)
+- [Nested Comments](#nested-comments)
+- [Do while loops](#do-while-loops)
+- [Breaking out of nested loops](#breaking-out-of-nested-loops)
+- [Removing gotos](#removing-gotos)
+
 ## Match statements
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
 - You cannot use switch statements in Neo-C. Match statements are used instead.
@@ -287,3 +304,171 @@ do {
   // Do something
 } while (1);
 ```
+
+## Breaking out of nested loops
+If you have a loop in a loop you can add an additional break statement to break out of both loops.
+
+```C++
+// Neo-C
+for (auto el in vec)
+  for (auto el2 in vec2)
+    for (auto el3 in vec3)
+      break break
+
+// C++
+for (auto el : vec) {
+  for (auto el2 : vec2) {
+    for (auto el3 : vec3) {
+      goto break_loops;
+    }
+  }
+  break_loops:
+}
+```
+
+- These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
+- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_1`
+
+## Removing gotos
+`goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s.
+1. Breaking out of nested loops
+  - This has been replaced with `break break` etc
+2. Breaking out of a loop from a switch statement that is in that loop.
+  - This has been replaced by allowing `break`s to work in match statements.
+3. Error handling in a scalable way
+  - This can be done with a cleanup function to achieve the same effect.
+
+<table>
+<tr>
+<td width=275 style="vertical-align: top;">
+
+```C++
+/*Un-scalable cleanup code*/
+#include <iostream>
+#include <fstream>
+
+using std::fstream;
+
+int main() {
+  fstream file1("file1");
+  if (!file1) {
+    cerr << "file1" << endl;
+    return -1;
+  }
+
+  fstream file2("file2");
+  if (!file2) {
+    cerr << "file2" << endl;
+    file1.close();
+    return -1;
+  }
+
+  fstream file3("file3");
+  if (!file3) {
+    cerr << "file3" << endl;
+    file1.close();
+    file2.close();
+    return -1;
+  }
+
+  file1.close();
+  file2.close();
+  file3.close();
+
+  return 0;
+}
+/*
+This code isn't scalable because as the amount of error checks increase, the amount of repeated clean up code also increases.
+*/
+```
+
+</td>
+
+<td width=275 style="vertical-align: top;">
+
+```C++
+/*Scalable cleanup code with gotos*/
+#include <iostream>
+#include <fstream>
+
+using std::fstream;
+
+int main() {
+  int retval = 0;
+
+  fstream file1("file1");
+  if (!file1) {
+    cerr << "file1" << endl;
+    return -1;
+  }
+
+  fstream file2("file2");
+  if (!file2) {
+    cerr << "file2" << endl;
+    retval = -1;
+    goto clean_file1;
+  }
+
+  fstream file3("file3");
+  if (!file3) {
+    cerr << "file3" << endl;
+    retval = -1;
+    goto close_file2;
+  }
+
+  file3.close();
+  close_file2:
+    file2.close();
+  close_file1:
+    file1.close();
+
+  return retval;
+}
+```
+
+</td>
+
+<td style="vertical-align: top;">
+
+```C++
+/*Scalable cleanup code with a function*/
+#include <iostream>
+#include <fstream>
+
+using std::fstream;
+
+void cleanup(fstream file1, fstream file2 = NULL, fstream file3 = NULL) {
+  file1.close();
+  if (file2 != NULL) file2.close();
+  if (file3 != NULL) file3.close();
+}
+
+int main(int argc, char *argv[]) {
+  fstream file1("file1");
+  if (!file1) {
+    cerr << "file1" << endl;
+    return -1;
+  }
+
+  fstream file2("file2");
+  if (!file2) {
+    cerr << "file2" << endl;
+    cleanup(file1);
+    return -1;
+  }
+
+  fstream file3("file3");
+  if (!file3) {
+    cerr << "file3" << endl;
+    cleanup(file1, file2);
+    return -1;
+  }
+
+  cleanup(file1, file2, file3);
+  return 0;
+}
+```
+
+</td>
+  </tr>
+</table>
