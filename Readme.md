@@ -485,7 +485,7 @@ int main(int argc, char *argv[]) {
   </tr>
 </table>
 
-## [Multiple usings](#)
+## [Multiple usings](#top)
 It's not recommended to use `using namespace std;` in C++ because it can cause naming conflicts. If you don't want to repeatedly type `std::`, it's recommended to use `using std::cout;`, `using std::endl;`, etc, each on a separate lines. However, this can get annoying, so Neo-C allows you to put them on one line, separated by commas.
 
 ```C++
