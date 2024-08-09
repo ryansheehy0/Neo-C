@@ -385,10 +385,12 @@ int main() {
   return 0;
 }
 /*
-This code isn't scalable because
-as the amount of error checks
-increase, the amount of repeated
-clean up code also increases.
+This code isn't scalable
+because as the amount of
+error checks increase,
+the amount of repeated
+clean up code also
+increases.
 */
 ```
 
@@ -397,7 +399,8 @@ clean up code also increases.
 <td width=275 style="vertical-align: top;">
 
 ```C++
-/*Scalable cleanup code with gotos*/
+/*Scalable cleanup
+code with gotos*/
 #include <iostream>
 #include <fstream>
 
@@ -441,13 +444,18 @@ int main() {
 <td style="vertical-align: top;">
 
 ```C++
-/*Scalable cleanup code with a function*/
+/*Scalable cleanup
+code with a function*/
 #include <iostream>
 #include <fstream>
 
 using std::fstream;
 
-void cleanup(fstream file1, fstream file2 = NULL, fstream file3 = NULL) {
+void cleanup(
+  fstream file1,
+  fstream file2 = NULL,
+  fstream file3 = NULL
+) {
   file1.close();
   if (file2 != NULL) file2.close();
   if (file3 != NULL) file3.close();
