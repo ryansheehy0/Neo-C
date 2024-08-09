@@ -2,6 +2,9 @@
 
 ## Low probably
 - Inline functions should still be allowed to use curly brackets?
+- No operator overloading.
+	- This can create really confusing code. Confuses what's built into the language and what comes from a library.
+	- What could this possibly take away from the language?
 
 ## Working on it
 - Negative array indexing
@@ -22,16 +25,10 @@ int thirdToLastElement = vec[vec.size() - 3];
 - The problem with this is that there is no consistent way to get the size of the element. The compiler has to get the size of the element.
 	- `sizeof(arr) / sizeof(arr[0])`
 	- `vec.size()`
-- Treating arrays as pointers when passed as arguments?
+- Objects in c++ without a class?
+- Removing const after ()s for a function. This means it promises not to modify anything inside the object.
 
 ## Probably not
-- Naming conventions
-	- When creating functions or variables you have to use camelCase.
-		- `int thisIsAVar`, `int thisIsAFunc()`
-	- When creating classes, enums you have to use PascalCase.
-		- `class ThisIsAClass()`
-	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
-	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
 - Async await
 	- There is probably a library for this
 - ... for file paths(Probably not)
@@ -66,3 +63,10 @@ Probably don't have because it can make errors and new users frustrated with the
 	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
 - It is recommended to use camelCase for vars and funcs, and PascalCase for classes and enums.
 	- This is not enforced to allow you to keep consistency with other code in C/C++.
+- Naming conventions
+	- When creating functions or variables you have to use camelCase.
+		- `int thisIsAVar`, `int thisIsAFunc()`
+	- When creating classes, enums you have to use PascalCase.
+		- `class ThisIsAClass()`
+	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
+	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
