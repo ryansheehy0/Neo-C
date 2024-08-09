@@ -146,11 +146,18 @@ When you define a function it is automatically given a function prototype at the
 
 ```C++
 // Neo-C
+int main()
+  // Do something
+
 void func(int arg)
   // Do something
 
 // C++
 void func(int);
+
+int main() {
+  // Do something
+}
 
 void func(int arg){
   // Do something
@@ -327,12 +334,12 @@ for (auto el : vec) {
 ```
 
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
-- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_1`
+- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_1`, `break_loops_2`, etc.
 
 ## Removing gotos
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s.
 1. Breaking out of nested loops
-  - This has been replaced with `break break` etc
+  - This has been replaced with `break break` etc.
 2. Breaking out of a loop from a switch statement that is in that loop.
   - This has been replaced by allowing `break`s to work in match statements.
 3. Error handling in a scalable way
@@ -378,7 +385,10 @@ int main() {
   return 0;
 }
 /*
-This code isn't scalable because as the amount of error checks increase, the amount of repeated clean up code also increases.
+This code isn't scalable because
+as the amount of error checks
+increase, the amount of repeated
+clean up code also increases.
 */
 ```
 
