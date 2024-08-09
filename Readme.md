@@ -25,7 +25,7 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 
 <!-- /TOC -->
 
-## [Match statements](#neo-c)
+## [Match statements](#)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
 - You cannot use switch statements in Neo-C. Match statements are used instead.
 
@@ -49,7 +49,7 @@ switch (var) {
 }
 ```
 
-### [Ranges](#neo-c)
+### [Ranges](#)
 It is common to perform an action with a range of inputs, such as all lowercase characters, uppercase characters, or digits. Therefore, you can use `...` in match statements to automatically create a range of cases.
 - This only works for char or int literals
 
@@ -69,7 +69,7 @@ switch (var) {
 }
 ```
 
-### [Multiple cases](#neo-c)
+### [Multiple cases](#)
 Instead of using fall-throughs for multiple case labels, you can use a comma `,` to separate different comparisons that should execute the same block of code.
 
 ```C++
@@ -85,7 +85,7 @@ switch (var) {
 }
 ```
 
-### [Breaks in match statements](#neo-c)
+### [Breaks in match statements](#)
 `break`s in switch statements cannot be used to break out of the loop containing the switch statement, but this can be done in match statements in Neo-C.
 
 ```C++
@@ -106,7 +106,7 @@ while (1) {
 break_loop:
 ```
 
-### [Strings](#neo-c)
+### [Strings](#)
 C++ doesn't support using strings in switch statements, but Neo-C does for match statements.
 - Ranges(`...`) don't work for strings
 
@@ -128,7 +128,7 @@ if (str == "a" || str == "ab") {
 }
 ```
 
-## [Importing and Exporting](#neo-c)
+## [Importing and Exporting](#)
 It's annoying to have a separate header file to define your exports, especially when you change a declaration in your code and then have to change it in the header file as well.
 
 The `#export` keyword is used to automatically construct an .h file with the same name as the .nc file.
@@ -145,7 +145,7 @@ int func();
 - These automatically have include guards(`#progma once`) added at the top.
 - If `#export` is used in a .nc file, when it compiles into its .cpp file, then its header file is automatically included at the top. `#include "file.h"`
 
-## [Automatic function hoisting](#neo-c)
+## [Automatic function hoisting](#)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
 
 ```C++
@@ -168,12 +168,12 @@ void func(int arg){
 }
 ```
 
-## [Semi-colons and curly brackets](#neo-c)
+## [Semi-colons and curly brackets](#)
 - Semi-colons cannot be used.
 - Curly brackets cannot be used and are replaced by indentations.
 	- You can use either tab or space indentation.
 
-## [For each loops](#neo-c)
+## [For each loops](#)
 C++ doesn't have a simple way to loop through a C style array and get each element with its corresponding index. In Neo-C there is a special for loop syntax for these operations.
 
 ```C++
@@ -208,7 +208,7 @@ for (int i = 0; i < 26; i++){
 
 - This syntax is easy translated to english: for each `element` and `index` in `array` of size `size` do something.
 
-### [Ranged based for loops](#neo-c)
+### [Ranged based for loops](#)
 You can still use ranged based for loops, but their syntax has been changed to better match the other ranged based for loop.
 
 ```C++
@@ -222,7 +222,7 @@ for (int el : vec) {
 }
 ```
 
-## [Classes](#neo-c)
+## [Classes](#)
 In C++ it is often necessary to have arguments for your constructor where those arguments get automatically assigned to variables inside the class. It can be very annoying just reassigning variables. To solve this Neo-C has a different syntax for constructors and classes.
 - You have to use `public`, `private`, or `protected` for each member in a class.
 
@@ -279,7 +279,7 @@ class Person {
 };
 ```
 
-## [Nested Comments](#neo-c)
+## [Nested Comments](#)
 When you need to comment out a large chunk of code, but that code already has a multi-line comment in it, you have to remove the inner `*/`. This is annoying so Neo-C adds the ability to do nested multi-line comments.
 
 ```javascript
@@ -296,7 +296,7 @@ When you need to comment out a large chunk of code, but that code already has a 
 */
 ```
 
-## [Do while loops](#neo-c)
+## [Do while loops](#)
 In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could easily be confused for a new while loop.
 
 ```C++
@@ -310,7 +310,7 @@ do {
 } while (1);
 ```
 
-## [Breaking out of nested loops](#neo-c)
+## [Breaking out of nested loops](#)
 If you have a loop in a loop you can add an additional break statement to break out of both loops.
 
 ```C++
@@ -334,7 +334,7 @@ for (auto el : vec) {
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
 - If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_1`, `break_loops_2`, etc.
 
-## [Removing gotos](#neo-c)
+## [Removing gotos](#)
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s.
 1. Breaking out of nested loops
   - This has been replaced with `break break` etc.
@@ -485,7 +485,7 @@ int main(int argc, char *argv[]) {
   </tr>
 </table>
 
-## [Multiple usings](#neo-c)
+## [Multiple usings](#)
 It's not recommended to use `using namespace std;` in C++ because it can cause naming conflicts. If you don't want to repeatedly type `std::`, it's recommended to use `using std::cout;`, `using std::endl;`, etc, each on a separate lines. However, this can get annoying, so Neo-C allows you to put them on one line, separated by commas.
 
 ```C++
