@@ -1,39 +1,30 @@
-## Possibly included features
-- Negative indexing an array
+## Probable Possibly included features
+
+## Low probably
+- Inline functions should still be allowed to use curly brackets?
+
+## Working on it
+- Negative array indexing
+	- In C++ there is no way to easily get an element starting from the last index. Therefore Neo-C adds additional syntax for this purpose.
+	- Need to allow for array indexing the the left
+
 ```C++
 // Neo-C
-arr[-1]
-arr[+1]
-arr-[1]
+int lastElement = vec-[-1]
+int secondToLastElement = vec-[-2]
+int thirdToLastElement = vec-[-3]
 
 // C++
-arr[arr.length() - 1]
-arr[arr.length() + var]
-	// Maybe also include vector.size()
+int lastElement = vec[vec.size() - 1];
+int secondToLastElement = vec[vec.size() - 2];
+int thirdToLastElement = vec[vec.size() - 3];
 ```
-## Negative array indexing
-In C++ there is no way to easily get an element starting from the last index. Therefore Neo-C adds additional syntax for indexing in the opposite direction.
-- The compiler has to know the size of the array.
+- The problem with this is that there is no consistent way to get the size of the element. The compiler has to get the size of the element.
 	- `sizeof(arr) / sizeof(arr[0])`
 	- `vec.size()`
+- Treating arrays as pointers when passed as arguments?
 
-```C++
-// Neo-C
-int arr[] = {0, 1, 2}
-int lastElement = arr-[-1]
-int secondToLastElement = arr-[-2]
-
-// C++ This Code does not work
-int arr[] = {0, 1, 2};
-int lastElement = *(arr - -1);
-int secondToLastElement = *(arr - -2);
-```
-
-- Standard namespaces automatically included when used?
-	- `using std::string`
-- Remove structs
-- Remove enum classes. Use namespaces and enums.
-	- You can achieve the same result by putting an enum inside a namespace.
+## Probably not
 - Naming conventions
 	- When creating functions or variables you have to use camelCase.
 		- `int thisIsAVar`, `int thisIsAFunc()`
@@ -41,12 +32,8 @@ int secondToLastElement = *(arr - -2);
 		- `class ThisIsAClass()`
 	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
 	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
-- const has to be in fornt of any data type.
-	- `const auto` instead of `auto const`
-- Inline functions should still be allowed to use curly brackets?
-
-- Async await?
-
+- Async await
+	- There is probably a library for this
 - ... for file paths(Probably not)
 	- Recursively search. Good idea.
 	- YourProjectFolder/.../file.h
@@ -56,15 +43,26 @@ int secondToLastElement = *(arr - -2);
 	- Why not have the feature of when you move a file, it searches through all your code and updates the file path.
 		- That would be better.
 		- Just an extension and doesn't have to be built into the language.
+- Bloat
+	- C++ includes many nice features over C, but it also includes a lot of bloat.
+	- delete keyword
+	- Remove enum classes. Use namespaces and enums.
+		- You can achieve the same result by putting an enum inside a namespace.
 
-Bloat
-C++ includes many nice features over C, but it also includes a lot of bloat.
+## Code formatting nazi?
+Neo-C enforces a certain style to your code. This is to allow a common look and feel to Neo-C.
+Probably don't have because it can make errors and new users frustrated with the language.
+- Should just leave this to who-ever is using the language.
 
-List of removed features:
-
-- Treating arrays as pointers when passed as arguments?
-- delete keyword?
-- no structs
-	- You can just use a class
-- Remove enum classes?
-- Use the C++ compiler for any error checking.
+- `const` has to be in front of any data type.
+	- `const auto` instead of `auto const`
+- For pointers and references `*` and `&`s have to be placed in front of the name.
+	- This is allowed:     `int *ptr` and `int &ref`
+	- This is not allowed: `int* ptr` and `int& ref`
+- Function arguments, arrays, and anything that using a comma to separate it must have a space after the comma.
+	- `int arr[] = {1, 2, 3}` and not `int arr[] = { 1,2,3 }`
+- Spaces are required before any `()`s, but functions and classes cannot have spaces after it.
+	- `if ()`, `for ()`, `while ()`, etc.
+	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
+- It is recommended to use camelCase for vars and funcs, and PascalCase for classes and enums.
+	- This is not enforced to allow you to keep consistency with other code in C/C++.

@@ -5,21 +5,28 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 <img src="./neo_c_logo.svg" width=400>
 
 ## Table of Contents
-- [Match statements](#match-statements)
-  - [Ranges](#ranges)
-  - [Multiple cases](#multiple-cases)
-  - [Breaks in match statements](#breaks-in-match-statements)
-  - [Strings](#strings)
-- [Importing and Exporting](#importing-and-exporting)
-- [Automatic function hoisting](#automatic-function-hoisting)
-- [Code formatting](#code-formatting)
-- [For each loops](#for-each-loops)
-  - [Ranged based for loops](#ranged-based-for-loops)
-- [Classes](#classes)
-- [Nested Comments](#nested-comments)
-- [Do while loops](#do-while-loops)
-- [Breaking out of nested loops](#breaking-out-of-nested-loops)
-- [Removing gotos](#removing-gotos)
+<!-- TOC -->
+
+- [Neo-C](#neo-c)
+	- [Table of Contents](#table-of-contents)
+	- [Match statements](#match-statements)
+		- [Ranges](#ranges)
+		- [Multiple cases](#multiple-cases)
+		- [Breaks in match statements](#breaks-in-match-statements)
+		- [Strings](#strings)
+	- [Importing and Exporting](#importing-and-exporting)
+	- [Automatic function hoisting](#automatic-function-hoisting)
+	- [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
+	- [For each loops](#for-each-loops)
+		- [Ranged based for loops](#ranged-based-for-loops)
+	- [Classes](#classes)
+	- [Nested Comments](#nested-comments)
+	- [Do while loops](#do-while-loops)
+	- [Breaking out of nested loops](#breaking-out-of-nested-loops)
+	- [Removing gotos](#removing-gotos)
+	- [Multiple usings](#multiple-usings)
+
+<!-- /TOC -->
 
 ## Match statements
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
@@ -164,17 +171,10 @@ void func(int arg){
 }
 ```
 
-## Code formatting
-Neo-C enforces a certain style to your code. This is to allow a common look and feel to Neo-C.
-
+## Semi-colons and curly brackets
 - Semi-colons cannot be used.
 - Curly brackets cannot be used and are replaced by indentations.
 	- You can use either tab or space indentation.
-- Spaces are required before any `()`s, but functions and classes cannot have spaces after it.
-	- `if ()`, `for ()`, `while ()`, etc.
-	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
-- It is recommended to use camelCase for vars and funcs, and PascalCase for classes and enums.
-	- This is not enforced to allow you to keep consistency with other code in C/C++.
 
 ## For each loops
 C++ doesn't have a simple way to loop through a C style array and get each element with its corresponding index. In Neo-C there is a special for loop syntax for these operations.
@@ -451,11 +451,7 @@ code with a function*/
 
 using std::fstream;
 
-void cleanup(
-  fstream file1,
-  fstream file2 = NULL,
-  fstream file3 = NULL
-) {
+void cleanup(fstream file1, fstream file2 = NULL, fstream file3 = NULL) {
   file1.close();
   if (file2 != NULL) file2.close();
   if (file3 != NULL) file3.close();
@@ -490,3 +486,19 @@ int main(int argc, char *argv[]) {
 </td>
   </tr>
 </table>
+
+## Multiple usings
+- Multiple `using`s on one line
+	- Why `using namespace std` is bad.
+	- What to use instead. `using std::cout;`, `using std::endl;`
+		- But it's annoying to have them on separate lines
+		- You can use comma to separate usings. `using std::cout, std::endl`
+
+```C++
+// Neo-C
+using std::cout, std::endl
+
+// C++
+using std::cout;
+using std::endl;
+```
