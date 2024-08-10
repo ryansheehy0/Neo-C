@@ -1,5 +1,5 @@
 # Neo-C
-Neo-C is a programming language like C++, but tries to be pleasant to use. It compiles to C++ and can use C++ libraries. It isn't designed to be backwards compatible with C++.
+Neo-C is a programming language like C++, but tries to be pleasant to use. It compiles to C++ and can use C++ libraries. It isn't designed to be backwards compatible with C++ or C.
 
 <img src="./neo_c_logo.svg" width=400>
 
@@ -15,12 +15,14 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 - [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
 - [For each loops](#for-each-loops)
 	- [Ranged based for loops](#ranged-based-for-loops)
-- [Classes](#classes)
+- [Classes and Structs](#classes-and-structs)
+	- [Inheritance](#inheritance)
+	- [Structs](#structs)
+	- [Classes](#classes)
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
 - [Removing gotos](#removing-gotos)
-- [Multiple usings](#multiple-usings)
 
 <!-- /TOC -->
 
@@ -221,62 +223,63 @@ for (int el : vec) {
 }
 ```
 
-## [Classes](#neo-c)
-In C++ it is often necessary to have arguments for your constructor where those arguments get automatically assigned to variables inside the class. It can be very annoying just reassigning variables. To solve this Neo-C has a different syntax for constructors and classes.
-- You have to use `public`, `private`, or `protected` for each member in a class.
+## [Classes and Structs](#neo-c)
+
+### [Inheritance](#neo-c)
+Neo-C does not support inheritance because it can create confusing code. Composition is recommended instead.
+- https://www.youtube.com/watch?v=hxGOiiR9ZKg
+-  `protected` keyword cannot be used in Neo-C
+
+### [Structs](#neo-c)
+In C++, the only difference between `struct`s and `class`es are whether they default to private or public. However, it is commonly recommend to only use `struct`s for storing related data together, and use a `class` when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow `struct`s to have methods or use the `private` keyword.
+- In Neo-C, `struct`s behave exactly like `struct`s in C.
+
+### [Classes](#neo-c)
+In C++, it's common to create a class where the constructor arguments are directly equal to private or public member variables. However, to do this in C++ it requires a lot of repetitive code, so Neo-C introduces a new syntax for creating classes.
 
 ```C++
 // Neo-C
-enum Sex
-  Male,
-  Female,
-  Other
+using std::string, std::cout, std::endl
 
-class Person(public int age, public int height, private int weight, private Sex sex)
-  public int getWeight()
-    if (sex == Male)
-      return weight
-    else
-      return -1
+class Book(private int copiesAvailable, public string title = "Unknown", public string author = "Unknown", public int pages = 0)
+  public:
+    Book
+      // Initialization constructor code
 
-  public void setWeight(int weight)
-    this->weight = weight
+    Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
+
+    void display()
+      cout << "title: "  << title  << endl
+      cout << "author: " << author << endl
+      cout << "pages: "  << pages  << endl
 
 // C++
-enum Sex {
-  Male,
-  Female,
-  Other
-};
+using std::string, std::cout, std::endl;
 
-class Person {
+class Book {
   private:
-    int weight;
-    Sex sex;
+    int copiesAvailable;
   public:
-    int age;
-    int height;
+    string title;
+    string author;
+    int pages;
 
-    Person(int age, int height, int weight, Sex sex) {
-      this->age = age;
-      this->height = height;
-      this->weight = weight;
-      this->sex = sex;
+    Book(int copiesAvailable, string title = "Unknown", string author = "Unknown", int pages = 0) : copiesAvailable(copiesAvailable), title(title), author(author), pages(pages) {
+      // Initialization constructor code
     }
 
-    int getWeight() {
-      if (sex == Male) {
-        return weight;
-      } else {
-        return -1;
-      }
-    }
+    Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100) {}
 
-    void setWeight(int weight) {
-      this->weight = weight;
+    void display() {
+      cout << "title: "  << title  << endl
+      cout << "author: " << author << endl
+      cout << "pages: "  << pages  << endl
     }
-};
+}
 ```
+
+- The initialization constructor is optional.
+- If you want to create a private constructor you can put the initialization constructor in `private:`.
 
 ## [Nested Comments](#neo-c)
 When you need to comment out a large chunk of code, but that code already has a multi-line comment in it, you have to remove the inner `*/`. This is annoying so Neo-C adds the ability to do nested multi-line comments.
@@ -483,15 +486,3 @@ int main(int argc, char *argv[]) {
 </td>
   </tr>
 </table>
-
-## [Multiple usings](#neo-c)
-It's not recommended to use `using namespace std;` in C++ because it can cause naming conflicts. If you don't want to repeatedly type `std::`, it's recommended to use `using std::cout;`, `using std::endl;`, etc, each on a separate lines. However, this can get annoying, so Neo-C allows you to put them on one line, separated by commas.
-
-```C++
-// Neo-C
-using std::cout, std::endl
-
-// C++
-using std::cout;
-using std::endl;
-```

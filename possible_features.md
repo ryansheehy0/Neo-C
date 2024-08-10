@@ -1,10 +1,36 @@
 ## Probable Possibly included features
+- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
+	- What are all the use cases for implicit conversions?
 
 ## Low probably
 - Inline functions should still be allowed to use curly brackets?
 - No operator overloading.
 	- This can create really confusing code. Confuses what's built into the language and what comes from a library.
 	- What could this possibly take away from the language?
+- Default arguments don't have to be in order
+  - Why do this?
+
+```C++
+// Neo-C
+int func(int a = 0, int b) // init
+func(, b) // calling
+
+// C++
+int func(int a, int b) {} // init
+func(0, b); // int
+```
+
+- You can also do C++ regular default augments
+
+```C++
+// Neo-C
+int func(int a, int b = 0) // init
+func(a) // calling
+
+// C++
+int func(int a, int b = 0) {} // init
+func(a); // int
+```
 
 ## Working on it
 - Negative array indexing
@@ -26,7 +52,7 @@ int thirdToLastElement = vec[vec.size() - 3];
 	- `sizeof(arr) / sizeof(arr[0])`
 	- `vec.size()`
 - Objects in c++ without a class?
-- Removing const after ()s for a function. This means it promises not to modify anything inside the object.
+	- Structs
 
 ## Probably not
 - Async await
@@ -40,11 +66,34 @@ int thirdToLastElement = vec[vec.size() - 3];
 	- Why not have the feature of when you move a file, it searches through all your code and updates the file path.
 		- That would be better.
 		- Just an extension and doesn't have to be built into the language.
-- Bloat
-	- C++ includes many nice features over C, but it also includes a lot of bloat.
-	- delete keyword
-	- Remove enum classes. Use namespaces and enums.
-		- You can achieve the same result by putting an enum inside a namespace.
+
+## Bloat
+C++ includes many nice features over C, but it also includes a lot of bloat.
+
+- `mutable`
+	- `const` after a member function doesn't allow you to change any internal variables in the class.
+	- `mutable` on a variable allows any of these function to change that variable and still be const.
+- `delete`
+- Remove `enum class`. Use namespaces and enums.
+	- You can achieve the same result by putting an enum inside a namespace.
+- Casting?
+	- `const_cast`, `static_cast`, `reinterpret_cast`, `dynamic_cast`
+	- Why not use C style casting?
+- Constants?
+	- `constexpr`, `consteval`, `constinit`
+	- When could this be useful?
+- `throw`
+	- Shouldn't be handling errors this way. It can create memory leaks
+	- How else could you do it?
+- `protected`
+	- Used for inheritance. Allows child classes to use member variables, but not objects themselves.
+	- Would have to remove inheritance, so maybe not.
+- `co_await`, `co_return`, `co_yield`?
+- `export`?
+	- Could that be used for global state?
+- `register`
+	- it does nothing
+- Remove template meta programming
 
 ## Code formatting nazi?
 Neo-C enforces a certain style to your code. This is to allow a common look and feel to Neo-C.
