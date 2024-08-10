@@ -152,7 +152,7 @@ When you define a function it is automatically given a function prototype at the
 ```C++
 // Neo-C
 int main()
-  // Do something
+  func(1)
 
 void func(int arg)
   // Do something
@@ -161,7 +161,7 @@ void func(int arg)
 void func(int);
 
 int main() {
-  // Do something
+  func(1);
 }
 
 void func(int arg){
@@ -246,6 +246,7 @@ class Book(private int copiesAvailable, public string title = "Unknown", public 
     Book
       // Initialization constructor code
 
+    // Constructor overloading example
     Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
 
     void display()
@@ -299,7 +300,7 @@ When you need to comment out a large chunk of code, but that code already has a 
 ```
 
 ## [Do while loops](#neo-c)
-In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could easily be confused for a new while loop.
+In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could easily be confused for a new while loop. So Neo-C puts the `do` and `while` on the same line.
 
 ```C++
 // Neo-C
