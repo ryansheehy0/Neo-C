@@ -5,6 +5,7 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 
 <!-- TOC -->
 
+- [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
 - [Match statements](#match-statements)
 	- [Ranges](#ranges)
 	- [Multiple cases](#multiple-cases)
@@ -12,7 +13,6 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 	- [Strings](#strings)
 - [Importing and Exporting](#importing-and-exporting)
 - [Automatic function hoisting](#automatic-function-hoisting)
-- [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
 - [For each loops](#for-each-loops)
 	- [Ranged based for loops](#ranged-based-for-loops)
 - [Classes and Structs](#classes-and-structs)
@@ -24,6 +24,11 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 - [Removing gotos](#removing-gotos)
 
 <!-- /TOC -->
+
+## [Semi-colons and curly brackets](#neo-c)
+- Semi-colons cannot be used.
+- Curly brackets cannot be used and are replaced by indentations.
+	- You can use either tab or space indentation.
 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
@@ -167,11 +172,6 @@ void func(int arg){
   // Do something
 }
 ```
-
-## [Semi-colons and curly brackets](#neo-c)
-- Semi-colons cannot be used.
-- Curly brackets cannot be used and are replaced by indentations.
-	- You can use either tab or space indentation.
 
 ## [For each loops](#neo-c)
 C++ doesn't have a simple way to loop through a C style array and get each element with its corresponding index. In Neo-C there is a special for loop syntax for these operations.

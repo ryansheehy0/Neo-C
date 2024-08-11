@@ -1,7 +1,11 @@
 ## Probable Possibly included features
 - Implement syntax highlighting for Neo-C
+	- https://www.youtube.com/watch?v=5msZv-nKebI&list=WL
 
 ## Low probably
+- When you include standard libraries `using std::library` is automatically added.
+	- This is only the case for standard libaries
+- All `enum`s become `enum class`es.
 - Inline functions should still be allowed to use curly brackets?
 - No operator overloading.
 	- This can create really confusing code. Confuses what's built into the language and what comes from a library.
@@ -60,6 +64,7 @@ int thirdToLastElement = vec[vec.size() - 3];
 		- Not any of the standard libraries
 - All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
 	- What are all the use cases for implicit conversions?
+- The spread operator from JS?
 
 ## Probably not
 - Async await
