@@ -53,6 +53,11 @@ int thirdToLastElement = vec[vec.size() - 3];
 	- `vec.size()`
 - Objects in c++ without a class?
 	- Structs
+- Inheritance
+	- Neo-C does not support inheritance because it can create confusing code. Composition is recommended instead.
+	- https://www.youtube.com/watch?v=hxGOiiR9ZKg
+	-  `protected` keyword cannot be used in Neo-C
+	- Some libraries require you to use inheritance in order to use them
 
 ## Probably not
 - Async await

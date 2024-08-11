@@ -5,24 +5,23 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 
 <!-- TOC -->
 
-- [Match statements](#match-statements)
-	- [Ranges](#ranges)
-	- [Multiple cases](#multiple-cases)
-	- [Breaks in match statements](#breaks-in-match-statements)
-	- [Strings](#strings)
-- [Importing and Exporting](#importing-and-exporting)
-- [Automatic function hoisting](#automatic-function-hoisting)
-- [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
-- [For each loops](#for-each-loops)
-	- [Ranged based for loops](#ranged-based-for-loops)
-- [Classes and Structs](#classes-and-structs)
-	- [Inheritance](#inheritance)
-	- [Structs](#structs)
-	- [Classes](#classes)
-- [Nested Comments](#nested-comments)
-- [Do while loops](#do-while-loops)
-- [Breaking out of nested loops](#breaking-out-of-nested-loops)
-- [Removing gotos](#removing-gotos)
+- [](#)
+	- [](#)
+	- [](#)
+	- [](#)
+	- [](#)
+- [](#)
+- [](#)
+- [](#)
+- [](#)
+	- [](#)
+- [](#)
+	- [](#)
+	- [](#)
+- [](#)
+- [](#)
+- [](#)
+- [](#)
 
 <!-- /TOC -->
 
@@ -224,11 +223,6 @@ for (int el : vec) {
 ```
 
 ## [Classes and Structs](#neo-c)
-
-### [Inheritance](#neo-c)
-Neo-C does not support inheritance because it can create confusing code. Composition is recommended instead.
-- https://www.youtube.com/watch?v=hxGOiiR9ZKg
--  `protected` keyword cannot be used in Neo-C
 
 ### [Structs](#neo-c)
 In C++, the only difference between `struct`s and `class`es are whether they default to private or public. However, it is commonly recommend to only use `struct`s for storing related data together, and use a `class` when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow `struct`s to have methods or use the `private` keyword.
