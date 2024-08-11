@@ -1,6 +1,5 @@
 ## Probable Possibly included features
-- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
-	- What are all the use cases for implicit conversions?
+- Implement syntax highlighting for Neo-C
 
 ## Low probably
 - Inline functions should still be allowed to use curly brackets?
@@ -31,6 +30,7 @@ func(a) // calling
 int func(int a, int b = 0) {} // init
 func(a); // int
 ```
+- ${} and ``s for C++ strings. Template literals.
 
 ## Working on it
 - Negative array indexing
@@ -52,12 +52,14 @@ int thirdToLastElement = vec[vec.size() - 3];
 	- `sizeof(arr) / sizeof(arr[0])`
 	- `vec.size()`
 - Objects in c++ without a class?
-	- Structs
 - Inheritance
 	- Neo-C does not support inheritance because it can create confusing code. Composition is recommended instead.
 	- https://www.youtube.com/watch?v=hxGOiiR9ZKg
 	-  `protected` keyword cannot be used in Neo-C
 	- Some libraries require you to use inheritance in order to use them
+		- Not any of the standard libraries
+- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
+	- What are all the use cases for implicit conversions?
 
 ## Probably not
 - Async await

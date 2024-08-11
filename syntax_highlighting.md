@@ -1,1 +1,0 @@
-How do you do syntax highlighting for Neo-C?
