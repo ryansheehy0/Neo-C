@@ -4,7 +4,8 @@
 #include <sstream>
 #include <vector>
 #include "is_token.cpp"
-#include "get_input_lines.cpp"
+#include "get_input_file_lines.h"
+#include "write_to_output_file.h"
 
 using std::string, std::vector, std::cout, std::endl, std::fstream;
 
@@ -61,46 +62,22 @@ vector<Token> tokenize(vector<string> lines) {
 	return tokens;
 }
 
-vector<string> convertToCppLines(vector<Token> tokens) {
-	vector<string> lines;
-	vector<Token> tokenBuff;
-	string line;
-
-	for (Token token : tokens) {
-		tokenBuff.push_back(token);
-
-		if (tokenBuff[0].type == TokenType::DataType) {
-			string dataType = tokenBuff[0].value;
-			if (tokenBuff[1].type == TokenType::Main) {
-				string main = tokenBuff[1].value;
-				if (tokenBuff[2].type == TokenType::OpeningParenthesis) {
-					string openingParenthesis = tokenBuff[2].value;
-					if (tokenBuff[2].type == TokenType::ClosingParenthesis) {
-						string closingParenthesis = tokenBuff[2].value;
-
-						line = dataType + main + openingParenthesis + closingParenthesis + " {";
-						lines.push_back(line);
-						line.clear();
-					}
-				}
-			}
-		}
-
-
-	// indentation
-	// return
-	// Integer Literal
-	// Add semi-colon
-	// Add new line
-	// Add closing currly brackets
-}
-
 int main (int argc, char *argv[]) {
-	vector<string> lines = getInputLines(argc, argv);
+	/*
+		 1. Get input file lines
+		 2. Tokenize
+		 3. Parse
+		 4. cpp generator
+		 5. Write to output file
+	*/
+
+
+	string inputFileName;
+	vector<string> lines = getInputFileLines(argc, argv, inputFileName);
 	// getInputFileLines
 	vector<Token> tokens = tokenize(lines);
 	vector<string> cppLines = convertToCppLines(tokens);
-	// writeToOutputFile(cpp);
+	writeToOutputFile(cpp, )
 
 	return 0;
 }

@@ -3,9 +3,8 @@
 	- https://www.youtube.com/watch?v=5msZv-nKebI&list=WL
 
 ## Low probably
-- When you include standard libraries `using std::library` is automatically added.
-	- This is only the case for standard libaries
 - All `enum`s become `enum class`es.
+	- Maybe not. It's nice just using the variables.
 - Inline functions should still be allowed to use curly brackets?
 - No operator overloading.
 	- This can create really confusing code. Confuses what's built into the language and what comes from a library.
@@ -65,6 +64,11 @@ int thirdToLastElement = vec[vec.size() - 3];
 - All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
 	- What are all the use cases for implicit conversions?
 - The spread operator from JS?
+- When you include standard libraries `using std::library` is automatically added.
+	- This is only the case for standard libraries
+	- What about `<iostream>`
+		- It should only automatically use the functions used.
+		- Autodetect this? What if you want to create a function that has the same name as like `cout`?
 
 ## Probably not
 - Async await
@@ -88,6 +92,7 @@ C++ includes many nice features over C, but it also includes a lot of bloat.
 - `delete`
 - Remove `enum class`. Use namespaces and enums.
 	- You can achieve the same result by putting an enum inside a namespace.
+	- If you want to make something of the enum type you can't do so with enum in a namespace
 - Casting?
 	- `const_cast`, `static_cast`, `reinterpret_cast`, `dynamic_cast`
 	- Why not use C style casting?

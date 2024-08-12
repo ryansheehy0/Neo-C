@@ -148,7 +148,7 @@ int func();
 ```
 
 - These automatically have include guards(`#progma once`) added at the top.
-- If `#export` is used in a .nc file, when it compiles into its .cpp file, then its header file is automatically included at the top. `#include "file.h"`
+- If `#export` is used in a .nc file, when it compiles into its .cpp file, then its own header file is automatically included at the top. `#include "file.h"`
 
 ## [Automatic function hoisting](#neo-c)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
