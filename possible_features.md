@@ -1,6 +1,19 @@
 ## Probable Possibly included features
-- Implement syntax highlighting for Neo-C
-	- https://www.youtube.com/watch?v=5msZv-nKebI&list=WL
+- Your `try` can be on the same line as you code
+
+```C++
+// Neo-C
+try func()
+catch (int error)
+	// Handle error
+
+// C++
+try {
+	func()
+} catch (int error) {
+	// Handle error
+}
+```
 
 ## Low probably
 - All `enum`s become `enum class`es.
@@ -33,42 +46,14 @@ func(a) // calling
 int func(int a, int b = 0) {} // init
 func(a); // int
 ```
-- ${} and ``s for C++ strings. Template literals.
+- If it's already not backwards compatible with C, why have the features of C?
+	- Remove C style arrays? Should be std::array instead.
+	- Change the default to std::string instead of const char*
+		- Or just have an auto conversions
 
 ## Working on it
-- Negative array indexing
-	- In C++ there is no way to easily get an element starting from the last index. Therefore Neo-C adds additional syntax for this purpose.
-	- Need to allow for array indexing the the left
-
-```C++
-// Neo-C
-int lastElement = vec-[-1]
-int secondToLastElement = vec-[-2]
-int thirdToLastElement = vec-[-3]
-
-// C++
-int lastElement = vec[vec.size() - 1];
-int secondToLastElement = vec[vec.size() - 2];
-int thirdToLastElement = vec[vec.size() - 3];
-```
-- The problem with this is that there is no consistent way to get the size of the element. The compiler has to get the size of the element.
-	- `sizeof(arr) / sizeof(arr[0])`
-	- `vec.size()`
 - Objects in c++ without a class?
-- Inheritance
-	- Neo-C does not support inheritance because it can create confusing code. Composition is recommended instead.
-	- https://www.youtube.com/watch?v=hxGOiiR9ZKg
-	-  `protected` keyword cannot be used in Neo-C
-	- Some libraries require you to use inheritance in order to use them
-		- Not any of the standard libraries
-- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
-	- What are all the use cases for implicit conversions?
-- The spread operator from JS?
-- When you include standard libraries `using std::library` is automatically added.
-	- This is only the case for standard libraries
-	- What about `<iostream>`
-		- It should only automatically use the functions used.
-		- Autodetect this? What if you want to create a function that has the same name as like `cout`?
+	- Special syntax for automatically creating an unordered_map?
 
 ## Probably not
 - Async await
@@ -82,6 +67,16 @@ int thirdToLastElement = vec[vec.size() - 3];
 	- Why not have the feature of when you move a file, it searches through all your code and updates the file path.
 		- That would be better.
 		- Just an extension and doesn't have to be built into the language.
+- `x := 0` instead of `auto x = 0`
+	- This could just be more confusing
+- Maybe only guarantee use of the standard libraries.
+	- This could be bad. It removes a lot of functionality from Neo-C
+	- Remove inheritance
+	- Remove C backwards compatibility
+- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
+	- What are all the use cases for implicit conversions?
+	- Implicit conversion can be useful to create user defined types.
+- The spread operator from JS? No need.
 
 ## Bloat
 C++ includes many nice features over C, but it also includes a lot of bloat.
@@ -99,9 +94,6 @@ C++ includes many nice features over C, but it also includes a lot of bloat.
 - Constants?
 	- `constexpr`, `consteval`, `constinit`
 	- When could this be useful?
-- `throw`
-	- Shouldn't be handling errors this way. It can create memory leaks
-	- How else could you do it?
 - `protected`
 	- Used for inheritance. Allows child classes to use member variables, but not objects themselves.
 	- Would have to remove inheritance, so maybe not.
@@ -136,3 +128,60 @@ Probably don't have because it can make errors and new users frustrated with the
 		- `class ThisIsAClass()`
 	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
 	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
+
+## [Inheritance](#neo-c)
+- I think inheritance is fine, just the way it should be used is important.(You can misuse all sorts of syntax things in any language.)
+	- Neo-C does not support inheritance because it can create confusing code. Instead of a child class inheriting a parent class, inheritance, you should include an instance of the parent class in the child class, composition.
+  - https://www.youtube.com/watch?v=hxGOiiR9ZKg
+  - `protected` keyword cannot be used in Neo-C
+	- How would you use libraries who rely on inheritance? Not standard libraries.
+
+- Add the `interface` keyword.
+	- A class that only has virtual functions with = 0;
+- You can only use inheritance on interfaces.
+
+## [Auto using](#neo-c)
+- Do this only for std libraries?
+	- Probably not.
+It C++
+- When you include standard libraries `using std::library` is automatically added.
+	- This is only the case for standard libraries
+	- What about `<iostream>`
+		- It should only automatically use the functions used.
+		- Autodetect this? What if you want to create a function that has the same name as like `cout`?
+	- You also don't know what function is coming from what file.
+		- I like how in js you have to specify what you want to include form the exported variables file.
+
+		- `#include std::cout <iostream>` is
+
+```C++
+// Neo-C
+#include (std::cout, cerr) <iostream>
+
+// C++
+#include <iostream>
+using std::cout, cerr;
+```
+
+In C++ if you use something from a libary, it isn't clear which library it came from. You have to look into each header file in order to determin. In Neo-C there is special syntax which allows you to chose what you want to include form header files and whcih header file they are being used from.
+- Is there a way to get importing and exporting like in front end javascript frameworks?
+
+## [Importing and exporting](#neo-c)
+- `import` and `export` keywords are added.
+	- `import (std::cout) <iostream>` allows you to only include the std::cout function and none of the others.
+		- Is this really necessary? Probably not.
+
+```C++
+// Neo-C
+import (std::cout) <iostream>
+
+// C++
+#include <iostream>
+using std::cout;
+```
+
+- But I like the way javascript handles importing and exporting.
+
+## Syntax highlighting
+- Implement syntax highlighting for Neo-C
+	- https://www.youtube.com/watch?v=5msZv-nKebI&list=WL

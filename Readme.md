@@ -22,6 +22,8 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
 - [Removing gotos](#removing-gotos)
+- [Negative array indexing](#negative-array-indexing)
+- [Template Literals](#template-literals)
 
 <!-- /TOC -->
 
@@ -29,6 +31,7 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 - Semi-colons cannot be used.
 - Curly brackets cannot be used and are replaced by indentations.
 	- You can use either tab or space indentation.
+  - Indentation for labels such as `public:` are also necessary.
 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
@@ -329,7 +332,7 @@ for (auto el : vec) {
 ```
 
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
-- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_1`, `break_loops_2`, etc.
+- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_2`, `break_loops_3`, etc.
 
 ## [Removing gotos](#neo-c)
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s.
@@ -349,7 +352,7 @@ for (auto el : vec) {
 #include <iostream>
 #include <fstream>
 
-using std::fstream;
+using std::fstream, std::cerr;
 
 int main() {
   fstream file1("file1");
@@ -399,7 +402,7 @@ code with gotos*/
 #include <iostream>
 #include <fstream>
 
-using std::fstream;
+using std::fstream, std::cerr;
 
 int main() {
   int retval = 0;
@@ -444,7 +447,7 @@ code with a function*/
 #include <iostream>
 #include <fstream>
 
-using std::fstream;
+using std::fstream, std::cerr;
 
 void cleanup(fstream file1, fstream file2 = NULL, fstream file3 = NULL) {
   file1.close();
@@ -481,3 +484,39 @@ int main(int argc, char *argv[]) {
 </td>
   </tr>
 </table>
+
+## [Negative array indexing](#neo-c)
+In C++ there isn't an easy way to concisely index from the last element. Therefore, Neo-C introduces a special syntax to allow for this.
+
+```C++
+// Neo-C
+std::vector<int> vec = {1, 2, 3}
+int lastEl = vec-[1]
+  // It can also work with variables
+int index = 2
+int secondToLastEl = vec-[index]
+
+// C++
+std::vector<int> vec = {1, 2, 3};
+int lastEl = vec[vec.size() - 1];
+int index = 2;
+int secondToLastEl = vec[vec.size() - index];
+```
+
+## [Template Literals](#neo-c)
+In C++ if you want to include a variable in a string you have to convert it to a string and concatenate it. This is annoying so Neo-C adds a special syntax to allow you to do this automatically, like many other languages.
+- Use `${code}` to insert into a string.
+- Strings can also span multiple lines.
+
+```C++
+// Neo-C
+int x = 10;
+string y = "10"
+string str = "x: ${x}
+y: ${y}"
+
+// C++
+int x = 10;
+string y = "10";
+string str = "x: " + to_string(x) + "\ny: " + y;
+```
