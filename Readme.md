@@ -139,7 +139,7 @@ if (str == "a" || str == "ab") {
 ## [Importing and Exporting](#neo-c)
 It's annoying to have a separate header file to define your exports, especially when you change a declaration in your code and then have to change it in the header file as well.
 
-The `#export` keyword is used to automatically construct an .h file with the same name as the .nc file.
+The `#export` keyword is used to automatically construct an .hpp file with the same name as the .nc file.
 
 ```C++
 // Neo-C
@@ -151,7 +151,7 @@ int func();
 ```
 
 - These automatically have include guards(`#progma once`) added at the top.
-- If `#export` is used in a .nc file, when it compiles into its .cpp file, then its own header file is automatically included at the top. `#include "file.h"`
+- If `#export` is used in a .nc file, when it compiles into its .cpp file, then its own header file is automatically included at the top. `#include "file.hpp"`
 
 ## [Automatic function hoisting](#neo-c)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
@@ -520,3 +520,5 @@ int x = 10;
 string y = "10";
 string str = "x: " + to_string(x) + "\ny: " + y;
 ```
+
+- `\${}` allows you to escape the template literal.

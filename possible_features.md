@@ -15,6 +15,10 @@ try {
 }
 ```
 
+- Remove operator overloading
+	- It can easily be misused
+	- It confuses people, they don't know if something is done through a library or in built into the language.
+
 ## Low probably
 - All `enum`s become `enum class`es.
 	- Maybe not. It's nice just using the variables.
@@ -185,3 +189,10 @@ using std::cout;
 ## Syntax highlighting
 - Implement syntax highlighting for Neo-C
 	- https://www.youtube.com/watch?v=5msZv-nKebI&list=WL
+
+## Problems
+- How to tokenize?
+	- Handle spaces? How do I enforce spaces?
+	- How to handle all the different types f tokenization in C++?
+- How to parse more complicated code?
+- How to organize the code?
