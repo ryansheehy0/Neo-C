@@ -1,4 +1,8 @@
 ## Probable Possibly included features
+- You can have functions within functions.
+	- Can you have classes within classes? No. Don't do this. It could be confusing.
+- There is no `static` keyword for member variables and functions?
+	- No static in classes? You can only do so through functions.
 - Your `try` can be on the same line as you code
 
 ```C++
@@ -81,6 +85,7 @@ func(a); // int
 	- What are all the use cases for implicit conversions?
 	- Implicit conversion can be useful to create user defined types.
 - The spread operator from JS? No need.
+- 
 
 ## Bloat
 C++ includes many nice features over C, but it also includes a lot of bloat.

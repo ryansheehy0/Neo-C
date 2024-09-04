@@ -1,11 +1,15 @@
 # Neo-C
-Neo-C is a programming language like C++, but tries to be pleasant to use. It compiles to C++ and can use C++ libraries. It isn't designed to be backwards compatible with C++ or C.
+Neo-C is a programming language like C++, but has a consistent and pleasant to use syntax. It has relatively simple features and tries not to be overly complex. It compiles into C++, but isn't backwards compatible.
 
 <img src="./neo_c_logo.svg" width=400>
 
 <!-- TOC -->
 
-- [Semi-colons and curly brackets](#semi-colons-and-curly-brackets)
+- [Basic syntax](#basic-syntax)
+- [Data Types](#data-types)
+	- [Built in data types](#built-in-data-types)
+	- [Built in array methods](#built-in-array-methods)
+- [Removal of operator overloading](#removal-of-operator-overloading)
 - [Match statements](#match-statements)
 	- [Ranges](#ranges)
 	- [Multiple cases](#multiple-cases)
@@ -27,11 +31,76 @@ Neo-C is a programming language like C++, but tries to be pleasant to use. It co
 
 <!-- /TOC -->
 
-## [Semi-colons and curly brackets](#neo-c)
+## [Basic syntax](#neo-c)
 - Semi-colons cannot be used.
+  - They are annoying to use and the ability to place multiple statements on one line is unnecessary.
 - Curly brackets cannot be used and are replaced by indentations.
-	- You can use either tab or space indentation.
-  - Indentation for labels such as `public:` are also necessary.
+  - Curly brackets are unnecessary. When a language requires curly brackets, indentation is already used, so it might as well be enforced by the language.
+	- You can either use tab or space indentation.
+- Parenthesis cannot be used for conditionals.
+  - They are unnecessary and often don't lead to more readable code.
+  - Functions and classes still require `()` without space. Ex: `void func()`
+
+## [Data Types](#neo-c)
+C++ has two main problems with its default data types.
+
+1. Data types don't have explicitly defined lengths.
+  - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if values are expected to exceed 32 bits, but the platform treats `int`s as 32 bits.
+2. Default array types are bad.
+2. Default array types aren't built into the language even when they are so commonly used.
+  - C-style arrays have been replaced by `std::array` in modern C++, but `std::array` isn't built into the language.
+  - Dynamic arrays(`std::vector`) and `std::string` aren't built into the language even when they are so commonly used.
+
+### [Built in data types](#neo-c)
+- auto
+- bool
+- i8/char, i16, i32, i64
+- u8, u16, u32, u64
+- string
+- type[size]
+- type[dynamic]
+- objects?
+  - The same as maps?
+
+### [Built in array methods](#neo-c)
+These are methods which are built in to strings, arrays, and dynamic arrays.
+
+| Method                                    | Description                                                                  |
+|-------------------------------------------|------------------------------------------------------------------------------|
+| .size                                     | Gets the size/length of the array.                                           |
+| .isEveryElement(function)                 | Tests if every element passes the function.                                  |
+| .resize(size)                             | Only used for strings and dynamic arrays.                                    |
+| .clear()                                  | Removes all the elements in string and dynamic arrays.                       |
+| .at(index)                                | Allows for negative array indexing. Ex: -1 is the last element.              |
+| .push(value)                              | Pushes an element on the end.                                                |
+| .pop()                                    | Removes and returns the last element on the end.                             |
+| .unshift(value)                           | Puts an element on the beginning.                                            |
+| .shift()                                  | Removes the first element and returns it.                                    |
+| .contains(value)                          | Does the value exist in the array?                                           |
+| .find(function)                           | Returns the first element that matches the function.                         |
+| .findIndex(function)                      | Returns the index of the first element that matches the function.            |
+| .subArray(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.     |
+| .subString(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.       |
+| .map(function)                            | Applies the function to each element of the array and returns that array.    |
+| .filter(function)                         | Returns a filtered array. If the function returns true it gets filtered out. |
+| .sort()                                   | Returns a sorted array from lowest to highest.                               |
+| .reverse()                                | Returns a reversed array.                                                    |
+| .insert(index, value)                     | Inserts the value after the index. The value can be an array.                |
+| .remove(index, optional howMany)          | Removes the element at index and the next howMany(defaults to 1).            |
+
+
+- .fill(el1, el2)
+- flat()
+- 
+
+- Functions argument have to have at least one argument.
+function(element, index, array)
+
+
+
+## [Removal of operator overloading](#neo-c)
+- It's important to loop at code and know what's built into the language and what is being done through the library. Neo-C makes its syntax very clear and consistent to avoid confusion. Ex: << being used for cout could be confused with the left shift operator.
+- It's important to look at code and know what syntax is part of the language and what's a library.
 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
@@ -233,23 +302,29 @@ In C++, the only difference between `struct`s and `class`es are whether they def
 
 ### [Classes](#neo-c)
 In C++, it's common to create a class where the constructor arguments are directly equal to private or public member variables. However, to do this in C++ it requires a lot of repetitive code, so Neo-C introduces a new syntax for creating classes.
+- Maybe by default things are public. You have to type `private` to make them private.
+  - The problem is the extra indentation. How big a problem is that.
+- By default everything is private. Us the `pub` keyword and `static` keywords.
+  - Should you allow `static`? What could you use instead.
+- Maybe have variable and function names start with `_` for them to be private. And not that to make them public.
+  - What about static?
+- Are there ever private constructors?
 
 ```C++
 // Neo-C
 using std::string, std::cout, std::endl
 
 class Book(private int copiesAvailable, public string title = "Unknown", public string author = "Unknown", public int pages = 0)
-  public:
-    Book
-      // Initialization constructor code
+  Book
+    // Initialization constructor code
 
-    // Constructor overloading example
-    Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
+  // Constructor overloading example
+  Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
 
-    void display()
-      cout << "title: "  << title  << endl
-      cout << "author: " << author << endl
-      cout << "pages: "  << pages  << endl
+  pub void display()
+    cout << "title: "  << title  << endl
+    cout << "author: " << author << endl
+    cout << "pages: "  << pages  << endl
 
 // C++
 using std::string, std::cout, std::endl;
