@@ -1,0 +1,11 @@
+- enums
+	- Same as an enum class
+- class
+	- no inheritance
+	- different syntax
+	- no static keyword?
+- interfaces
+- objects
+- std::array or C-style arrays
+- All the keywords
+- Organize scalable error handling without gotos file

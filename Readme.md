@@ -1,5 +1,5 @@
 # Neo-C
-Neo-C is a programming language like C++, but has a consistent and pleasant to use syntax. It has relatively simple features and tries not to be overly complex. It compiles into C++, but isn't backwards compatible.
+Neo-C is a programming language like C++, but tries to have a consistent and pleasant to use syntax. It has relatively simple features and tries not to be overly complex. It isn't backwards compatible C++.
 
 <img src="./neo_c_logo.svg" width=400>
 
@@ -17,19 +17,20 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
 	- [Breaks in match statements](#breaks-in-match-statements)
 	- [Strings](#strings)
 - [Importing and Exporting](#importing-and-exporting)
-- [Built in/Standard libraries](#built-instandard-libraries)
+	- [Built in/Standard libraries](#built-instandard-libraries)
 - [Automatic function hoisting](#automatic-function-hoisting)
 - [For each loops](#for-each-loops)
-	- [Ranged based for loops](#ranged-based-for-loops)
 - [Classes, Structs, Interfaces, and Objects](#classes-structs-interfaces-and-objects)
 	- [Structs](#structs)
 	- [Classes](#classes)
+	- [Interfaces](#interfaces)
+	- [Objects](#objects)
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
 - [Removing gotos](#removing-gotos)
-- [Negative array indexing](#negative-array-indexing)
 - [Template Literals](#template-literals)
+- [Other changes](#other-changes)
 - [All Keywords](#all-keywords)
 
 <!-- /TOC -->
@@ -43,7 +44,8 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
 - Parenthesis cannot be used for conditionals.
   - They are unnecessary and often don't lead to more readable code.
   - Functions and classes still require `()` without space. Ex: `void func()`
-
+- You cannot use underscores in variable, function, etc names.
+  - This essentially enforces camelCase and prevents snake_case.
 
 ## [Data Types](#neo-c)
 C++ has two main problems with its default data types.
@@ -64,9 +66,22 @@ C++ has two main problems with its default data types.
 - `string`
   - C++: `std::string`
 - type[size]
-  - C++: `std::array`
+  - C++: `std::array` (Maybe not because the size has to be known at compile time.)
 - type[dynamic]
   - C++: `std::vector`
+- Arrays have to be declared using this syntax.
+
+```C++
+// Neo-c
+i64[] arr = {1, 2, 3}
+i64[3] arr2
+i64[dynamic] dArray = {1, 2, 3}
+
+// C++
+std::array<int64_t, 3> arr = {1, 2, 3};
+std::array<int64_t, 3> arr2;
+std::vector<int64_t> dArray;
+```
 
 ### [Built in string and array methods](#neo-c)
 These are methods which are built into strings, arrays, and dynamic arrays.
@@ -102,18 +117,18 @@ These are methods which are built into strings, arrays, and dynamic arrays.
 
 - The function passed to these methods should have at least one argument. There arguments can be `function(element, index, array)`
 
-| Special string methods | Description                                          |
-|------------------------|------------------------------------------------------|
-| .toUpperCase()         | Converts string to upper case                        |
-| .toLowerCase()         | Converts string to lower case                        |
-| .trimStart()           | Removes any white space in front of the string       |
-| .trimEnd()             | Removes any white space at the back of the string    |
-| .trim()                | Removes any white space in the front and at the back |
+| Special string methods | Description                                           |
+|------------------------|-------------------------------------------------------|
+| .toUpperCase()         | Converts string to upper case.                        |
+| .toLowerCase()         | Converts string to lower case.                        |
+| .trimStart()           | Removes any white space in front of the string.       |
+| .trimEnd()             | Removes any white space at the back of the string.    |
+| .trim()                | Removes any white space in the front and at the back. |
 
-| Conversion methods     | Description              |
-|------------------------|--------------------------|
-| .join(stringSeparator) | Converts array to string |
-| .split(string)         | Converts string to array |
+| Conversion methods     | Description                                                                           |
+|------------------------|---------------------------------------------------------------------------------------|
+| .join(stringSeparator) | Concatenates the array into a single string, separated by the stringSeparator.        |
+| .split(splitString)    | Divides a string into an array based on the occurrences of the specified splitString. |
 
 - You can use `array1 + array2` or `string1 + string2` to do concatenation.
 
@@ -252,26 +267,30 @@ C++ has some notable problems when it comes to importing and exporting with head
 2. When you import/include a header file you are including everything in that file instead of only what you want to use.
 3. When you use some code in an included header file, it isn't clear which header file that code belongs to.
 
-```C++
-// Neo-C
-import Name <Library>
-import {function1, function2} <Library>
-import Name, {function1, function2} "localFiles.nc"
+In Neo-C you can using the `import` keyword and the `export` keyword to explicitly import or export what you want.
+- Importing
+  - `import Name <Library>` imports the entire Library under the object Name.
+  - `import Name2 "./localFile.nc"` imports all of the exported entities in that local file under the object Name2.
+  - `import {var, func} <Library>` imports only the exported entities with the name `var` and `func` from the Library.
+  - `import Name3, {var, func} <Library>` imports `var` and `func` from Library and all of the exports in Library under the object Name3.
+- Exporting
+  - `export i64 var = 0` exports the i64 variable named `var`.
+  - `export void func()` exports the function `func`.
 
-export bool func()
-```
-
-## [Built in/Standard libraries](#neo-c)
+### [Built in/Standard libraries](#neo-c)
 - Terminal
 	- print()
 	- userInput()
 	- printError()
 - Math
+  - abs()
+  - sqrt()
 - File
 - Error
 	- exit()
 - Regex
 - Convert
+  - toI64()
 - Thread
 - Network
   - fetch
@@ -313,59 +332,58 @@ void func(int arg){
 ```
 
 ## [For each loops](#neo-c)
-C++ doesn't have a simple way to loop through a C style array and get each element with its corresponding index. In Neo-C there is a special for loop syntax for these operations.
+In C++, including the index in a for-each loop isn't easy. Neo-C adds this capability.
 
 ```C++
 // Neo-C
-std::string str = "This is a test."
-for (char element, int index in str of size str.length())
-  std::cout << element << std::endl
+string str = "This is a test."
+
+for char c in str
+  // Loops through all the characters in the string
+
+for char c, i64 i in str
+  // Loops through all the characters and has the index
+
+for i64 i = 0; i < 100; i++
+  // You can also do normal for loops
 
 // C++
-std::string str = "This is a test.";
-for (int index = 0; index < str.length(); index++) {
-  char element = str[index];
-  std::cout << element << std::endl;
+string str = "This is a test.";
+
+for (char c : str) {
+  // Loops through all the characters in the string
+}
+
+for (int64_t i = 0; i < str.size(); i++) {
+  char c = str[i];
+  // Loops through all the characters and has the index
+}
+
+for (int64_t i = 0; i < 100; i++) {
+  // You can also do normal for loops
 }
 ```
 
-- This can also work for references.
+- This can also work for reference variables.
 
 ```C++
 // Neo-C
-char abcs[26]
-for (char &letter, int i in abcs of size 26)
+char[26] abcs
+for char &letter, i8 i in abcs
   letter = 97 + i
 
 // C++
 char abcs[26];
-for (int i = 0; i < 26; i++){
+for (int8_t i = 0; i < abcs.size(); i++){
   char &letter = abcs[i];
   letter = 97 + i;
-}
-```
-
-- This syntax is easy translated to english: for each `element` and `index` in `array` of size `size` do something.
-
-### [Ranged based for loops](#neo-c)
-You can still use ranged based for loops, but their syntax has been changed to better match the other ranged based for loop.
-
-```C++
-// Neo-C
-for (int el in vec)
-  // Do something
-
-// C++
-for (int el : vec) {
-  // Do something
 }
 ```
 
 ## [Classes, Structs, Interfaces, and Objects](#neo-c)
 
 ### [Structs](#neo-c)
-In C++, the only difference between `struct`s and `class`es are whether they default to private or public. However, it is commonly recommend to only use `struct`s for storing related data together, and use a `class` when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow `struct`s to have methods or use the `private` keyword.
-- In Neo-C, `struct`s behave exactly like `struct`s in C.
+In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public. In Neo-C structs behave similarly to structs in C.
 
 ### [Classes](#neo-c)
 In C++, it's common to create a class where the constructor arguments are directly equal to private or public member variables. However, to do this in C++ it requires a lot of repetitive code, so Neo-C introduces a new syntax for creating classes.
@@ -376,8 +394,29 @@ In C++, it's common to create a class where the constructor arguments are direct
 - Maybe have variable and function names start with `_` for them to be private. And not that to make them public.
   - What about static?
 - Are there ever private constructors?
+- Should it be public instead of pub? I'm not using str for string or arr for array
+- Problem: You have to have an extra indentation for public: and private:. You could put public and private before each member, but that is very repetitive and takes up more horizontal space.
+  - Use `_` in front of names to make them private
+  - Don't use `_` in front to make them public 
 
 ```C++
+// Neo-c
+class Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unknown", i64 pages = 0)
+  Book
+    // Initialization constructor code
+
+  Book(const Book& book): title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
+    // Should I use this syntax?
+    title = book.title
+    author = book.author
+    pages = book.pages
+    copiesAvailable = 100
+
+  void display()
+    print("title: ${title}\n")
+    print("author: ${author}\n")
+    print("pages: ${pages}\n")
+
 // Neo-C
 using std::string, std::cout, std::endl
 
@@ -421,8 +460,13 @@ class Book {
 - The initialization constructor is optional.
 - If you want to create a private constructor you can put the initialization constructor in `private:`.
 
+### [Interfaces](#neo-c)
+- Instead of using inheritance, Neo-C uses composition and interfaces.
+
+### [Objects](#neo-c)
+
 ## [Nested Comments](#neo-c)
-When you need to comment out a large chunk of code, but that code already has a multi-line comment in it, you have to remove the inner `*/`. This is annoying so Neo-C adds the ability to do nested multi-line comments.
+When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
 
 ```javascript
 // Neo-C
@@ -439,17 +483,17 @@ When you need to comment out a large chunk of code, but that code already has a 
 ```
 
 ## [Do while loops](#neo-c)
-In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could easily be confused for a new while loop. So Neo-C puts the `do` and `while` on the same line.
+In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could be easily confused for a new while loop. So Neo-C puts the `do` and `while` keywords on the same line.
 
 ```C++
 // Neo-C
-do while (1)
-  // Do something
+do while true
+  // Do something at least once
 
 // C++
 do {
-  // Do something
-} while (1);
+  // Do something at least once
+} while (true);
 ```
 
 ## [Breaking out of nested loops](#neo-c)
@@ -457,15 +501,15 @@ If you have a loop in a loop you can add an additional break statement to break 
 
 ```C++
 // Neo-C
-for (auto el in vec)
-  for (auto el2 in vec2)
-    for (auto el3 in vec3)
+for auto el in arr
+  for auto el2 in arr2
+    for auto el3 in arr3
       break break
 
 // C++
-for (auto el : vec) {
-  for (auto el2 : vec2) {
-    for (auto el3 : vec3) {
+for (auto el : arr) {
+  for (auto el2 : arr2) {
+    for (auto el3 : arr3) {
       goto break_loops;
     }
   }
@@ -477,193 +521,51 @@ for (auto el : vec) {
 - If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_2`, `break_loops_3`, etc.
 
 ## [Removing gotos](#neo-c)
-`goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s.
+`goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
 1. Breaking out of nested loops
   - This has been replaced with `break break` etc.
 2. Breaking out of a loop from a switch statement that is in that loop.
   - This has been replaced by allowing `break`s to work in match statements.
 3. Error handling in a scalable way
-  - This can be done with a cleanup function to achieve the same effect.
-
-<table>
-<tr>
-<td width=275 style="vertical-align: top;">
-
-```C++
-/*Un-scalable cleanup code*/
-#include <iostream>
-#include <fstream>
-
-using std::fstream, std::cerr;
-
-int main() {
-  fstream file1("file1");
-  if (!file1) {
-    cerr << "file1" << endl;
-    return -1;
-  }
-
-  fstream file2("file2");
-  if (!file2) {
-    cerr << "file2" << endl;
-    file1.close();
-    return -1;
-  }
-
-  fstream file3("file3");
-  if (!file3) {
-    cerr << "file3" << endl;
-    file1.close();
-    file2.close();
-    return -1;
-  }
-
-  file1.close();
-  file2.close();
-  file3.close();
-
-  return 0;
-}
-/*
-This code isn't scalable
-because as the amount of
-error checks increase,
-the amount of repeated
-clean up code also
-increases.
-*/
-```
-
-</td>
-
-<td width=275 style="vertical-align: top;">
-
-```C++
-/*Scalable cleanup
-code with gotos*/
-#include <iostream>
-#include <fstream>
-
-using std::fstream, std::cerr;
-
-int main() {
-  int retval = 0;
-
-  fstream file1("file1");
-  if (!file1) {
-    cerr << "file1" << endl;
-    return -1;
-  }
-
-  fstream file2("file2");
-  if (!file2) {
-    cerr << "file2" << endl;
-    retval = -1;
-    goto clean_file1;
-  }
-
-  fstream file3("file3");
-  if (!file3) {
-    cerr << "file3" << endl;
-    retval = -1;
-    goto close_file2;
-  }
-
-  file3.close();
-  close_file2:
-    file2.close();
-  close_file1:
-    file1.close();
-
-  return retval;
-}
-```
-
-</td>
-
-<td style="vertical-align: top;">
-
-```C++
-/*Scalable cleanup
-code with a function*/
-#include <iostream>
-#include <fstream>
-
-using std::fstream, std::cerr;
-
-void cleanup(fstream file1, fstream file2 = NULL, fstream file3 = NULL) {
-  file1.close();
-  if (file2 != NULL) file2.close();
-  if (file3 != NULL) file3.close();
-}
-
-int main(int argc, char *argv[]) {
-  fstream file1("file1");
-  if (!file1) {
-    cerr << "file1" << endl;
-    return -1;
-  }
-
-  fstream file2("file2");
-  if (!file2) {
-    cerr << "file2" << endl;
-    cleanup(file1);
-    return -1;
-  }
-
-  fstream file3("file3");
-  if (!file3) {
-    cerr << "file3" << endl;
-    cleanup(file1, file2);
-    return -1;
-  }
-
-  cleanup(file1, file2, file3);
-  return 0;
-}
-```
-
-</td>
-  </tr>
-</table>
-
-## [Negative array indexing](#neo-c)
-In C++ there isn't an easy way to concisely index from the last element. Therefore, Neo-C introduces a special syntax to allow for this.
-
-```C++
-// Neo-C
-std::vector<int> vec = {1, 2, 3}
-int lastEl = vec-[1]
-  // It can also work with variables
-int index = 2
-int secondToLastEl = vec-[index]
-
-// C++
-std::vector<int> vec = {1, 2, 3};
-int lastEl = vec[vec.size() - 1];
-int index = 2;
-int secondToLastEl = vec[vec.size() - index];
-```
+  - This can be done with a cleanup function to achieve a similar effect.
 
 ## [Template Literals](#neo-c)
-In C++ if you want to include a variable in a string you have to convert it to a string and concatenate it. This is annoying so Neo-C adds a special syntax to allow you to do this automatically, like many other languages.
+In C++, if you want to include a variable in a string you have to convert it to a string and concatenate it. This is annoying so Neo-C adds a special syntax to allow you to do this automatically, like many other languages.
 - Use `${code}` to insert into a string.
 - Strings can also span multiple lines.
 
 ```C++
 // Neo-C
-int x = 10;
+i64 x = 10
 string y = "10"
 string str = "x: ${x}
 y: ${y}"
 
 // C++
-int x = 10;
+int64_t x = 10;
 string y = "10";
 string str = "x: " + to_string(x) + "\ny: " + y;
 ```
 
 - `\${}` allows you to escape the template literal.
+
+## [Other changes](#neo-c)
+- `**` can be used for exponents.
+- `try` for a try-catch block can be on the same line
+
+```C++
+// Neo-C
+try func()
+catch (string error)
+	// Handle error
+
+// C++
+try {
+	func()
+} catch (std::string error) {
+	// Handle error
+}
+```
 
 ## [All Keywords](#neo-c)
 
