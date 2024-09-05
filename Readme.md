@@ -8,7 +8,8 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
 - [Basic syntax](#basic-syntax)
 - [Data Types](#data-types)
 	- [Built in data types](#built-in-data-types)
-	- [Built in array methods](#built-in-array-methods)
+	- [Built in string and array methods](#built-in-string-and-array-methods)
+	- [Main function](#main-function)
 - [Removal of operator overloading](#removal-of-operator-overloading)
 - [Match statements](#match-statements)
 	- [Ranges](#ranges)
@@ -16,10 +17,11 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
 	- [Breaks in match statements](#breaks-in-match-statements)
 	- [Strings](#strings)
 - [Importing and Exporting](#importing-and-exporting)
+- [Built in/Standard libraries](#built-instandard-libraries)
 - [Automatic function hoisting](#automatic-function-hoisting)
 - [For each loops](#for-each-loops)
 	- [Ranged based for loops](#ranged-based-for-loops)
-- [Classes and Structs](#classes-and-structs)
+- [Classes, Structs, Interfaces, and Objects](#classes-structs-interfaces-and-objects)
 	- [Structs](#structs)
 	- [Classes](#classes)
 - [Nested Comments](#nested-comments)
@@ -28,6 +30,7 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
 - [Removing gotos](#removing-gotos)
 - [Negative array indexing](#negative-array-indexing)
 - [Template Literals](#template-literals)
+- [All Keywords](#all-keywords)
 
 <!-- /TOC -->
 
@@ -41,66 +44,104 @@ Neo-C is a programming language like C++, but has a consistent and pleasant to u
   - They are unnecessary and often don't lead to more readable code.
   - Functions and classes still require `()` without space. Ex: `void func()`
 
+
 ## [Data Types](#neo-c)
 C++ has two main problems with its default data types.
 
 1. Data types don't have explicitly defined lengths.
-  - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if values are expected to exceed 32 bits, but the platform treats `int`s as 32 bits.
-2. Default array types are bad.
-2. Default array types aren't built into the language even when they are so commonly used.
-  - C-style arrays have been replaced by `std::array` in modern C++, but `std::array` isn't built into the language.
-  - Dynamic arrays(`std::vector`) and `std::string` aren't built into the language even when they are so commonly used.
+  - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem on certain platforms if values are expected to exceed 32 bits.
+2. Array types aren't built into the language.
+  - C-style arrays have been replaced by `std::array` in modern C++, but `[]` creates a C-style array instead of an `std::array`.
+  - Dynamic arrays(`std::vector`) and strings(`std::string`) aren't built into the language even when they are so commonly used.
 
 ### [Built in data types](#neo-c)
-- auto
-- bool
-- i8/char, i16, i32, i64
-- u8, u16, u32, u64
-- string
+- `auto`
+- `bool`
+- `i8`, `i16`, `i32`, `i64`
+  - C++: `int8_t`, `int16_t`, `int32_t`, `int64_t`
+- `u8`/`char`, `u16`, `u32`, `u64`
+  - C++: `uint8_t`, `uint16_t`, `uint32_t`, `uint64_t`
+- `string`
+  - C++: `std::string`
 - type[size]
+  - C++: `std::array`
 - type[dynamic]
-- objects?
-  - The same as maps?
+  - C++: `std::vector`
 
-### [Built in array methods](#neo-c)
-These are methods which are built in to strings, arrays, and dynamic arrays.
+### [Built in string and array methods](#neo-c)
+These are methods which are built into strings, arrays, and dynamic arrays.
 
-| Method                                    | Description                                                                  |
-|-------------------------------------------|------------------------------------------------------------------------------|
-| .size                                     | Gets the size/length of the array.                                           |
-| .isEveryElement(function)                 | Tests if every element passes the function.                                  |
-| .resize(size)                             | Only used for strings and dynamic arrays.                                    |
-| .clear()                                  | Removes all the elements in string and dynamic arrays.                       |
-| .at(index)                                | Allows for negative array indexing. Ex: -1 is the last element.              |
-| .push(value)                              | Pushes an element on the end.                                                |
-| .pop()                                    | Removes and returns the last element on the end.                             |
-| .unshift(value)                           | Puts an element on the beginning.                                            |
-| .shift()                                  | Removes the first element and returns it.                                    |
-| .contains(value)                          | Does the value exist in the array?                                           |
-| .find(function)                           | Returns the first element that matches the function.                         |
-| .findIndex(function)                      | Returns the index of the first element that matches the function.            |
-| .subArray(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.     |
-| .subString(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.       |
-| .map(function)                            | Applies the function to each element of the array and returns that array.    |
-| .filter(function)                         | Returns a filtered array. If the function returns true it gets filtered out. |
-| .sort()                                   | Returns a sorted array from lowest to highest.                               |
-| .reverse()                                | Returns a reversed array.                                                    |
-| .insert(index, value)                     | Inserts the value after the index. The value can be an array.                |
-| .remove(index, optional howMany)          | Removes the element at index and the next howMany(defaults to 1).            |
+| Method                                      | Description                                                                 |
+|---------------------------------------------|-----------------------------------------------------------------------------|
+| .size()                                     | Gets the size/length of the array.                                          |
+| .at(index)                                  | Allows for negative array indexing. Ex: -1 is the last element.             |
+| .allocate(size)                             | Sets the allocated memory size for the string or dynamic array.             |
+| .allocation()                               | Gets the size of the allocated memory of the string or dynamic array.       |
+| .push(value)                                | Pushes an element on the end.                                               |
+| .pop()                                      | Removes and returns the last element on the end.                            |
+| .unshift(value)                             | Puts an element on the beginning.                                           |
+| .shift()                                    | Removes the first element and returns it.                                   |
+| .subArray(startIndex, optional endIndex)    | Returns a sub array from startIndex to endIndex or the end of the array.    |
+| .subString(startIndex, optional endIndex)   | Returns a string from startIndex to endIndex or the end of the string.      |
+| .sort()                                     | Returns a sorted array from lowest to highest.                              |
+| .reverse()                                  | Returns a reversed array.                                                   |
+| .contains(value)                            | Does the value exist in the array?                                          |
+| .bContains(value)                           | Contains function with binary search. Array is assumed to be sorted.        |
+| .find(value)                                | Gets the index of the value. -1 if not found.                               |
+| .bFind(value)                               | Binary search to get the index of the value. Array is assumed to be sorted. |
+| .insert(index, value, optional value, etc.) | Inserts the value or values after the index.                                |
+| .remove(index, optional howMany)            | Removes the element at index and the next howMany(defaults to 1).           |
+| .fill(value, startIndex, optional endIndex) | Fills the range, or the rest of the array, with the value.                  |
 
+| Methods that require function arguments | Description                                                                  |
+|-----------------------------------------|------------------------------------------------------------------------------|
+| .isEveryElement(function)               | Tests if every element passes the function.                                  |
+| .isOneOrMoreElement(function)           | Tests if one or more elements passes the function.                           |
+| .map(function)                          | Applies the function to each element of the array and returns that array.    |
+| .filter(function)                       | Returns a filtered array. If the function returns true it gets filtered out. |
 
-- .fill(el1, el2)
-- flat()
-- 
+- The function passed to these methods should have at least one argument. There arguments can be `function(element, index, array)`
 
-- Functions argument have to have at least one argument.
-function(element, index, array)
+| Special string methods | Description                                          |
+|------------------------|------------------------------------------------------|
+| .toUpperCase()         | Converts string to upper case                        |
+| .toLowerCase()         | Converts string to lower case                        |
+| .trimStart()           | Removes any white space in front of the string       |
+| .trimEnd()             | Removes any white space at the back of the string    |
+| .trim()                | Removes any white space in the front and at the back |
 
+| Conversion methods     | Description              |
+|------------------------|--------------------------|
+| .join(stringSeparator) | Converts array to string |
+| .split(string)         | Converts string to array |
 
+- You can use `array1 + array2` or `string1 + string2` to do concatenation.
+
+### [Main function](#neo-c)
+
+```C++
+// Neo-C
+i32 main(string[dynamic] args) // It can only have the argument named args
+  // or
+i32 main()
+
+// C++
+int main(int argc, char* argv[]) {
+  std::vector<std::string> args;
+  for (int i = 0; i < argc; i++) {
+    args.push_back(argv[i]);
+  }
+}
+  // or
+int main() {
+}
+```
+
+- If argc and argv are used as other variable names, then the arguments are named differently so there's no naming conflict.
 
 ## [Removal of operator overloading](#neo-c)
-- It's important to loop at code and know what's built into the language and what is being done through the library. Neo-C makes its syntax very clear and consistent to avoid confusion. Ex: << being used for cout could be confused with the left shift operator.
-- It's important to look at code and know what syntax is part of the language and what's a library.
+It's important for a language to stay consistent with its syntax so people know what's built into the language and what isn't. Operator overloading can break this consistency and therefore it has been removed.
+  - Ex: The `<<` in `std::cout << "Hello World\n";` can be confused with the left shift operator. It isn't clear if that special `<<` syntax is built into the language or comes from the library.
 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
@@ -206,21 +247,47 @@ if (str == "a" || str == "ab") {
 ```
 
 ## [Importing and Exporting](#neo-c)
-It's annoying to have a separate header file to define your exports, especially when you change a declaration in your code and then have to change it in the header file as well.
-
-The `#export` keyword is used to automatically construct an .hpp file with the same name as the .nc file.
+C++ has some notable problems when it comes to importing and exporting with header files.
+1. If you make a change to a definition in a cpp file you have to make the same corresponding change in the header file.
+2. When you import/include a header file you are including everything in that file instead of only what you want to use.
+3. When you use some code in an included header file, it isn't clear which header file that code belongs to.
 
 ```C++
 // Neo-C
-#export int func()
+import Name <Library>
+import {function1, function2} <Library>
+import Name, {function1, function2} "localFiles.nc"
 
-// C++
-#progma once
-int func();
+export bool func()
 ```
 
-- These automatically have include guards(`#progma once`) added at the top.
-- If `#export` is used in a .nc file, when it compiles into its .cpp file, then its own header file is automatically included at the top. `#include "file.hpp"`
+## [Built in/Standard libraries](#neo-c)
+- Terminal
+	- print()
+	- userInput()
+	- printError()
+- Math
+- File
+- Error
+	- exit()
+- Regex
+- Convert
+- Thread
+- Network
+  - fetch
+  - json
+  - express like server
+- Time
+- HTML
+  - JSX should be built into the language?
+- GUI
+- LinkedList
+- Encrypt
+  - random
+  - sha256
+- Test
+- Bash
+  - Running bash commands
 
 ## [Automatic function hoisting](#neo-c)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
@@ -294,7 +361,7 @@ for (int el : vec) {
 }
 ```
 
-## [Classes and Structs](#neo-c)
+## [Classes, Structs, Interfaces, and Objects](#neo-c)
 
 ### [Structs](#neo-c)
 In C++, the only difference between `struct`s and `class`es are whether they default to private or public. However, it is commonly recommend to only use `struct`s for storing related data together, and use a `class` when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow `struct`s to have methods or use the `private` keyword.
@@ -597,3 +664,13 @@ string str = "x: " + to_string(x) + "\ny: " + y;
 ```
 
 - `\${}` allows you to escape the template literal.
+
+## [All Keywords](#neo-c)
+
+|       |           |         |
+|-------|-----------|---------|
+| if    | class     | dynamic |
+| for   | struct    | return  |
+| while | interface |         |
+
+- You can use C++ keywords as names, but when they are used they are mapped to different names.

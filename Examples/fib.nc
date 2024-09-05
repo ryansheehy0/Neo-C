@@ -1,18 +1,15 @@
-#include <iostream>
+import {print} <Terminal>
 
-using std::cout, std::endl
+i32 main()
+	u16 x, y, z
 
-int main()
-	int x, y, z
-
-	while (1)
+	while true
 		x = 0
 		y = 1
-		do
-			cout << x << endl
+		do while x < 255
+			print(x)
 
 			z = x + y
 			x = y
 			y = z
-		while (x < 255)
 		break

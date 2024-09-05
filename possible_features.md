@@ -62,6 +62,10 @@ func(a); // int
 ## Working on it
 - Objects in c++ without a class?
 	- Special syntax for automatically creating an unordered_map?
+- Using ranges(`...`) for strings in match statements
+	- "a"..."abc"
+		- "a", "b", "c", ... "z", "aa", "ab", ..., "ba", "bb" ... "abc"
+		- Or "a", "ab", "abc"
 
 ## Probably not
 - Async await
@@ -201,3 +205,15 @@ using std::cout;
 	- How to handle all the different types f tokenization in C++?
 - How to parse more complicated code?
 - How to organize the code?
+
+## Better if statements
+It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
+
+```C++
+int a = 10;
+if (a > 10 && a < 20)
+
+// Neo-c
+if a > 10 && a < 20
+if a > 10 && < 20 // This should work
+```
