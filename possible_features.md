@@ -114,3 +114,4 @@ if (a > 10 && a < 20)
 - operations and comparisons
 - decimal literals
 - ${} in strings
+- Nested comments
