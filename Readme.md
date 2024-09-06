@@ -20,7 +20,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 	- [Built in/Standard libraries](#built-instandard-libraries)
 - [Automatic function hoisting](#automatic-function-hoisting)
 - [For each loops](#for-each-loops)
-- [Classes, Structs, Interfaces, and Objects](#classes-structs-interfaces-and-objects)
+- [Containers](#containers)
 	- [Structs](#structs)
 	- [Classes](#classes)
 	- [Interfaces](#interfaces)
@@ -166,7 +166,7 @@ The match statement is exactly like the switch statement, but the brakes are aut
 
 ```C++
 // Neo-C
-match (var)
+match var
   case 1:
   case 2:
   default:
@@ -188,7 +188,7 @@ It is common to perform an action with a range of inputs, such as all lowercase 
 
 ```C++
 // Neo-C
-match (var)
+match var
   case 'a'...'c':
     // Do something
 
@@ -207,7 +207,7 @@ Instead of using fall-throughs for multiple case labels, you can use a comma `,`
 
 ```C++
 // Neo-C
-match (var)
+match var
   case 'a', 'b':
 
 // C++
@@ -223,13 +223,13 @@ switch (var) {
 
 ```C++
 // Neo-C
-while (1)
-  match (1)
+while true
+  match 1
     case 1:
       break
 
 // C++
-while (1) {
+while (true) {
   switch (1) {
     case 1:
       goto break_loop;
@@ -246,7 +246,7 @@ C++ doesn't support using strings in switch statements, but Neo-C does for match
 ```C++
 // Neo-C
 std::string str = "abc"
-match (str)
+match str
   case "a", "ab":
     // Do something
   case "abc":
@@ -380,88 +380,70 @@ for (int8_t i = 0; i < abcs.size(); i++){
 }
 ```
 
-## [Classes, Structs, Interfaces, and Objects](#neo-c)
+## [Containers](#neo-c)
 
 ### [Structs](#neo-c)
 In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public. In Neo-C structs behave similarly to structs in C.
 
 ### [Classes](#neo-c)
-In C++, it's common to create a class where the constructor arguments are directly equal to private or public member variables. However, to do this in C++ it requires a lot of repetitive code, so Neo-C introduces a new syntax for creating classes.
-- Maybe by default things are public. You have to type `private` to make them private.
-  - The problem is the extra indentation. How big a problem is that.
-- By default everything is private. Us the `pub` keyword and `static` keywords.
-  - Should you allow `static`? What could you use instead.
-- Maybe have variable and function names start with `_` for them to be private. And not that to make them public.
-  - What about static?
-- Are there ever private constructors?
-- Should it be public instead of pub? I'm not using str for string or arr for array
-- Problem: You have to have an extra indentation for public: and private:. You could put public and private before each member, but that is very repetitive and takes up more horizontal space.
-  - Use `_` in front of names to make them private
-  - Don't use `_` in front to make them public 
+Neo-C makes 3 notable changes to classes
+
+1. In C++, it's very common to create a class where the constructor arguments just are assigned directly to member variables. C++ provides a special syntax for this, but you still have to create those member variables. Neo-C adds a default constructor which automatically creates those member variables and assigns them.
+2. In C++, `private:` and `public:` usually require another indentation or are put on the same line as the class. This can create extra indentation or funny looking styling. This could be replaced by specifying `private` or `public` for each member entity, however this tends to be very verbose and annoying. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
+3. Inheritance has been removed from Neo-C and composition is recommended instead.
+  - https://www.youtube.com/watch?v=hxGOiiR9ZKg
+  - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
 
 ```C++
-// Neo-c
+// Neo-C
 class Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unknown", i64 pages = 0)
   Book
-    // Initialization constructor code
+    // Initialization constructor code. This is optional.
 
-  Book(const Book& book): title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
-    // Should I use this syntax?
-    title = book.title
-    author = book.author
-    pages = book.pages
-    copiesAvailable = 100
+  Book(Book book) : _copiesAvailable(100), title(book.title), author(book.author), pages(book.pages)
+    // Constructor overloading example.
+
+  ~Book()
+    // This is the destructor
 
   void display()
     print("title: ${title}\n")
     print("author: ${author}\n")
     print("pages: ${pages}\n")
 
-// Neo-C
-using std::string, std::cout, std::endl
-
-class Book(private int copiesAvailable, public string title = "Unknown", public string author = "Unknown", public int pages = 0)
-  Book
-    // Initialization constructor code
-
-  // Constructor overloading example
-  Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100)
-
-  pub void display()
-    cout << "title: "  << title  << endl
-    cout << "author: " << author << endl
-    cout << "pages: "  << pages  << endl
-
 // C++
-using std::string, std::cout, std::endl;
-
 class Book {
   private:
-    int copiesAvailable;
+    int64_t _copiesAvailable;
   public:
-    string title;
-    string author;
-    int pages;
+    std::string title;
+    std::string author;
+    int64_t pages;
 
-    Book(int copiesAvailable, string title = "Unknown", string author = "Unknown", int pages = 0) : copiesAvailable(copiesAvailable), title(title), author(author), pages(pages) {
-      // Initialization constructor code
+    Book(int64_t _copiesAvailable, std::string title = "Unknown", std::string author = "Unknown", int64_t pages = 0) : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
+      // Initialization constructor code. This is optional.
     }
 
-    Book(const Book& book) : title(book.title), author(book.author), pages(book.pages), copiesAvailable(100) {}
+    Book(Book book) : _copiesAvailable(100), title(book.title), author(book.author), pages(book.pages) {
+      // Constructor overloading example.
+    }
+
+    ~Book() {
+      // This is the destructor
+    }
 
     void display() {
-      cout << "title: "  << title  << endl
-      cout << "author: " << author << endl
-      cout << "pages: "  << pages  << endl
+      std::cout << "title: " + title + "\n";
+      std::cout << "author: " + author + "\n";
+      std::cout << "pages: " + to_string(pages) + "\n";
     }
 }
 ```
 
-- The initialization constructor is optional.
-- If you want to create a private constructor you can put the initialization constructor in `private:`.
-
 ### [Interfaces](#neo-c)
 - Instead of using inheritance, Neo-C uses composition and interfaces.
+- Add the `interface` keyword.
+	- A class that only has virtual functions with = 0;
 
 ### [Objects](#neo-c)
 
@@ -560,8 +542,7 @@ catch (string error)
 	// Handle error
 
 // C++
-try {
-	func()
+try { func()
 } catch (std::string error) {
 	// Handle error
 }

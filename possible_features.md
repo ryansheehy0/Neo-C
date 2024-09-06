@@ -2,6 +2,7 @@
 - You can have functions within functions.
 	- Can you have classes within classes? No. Don't do this. It could be confusing.
 	- Assigning functions to variables?
+- How do you create a custom library?
 
 ## Low probably
 - All `enum`s become `enum class`es.
@@ -89,17 +90,6 @@ Probably don't have because it can make errors and new users frustrated with the
 		- `class ThisIsAClass()`
 	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
 	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
-
-## [Inheritance](#neo-c)
-- I think inheritance is fine, just the way it should be used is important.(You can misuse all sorts of syntax things in any language.)
-	- Neo-C does not support inheritance because it can create confusing code. Instead of a child class inheriting a parent class, inheritance, you should include an instance of the parent class in the child class, composition.
-  - https://www.youtube.com/watch?v=hxGOiiR9ZKg
-  - `protected` keyword cannot be used in Neo-C
-	- How would you use libraries who rely on inheritance? Not standard libraries.
-
-- Add the `interface` keyword.
-	- A class that only has virtual functions with = 0;
-- You can only use inheritance on interfaces.
 
 ## Better if statements
 It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
