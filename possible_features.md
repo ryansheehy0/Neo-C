@@ -106,12 +106,6 @@ if (a > 10 && a < 20)
 ```
 
 ## Syntax highlighting todo
-- <Libraries>
-- variable names
-- function names
-	- and methods
-- dynamic
-- operations and comparisons
-- decimal literals
 - ${} in strings
 - Nested comments
+- function and variables properly highlighted when importing

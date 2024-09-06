@@ -13,6 +13,15 @@
 		},
 		{
 			"include": "#dataTypes"
+		},
+		{
+			"include": "#literals"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#variables"
 		}
 	],
 	"repository": {
@@ -44,7 +53,25 @@
 		"dataTypes": {
 			"patterns": [{
 				"name": "storage.type.neo-c",
-				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string)\\b"
+				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string|dynamic|true|false)\\b"
+			}]
+		},
+		"literals": {
+			"patterns": [{
+				"name": "constant.numeric.neo-c",
+				"match": "(?<![a-zA-Z])-?\\b\\d+\\b"
+			}]
+		},
+		"functions": {
+			"patterns": [{
+				"name": "entity.name.function.neo-c",
+				"match": "\\w+(?=\\()"
+			}]
+		},
+		"variables": {
+			"patterns": [{
+				"name": "variable.neo-c",
+				"match": "\\b[a-zA-Z](?!\\()\\b|\\b[a-zA-Z][a-zA-Z0-9]+(?!\\()\\b"
 			}]
 		}
 	},
