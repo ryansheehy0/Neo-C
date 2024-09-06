@@ -44,8 +44,9 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - Parenthesis cannot be used for conditionals.
   - They are unnecessary and often don't lead to more readable code.
   - Functions and classes still require `()` without space. Ex: `void func()`
-- You cannot use underscores in variable, function, etc names.
+- You cannot use underscores in entity names.
   - This essentially enforces camelCase and prevents snake_case.
+  - They may only include lowercase and uppercase letters, as well as numbers, but cannot begin with a number.
 
 ## [Data Types](#neo-c)
 C++ has two main problems with its default data types.

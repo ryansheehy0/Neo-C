@@ -1,0 +1,25 @@
+{
+  "name": "neo-c-syntax-highlighter",
+  "displayName": "Neo-C Syntax Highlighter",
+  "description": "A syntax highlighter extention for the Neo-C programming language.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "neo-c",
+      "aliases": ["Neo-C", "neo-c"],
+      "extensions": [".nc"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "neo-c",
+      "scopeName": "source.nc",
+      "path": "./syntaxes/neo-c.tmLanguage.json"
+    }]
+  }
+}

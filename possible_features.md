@@ -1,4 +1,5 @@
 ## Probable Possibly included features
+- What about PASCAL_CASE for constants? That isn't allowed? Maybe instead of the `const` keyword you just make the variables in PASCAL_CASE in order to define them as constants. Can variables change from non constants to constants?
 - You can have functions within functions.
 	- Can you have classes within classes? No. Don't do this. It could be confusing.
 	- Assigning functions to variables?
@@ -103,3 +104,13 @@ if a > 10 && _ < 20
 // C++
 if (a > 10 && a < 20)
 ```
+
+## Syntax highlighting todo
+- <Libraries>
+- variable names
+- function names
+	- and methods
+- dynamic
+- operations and comparisons
+- decimal literals
+- ${} in strings

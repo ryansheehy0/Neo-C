@@ -1,0 +1,49 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Neo-C",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#libraries"
+		},
+		{
+			"include": "#dataTypes"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.neo-c",
+				"match": "\\b(if|while|for|do|return|break|in|import|export|else)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.neo-c",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+				"name": "constant.character.escape.neo-c",
+				"match": "\\\\."
+			}]
+		},
+		"library": {
+			"name": "",
+			"match": "\\bimport\\s+.+\\s+(<.+>)\\b",
+			"captures": {
+				"1": {"name": "string.quoted.other.neo-c"}
+			}
+		},
+		"dataTypes": {
+			"patterns": [{
+				"name": "storage.type.neo-c",
+				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string)\\b"
+			}]
+		}
+	},
+	"scopeName": "source.nc"
+}
