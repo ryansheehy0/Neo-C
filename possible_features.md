@@ -105,7 +105,12 @@ if a > 10 && _ < 20
 if (a > 10 && a < 20)
 ```
 
+```javascript
+let a = `Test ${Test} test`
+```
+
 ## Syntax highlighting todo
-- ${} in strings
+- Single line and multi line Comments
 - Nested comments
-- function and variables properly highlighted when importing
+- Single quotes. ''
+	- '[^']{1}'

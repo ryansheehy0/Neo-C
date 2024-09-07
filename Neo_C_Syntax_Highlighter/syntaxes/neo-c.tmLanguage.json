@@ -35,10 +35,20 @@
 			"name": "string.quoted.double.neo-c",
 			"begin": "\"",
 			"end": "\"",
-			"patterns": [{
-				"name": "constant.character.escape.neo-c",
-				"match": "\\\\."
-			}]
+			"patterns": [
+				{
+					"name": "constant.character.escape.neo-c",
+					"match": "\\\\."
+				},
+				{
+					"name": "storage.type.neo-c",
+					"begin": "(?<!\\\\)\\${",
+					"end": "}",
+					"patterns": [{
+						"include": "$self"
+					}]
+				}
+			]
 		},
 		"libraries": {
 			"patterns": [{
