@@ -110,7 +110,6 @@ let a = `Test ${Test} test`
 ```
 
 ## Syntax highlighting todo
-- Single line and multi line Comments
-- Nested comments
 - Single quotes. ''
 	- '[^']{1}'
+- Nested comments

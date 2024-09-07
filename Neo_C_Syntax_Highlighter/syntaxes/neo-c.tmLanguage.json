@@ -22,6 +22,12 @@
 		},
 		{
 			"include": "#variables"
+		},
+		{
+			"include": "#multiLineComments"
+		},
+		{
+			"include": "#singleLineComments"
 		}
 	],
 	"repository": {
@@ -82,6 +88,19 @@
 			"patterns": [{
 				"name": "variable.neo-c",
 				"match": "\\b[a-zA-Z](?!\\()\\b|\\b[a-zA-Z][a-zA-Z0-9]+(?!\\()\\b"
+			}]
+		},
+		"multiLineComments": {
+			"patterns": [{
+				"name": "comment.block.neo-c",
+				"begin": "\\/\\*",
+				"end": "\\*\\/"
+			}]
+		},
+		"singleLineComments" : {
+			"patterns": [{
+				"name": "comment.line.double-slash.neo-c",
+				"match": "\/\/.*"
 			}]
 		}
 	},

@@ -13,3 +13,9 @@ i32 main()
 			x = y
 			y = z
 		break
+
+/*
+	Comment
+	/* This is also a comment */
+	Comment
+*/
