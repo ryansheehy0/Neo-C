@@ -9,6 +9,9 @@
 			"include": "#strings"
 		},
 		{
+			"include": "#characters"
+		},
+		{
 			"include": "#libraries"
 		},
 		{
@@ -34,7 +37,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case)\\b"
 			}]
 		},
 		"strings": {
@@ -55,6 +58,12 @@
 					}]
 				}
 			]
+		},
+		"characters": {
+			"patterns": [{
+				"name": "string.quoted.single.neo-c",
+				"match": "'.{1}'"
+			}]
 		},
 		"libraries": {
 			"patterns": [{
