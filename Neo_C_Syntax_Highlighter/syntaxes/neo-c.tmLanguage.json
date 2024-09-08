@@ -37,7 +37,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|try|catch)\\b"
 			}]
 		},
 		"strings": {
@@ -103,7 +103,10 @@
 			"patterns": [{
 				"name": "comment.block.neo-c",
 				"begin": "\\/\\*",
-				"end": "\\*\\/"
+				"end": "\\*\\/",
+				"patterns": [{
+					"include": "#multiLineComments"
+				}]
 			}]
 		},
 		"singleLineComments" : {

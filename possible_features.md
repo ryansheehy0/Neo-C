@@ -108,6 +108,3 @@ if (a > 10 && a < 20)
 ```javascript
 let a = `Test ${Test} test`
 ```
-
-## Syntax highlighting todo
-- Nested comments
