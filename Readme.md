@@ -22,7 +22,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Automatic function hoisting](#automatic-function-hoisting)
 - [For each loops](#for-each-loops)
 - [Containers](#containers)
-	- [Structs](#structs)
+	- [Structs and Unions](#structs-and-unions)
 	- [Classes](#classes)
 	- [Interfaces](#interfaces)
 	- [Objects](#objects)
@@ -44,7 +44,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 	- You can either use tab or space indentation.
 - Parenthesis cannot be used for conditionals.
   - They are unnecessary and often don't lead to more readable code.
-  - Functions and classes still require `()` without space. Ex: `void func()`
+  - Functions and classes still require `()` without the space. Ex: `void func()` and not `void func ()`
 
 ### [Naming Conventions](#neo-c)
 Neo-C enforces naming conventions because it keeps things more consistent which allows code to be read quicker. No name can start with underscores, besides [private members](#classes), or numbers. Names are case sensitive.
@@ -395,7 +395,7 @@ for (int8_t i = 0; i < abcs.size(); i++){
 
 ## [Containers](#neo-c)
 
-### [Structs](#neo-c)
+### [Structs and Unions](#neo-c)
 In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public. In Neo-C structs behave similarly to structs in C.
 
 ### [Classes](#neo-c)
@@ -460,6 +460,7 @@ class Book {
 - Add the `interface` keyword.
 	- A class that only has virtual functions with = 0;
 - Can a class implement multiple interfaces?
+- A class can use multiple interfaces
 
 ```C++
 // Neo-C
@@ -497,6 +498,8 @@ class obj {
 
 obj.get_object.publicFunction() // Accessing the object
 ```
+
+# [Enums](#neo-c)
 
 ## [Nested Comments](#neo-c)
 When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -598,6 +601,7 @@ try { func()
 	// Handle error
 }
 ```
+- You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
 
 ## [All Keywords](#neo-c)
 - auto, void, const

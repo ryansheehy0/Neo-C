@@ -67,29 +67,12 @@ func(a); // int
 ```
 
 ### Code formatting nazi?
-Neo-C enforces a certain style to your code. This is to allow a common look and feel to Neo-C.
-Probably don't have because it can make errors and new users frustrated with the language.
-- Should just leave this to who-ever is using the language.
-
-- `const` has to be in front of any data type.
-	- `const auto` instead of `auto const`
+Probably don't include these. These aren't that big a deal.
 - For pointers and references `*` and `&`s have to be placed in front of the name.
 	- This is allowed:     `int *ptr` and `int &ref`
 	- This is not allowed: `int* ptr` and `int& ref`
 - Function arguments, arrays, and anything that using a comma to separate it must have a space after the comma.
 	- `int arr[] = {1, 2, 3}` and not `int arr[] = { 1,2,3 }`
-- Spaces are required before any `()`s, but functions and classes cannot have spaces after it.
-	- `if ()`, `for ()`, `while ()`, etc.
-	- `void func(int arg)`, `func(arg)`, `class Class(int arg)`, etc.
-- It is recommended to use camelCase for vars and funcs, and PascalCase for classes and enums.
-	- This is not enforced to allow you to keep consistency with other code in C/C++.
-- Naming conventions
-	- When creating functions or variables you have to use camelCase.
-		- `int thisIsAVar`, `int thisIsAFunc()`
-	- When creating classes, enums you have to use PascalCase.
-		- `class ThisIsAClass()`
-	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
-	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
 
 ### Better if statements
 It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
