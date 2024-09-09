@@ -6,6 +6,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 <!-- TOC -->
 
 - [Basic syntax](#basic-syntax)
+	- [Naming Conventions](#naming-conventions)
 - [Data Types](#data-types)
 	- [Built in data types](#built-in-data-types)
 	- [Built in string and array methods](#built-in-string-and-array-methods)
@@ -44,9 +45,16 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - Parenthesis cannot be used for conditionals.
   - They are unnecessary and often don't lead to more readable code.
   - Functions and classes still require `()` without space. Ex: `void func()`
-- You cannot use underscores in entity names.
-  - This essentially enforces camelCase and prevents snake_case.
-  - They may only include lowercase and uppercase letters, as well as numbers, but cannot begin with a number.
+
+### [Naming Conventions](#neo-c)
+Neo-C enforces naming conventions because it keeps things more consistent which allows code to be read quicker. No name can start with underscores, besides [private members](#classes), or numbers. Names are case sensitive.
+
+- Variables, functions, objects
+  - camelCase
+- Constants
+  - SCREAMING_SNAKE_CASE
+- Classes, Structs, Enums, Interfaces
+  - PascalCase
 
 ## [Data Types](#neo-c)
 C++ has two main problems with its default data types.
@@ -280,13 +288,16 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
 
 ### [Built in/Standard libraries](#neo-c)
 - Terminal
-	- print()
-	- userInput()
+	- print(string msg)
+  - printLine() - Automatically adds a new line to the end.
 	- printError()
+  - printLineError()
+	- userInput()
 - Math
   - abs()
   - sqrt()
 - File
+  - getFile(string fileName)
 - Error
 	- exit()
 - Regex
@@ -298,6 +309,7 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
   - json
   - express like server
 - Time
+  - currentTime()
 - HTML
   - JSX should be built into the language?
 - GUI
@@ -443,10 +455,48 @@ class Book {
 
 ### [Interfaces](#neo-c)
 - Instead of using inheritance, Neo-C uses composition and interfaces.
+  - Interfaces are classes that only have virtual functions and variables.
+  - You cannot create an instance of an interface.
 - Add the `interface` keyword.
 	- A class that only has virtual functions with = 0;
+- Can a class implement multiple interfaces?
+
+```C++
+// Neo-C
+interface 
+```
 
 ### [Objects](#neo-c)
+Objects in Neo-C are like singletons in C++. There is only one instance of them. You can still make private members by include an underscore in front of the name. You access them like you would any other object.
+
+```C++
+// Neo-C
+object obj
+  string _privateVar
+
+  void publicFunction()
+
+obj.publicFunction() // Accessing the object
+
+// C++
+class obj {
+  public:
+    static obj& get_object() {
+      return object_instance;
+    }
+
+    void publicFunction(){
+    }
+
+  private:
+    obj() {}
+    static obj object_instance;
+
+    std::string _privateVar;
+}
+
+obj.get_object.publicFunction() // Accessing the object
+```
 
 ## [Nested Comments](#neo-c)
 When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -539,7 +589,7 @@ string str = "x: " + to_string(x) + "\ny: " + y;
 ```C++
 // Neo-C
 try func()
-catch (string error)
+catch string error
 	// Handle error
 
 // C++
@@ -550,11 +600,18 @@ try { func()
 ```
 
 ## [All Keywords](#neo-c)
+- auto, void, const
+- bool, i8, i16, i32, i64, u8, char, u16, u32, u64, string, dynamic
+- true, false
+- import, export
+- if, else
+- for, in
+- match, case, default
+- do, while
+- break, continue
+- return
+- interface, class, this
+- struct, union, object, enum
+- try, catch, throw
 
-|       |           |         |
-|-------|-----------|---------|
-| if    | class     | dynamic |
-| for   | struct    | return  |
-| while | interface |         |
-
-- You can use C++ keywords as names, but when they are used they are mapped to different names.
+- Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.

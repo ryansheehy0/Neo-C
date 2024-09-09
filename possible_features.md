@@ -1,16 +1,48 @@
-## Probable Possibly included features
-- What about PASCAL_CASE for constants? That isn't allowed? Maybe instead of the `const` keyword you just make the variables in PASCAL_CASE in order to define them as constants. Can variables change from non constants to constants?
-- You can have functions within functions.
-	- Can you have classes within classes? No. Don't do this. It could be confusing.
-	- Assigning functions to variables?
-- How do you create a custom library?
+## Todo
+- std::array vs C-style arrays
+	- The size of std::array can't be defined at run time
+	- C-style arrays are missing a lot of features
+- interfaces
+- templates
+	- Remove template meta programming
+- new and delete
+	- Allows easy creation of objects on the heap instead of the stack.
+- static
+- volatile
+	- So compiler doesn't optimize things out
+- async, await, and promises
+- multi threading
+- casting
+	- I like the syntax of C-style casting.
+	- What about const_cast? How to cast consts
+- typeof
+- functions within functions?
+	- You cannot have a class within a class.
+- Inline functions
+	- Maybe don't include. Could be confusing.
+	- if included, should they be allowed to have curly brackets
+- Assigning functions to variables
+	- Maybe don't include. Could be confusing.
+	- When you create a function you should be able to use it like a variable.
+- How to do functions as arguments
+- Creating libraries
+	- Should be done through the compiler.
+	- Should have 2 settings. Include links or not.
+- asm keyword?
+- enums
+	- Make all enums, enum classes? Probably. Makes code more readable.
+- Smart pointers
+- `co_await`, `co_return`, `co_yield`?
+- `constexpr`, `consteval`, `constinit`
 
-## Low probably
-- All `enum`s become `enum class`es.
-	- Maybe not. It's nice just using the variables.
-- Inline functions should still be allowed to use curly brackets?
+## Other notes/ideas
+- In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
+- All constructors are given the `explicit` keyword to prevent confusing implicit conversions.
+	- There should be a common syntax for creating objects from variables.
+
+### Change how default arguments work
+Unnecessary to include
 - Default arguments don't have to be in order
-  - Why do this?
 
 ```C++
 // Neo-C
@@ -34,40 +66,7 @@ int func(int a, int b = 0) {} // init
 func(a); // int
 ```
 
-- Async await in Neo-C
-
-## Probably not
-- All constructors are given the `explicit` keyword to prevent confusing implicit conversions. This cannot be changed in Neo-C.
-	- What are all the use cases for implicit conversions?
-	- Implicit conversion can be useful to create user defined types.
-
-## Bloat
-C++ includes many nice features over C, but it also includes a lot of bloat.
-
-- `mutable`
-	- `const` after a member function doesn't allow you to change any internal variables in the class.
-	- `mutable` on a variable allows any of these function to change that variable and still be const.
-- `delete`
-- Remove `enum class`. Use namespaces and enums.
-	- You can achieve the same result by putting an enum inside a namespace.
-	- If you want to make something of the enum type you can't do so with enum in a namespace
-- Casting?
-	- `const_cast`, `static_cast`, `reinterpret_cast`, `dynamic_cast`
-	- Why not use C style casting?
-- Constants?
-	- `constexpr`, `consteval`, `constinit`
-	- When could this be useful?
-- `protected`
-	- Used for inheritance. Allows child classes to use member variables, but not objects themselves.
-	- Would have to remove inheritance, so maybe not.
-- `co_await`, `co_return`, `co_yield`?
-- `export`?
-	- Could that be used for global state?
-- `register`
-	- it does nothing
-- Remove template meta programming
-
-## Code formatting nazi?
+### Code formatting nazi?
 Neo-C enforces a certain style to your code. This is to allow a common look and feel to Neo-C.
 Probably don't have because it can make errors and new users frustrated with the language.
 - Should just leave this to who-ever is using the language.
@@ -92,11 +91,11 @@ Probably don't have because it can make errors and new users frustrated with the
 	- Enforcement is applied only when creating things, not when using them, to ensure compatibility with other people's C++ code.
 	- Maybe not because people then can't swtich Neo-C if their libraries use snake case
 
-## Better if statements
+### Better if statements
 It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
 
 ```C++
-// Neo-c
+// Neo-C
 if a > 10 && < 20
 	// Or you can do
 if a > 10 && _ < 20

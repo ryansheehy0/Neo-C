@@ -1,4 +1,4 @@
-import {print} <Terminal>
+import {printLine} <Terminal>
 
 i32 main()
-	print("Hello World")
+	printLine("Hello World")

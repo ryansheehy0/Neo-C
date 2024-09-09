@@ -1,4 +1,4 @@
-import {print} <Terminal>
+import {printLine} <Terminal>
 
 i32 main()
 	u16 x, y, z
@@ -7,7 +7,7 @@ i32 main()
 		x = 0
 		y = 1
 		do while x < 255
-			print(x)
+			printLine(x)
 
 			z = x + y
 			x = y

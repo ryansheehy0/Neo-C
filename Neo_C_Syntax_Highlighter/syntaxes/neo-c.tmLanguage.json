@@ -37,7 +37,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|try|catch)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|try|catch|object)\\b"
 			}]
 		},
 		"strings": {
@@ -78,7 +78,7 @@
 		"dataTypes": {
 			"patterns": [{
 				"name": "storage.type.neo-c",
-				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string|dynamic|true|false)\\b"
+				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string|dynamic|true|false|void|const)\\b"
 			}]
 		},
 		"literals": {
@@ -96,7 +96,7 @@
 		"variables": {
 			"patterns": [{
 				"name": "variable.neo-c",
-				"match": "\\b[a-zA-Z](?!\\()\\b|\\b[a-zA-Z][a-zA-Z0-9]+(?!\\()\\b"
+				"match": "\\b_?[a-zA-Z](?!\\()\\b|\\b_?[a-zA-Z][a-zA-Z0-9]+(?!\\()\\b"
 			}]
 		},
 		"multiLineComments": {
