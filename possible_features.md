@@ -1,8 +1,12 @@
 ## Todo
+- interfaces
 - std::array vs C-style arrays
 	- The size of std::array can't be defined at run time
 	- C-style arrays are missing a lot of features
-- interfaces
+- casting
+	- I like the syntax of C-style casting.
+	- What about const_cast? How to cast consts
+
 - templates
 	- Remove template meta programming
 - new and delete
@@ -12,9 +16,6 @@
 	- So compiler doesn't optimize things out
 - async, await, and promises
 - multi threading
-- casting
-	- I like the syntax of C-style casting.
-	- What about const_cast? How to cast consts
 - typeof
 - functions within functions?
 	- You cannot have a class within a class.
@@ -34,6 +35,7 @@
 - Smart pointers
 - `co_await`, `co_return`, `co_yield`?
 - `constexpr`, `consteval`, `constinit`
+- Use the `?` to wrap things in `std::optional`
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
@@ -76,6 +78,7 @@ Probably don't include these. These aren't that big a deal.
 
 ### Better if statements
 It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
+`_` uses the last used variable in a conditional
 
 ```C++
 // Neo-C

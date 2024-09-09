@@ -454,17 +454,27 @@ class Book {
 ```
 
 ### [Interfaces](#neo-c)
-- Instead of using inheritance, Neo-C uses composition and interfaces.
-  - Interfaces are classes that only have virtual functions and variables.
-  - You cannot create an instance of an interface.
-- Add the `interface` keyword.
-	- A class that only has virtual functions with = 0;
-- Can a class implement multiple interfaces?
-- A class can use multiple interfaces
+Composition and interfaces are preferred over inheritance because they allow the code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
+- Interfaces can only include public function declarations and public variable declarations. This includes declarations of Classes, Structs, Interfaces, and Unions, but does not include Objects or Enums because those automatically define variables.
+  - Unlike other languages, Neo-C allows interfaces to include public variable declarations because they are somewhat equivalent to having getter and setter methods for a private variables. This eliminates the need for redundant getter and setter methods in interfaces.
+- Multiple interfaces can be implemented with: `class Class() : Interface1, Interface2, Interface3`
+  - This means the class must define all the declared functions in the interfaces.
+- Interfaces cannot have other interfaces. This isn't allowed: `interface Interface1 : Interface2`
 
 ```C++
 // Neo-C
-interface 
+interface Interface
+  i64 var
+  void func()
+
+// C++
+class Interface {
+  public:
+    int64_t var;
+    virtual void func() = 0;
+  private:
+    Interface() {}
+}
 ```
 
 ### [Objects](#neo-c)
@@ -474,10 +484,13 @@ Objects in Neo-C are like singletons in C++. There is only one instance of them.
 // Neo-C
 object obj
   string _privateVar
+  string publicVar = "Example"
 
   void publicFunction()
 
-obj.publicFunction() // Accessing the object
+// Accessing the object
+obj.publicFunction()
+obj.publicVar
 
 // C++
 class obj {
@@ -489,6 +502,8 @@ class obj {
     void publicFunction(){
     }
 
+    std::string publicVar = "Example";
+
   private:
     obj() {}
     static obj object_instance;
@@ -496,7 +511,9 @@ class obj {
     std::string _privateVar;
 }
 
-obj.get_object.publicFunction() // Accessing the object
+// Accessing the object
+obj.get_object().publicFunction();
+obj.get_object().publicVar;
 ```
 
 # [Enums](#neo-c)
