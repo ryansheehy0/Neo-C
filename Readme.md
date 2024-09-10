@@ -57,13 +57,24 @@ Neo-C enforces naming conventions because it keeps things more consistent which 
   - PascalCase
 
 ## [Data Types](#neo-c)
-C++ has two main problems with its default data types.
+C++ has some problems with its default data types.
 
 1. Data types don't have explicitly defined lengths.
   - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem on certain platforms if values are expected to exceed 32 bits.
-2. Array types aren't built into the language.
-  - C-style arrays have been replaced by `std::array` in modern C++, but `[]` creates a C-style array instead of an `std::array`.
-  - Dynamic arrays(`std::vector`) and strings(`std::string`) aren't built into the language even when they are so commonly used.
+2. Dynamic arrays aren't built into the language.
+  - Dynamic arrays(`std::vector`) and strings(`std::string`) aren't built into the language even when they are so commonly used. This can be annoying having to include such a common feature.
+3. There are multiple ways of making arrays with `std::array` and C-style arrays.
+  - Having multiple ways of creating arrays can be confusing and is unnecessary.
+  - There are many benefits to using `std::array` over C-style arrays, but the size of `std::array`s cannot be defined at run time, therefore C-style arrays are sometimes used in C++.
+
+```C++
+int main(int argc, char** argv) {
+  // This is valid
+  int arr[argc];
+  // This is invalid
+  std::array<int, argc>;
+}
+```
 
 ### [Built in data types](#neo-c)
 - `auto`
@@ -75,7 +86,7 @@ C++ has two main problems with its default data types.
 - `string`
   - C++: `std::string`
 - type[size]
-  - C++: `std::array` (Maybe not because the size has to be known at compile time.)
+  - C++: `type name[size]`
 - type[dynamic]
   - C++: `std::vector`
 - Arrays have to be declared using this syntax.
@@ -87,9 +98,9 @@ i64[3] arr2
 i64[dynamic] dArray = {1, 2, 3}
 
 // C++
-std::array<int64_t, 3> arr = {1, 2, 3};
-std::array<int64_t, 3> arr2;
-std::vector<int64_t> dArray;
+int64_t arr[] = {1, 2, 3};
+int64_t arr2[3];
+std::vector<int64_t> dArray = {1, 2, 3};
 ```
 
 ### [Built in string and array methods](#neo-c)
@@ -145,23 +156,21 @@ These are methods which are built into strings, arrays, and dynamic arrays.
 
 ```C++
 // Neo-C
-i32 main(string[dynamic] args) // It can only have the argument named args
+i32 main(string[] args)
   // or
 i32 main()
 
 // C++
-int main(int argc, char* argv[]) {
-  std::vector<std::string> args;
-  for (int i = 0; i < argc; i++) {
-    args.push_back(argv[i]);
+int main(int arg_c, char** arg_v) {
+  std::string args[arg_c];
+  for (int i = 0; i < arg_c; i++) {
+    args[i] = arg_v[i];
   }
 }
   // or
 int main() {
 }
 ```
-
-- If argc and argv are used as other variable names, then the arguments are named differently so there's no naming conflict.
 
 ## [Removal of operator overloading](#neo-c)
 It's important for a language to stay consistent with its syntax so people know what's built into the language and what isn't. Operator overloading can break this consistency and therefore it has been removed.
@@ -323,6 +332,7 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
 
 ## [Automatic function hoisting](#neo-c)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
+- There is also function hoisting in classes and objects
 
 ```C++
 // Neo-C
@@ -345,35 +355,42 @@ void func(int arg){
 ```
 
 ## [For each loops](#neo-c)
-In C++, including the index in a for-each loop isn't easy. Neo-C adds this capability.
+In C++, it's impossible to include the index in a for-each loop, which means you have to re-write the for loop. Neo-C adds this capability.
 
 ```C++
 // Neo-C
-string str = "This is a test."
+i64[] arr = {1, 2, 3, 4}
+i64[dynamic] dArr = {1, 2, 3, 4}
 
-for char c in str
-  // Loops through all the characters in the string
+for i64 el in arr
+  // For each loop in array
+for i64 el in dArr
+  // For each loop in dynamic array
 
-for char c, i64 i in str
-  // Loops through all the characters and has the index
-
-for i64 i = 0; i < 100; i++
-  // You can also do normal for loops
+for i64 el, i64 i in arr
+  // For each loop with index in array
+for i64 el, i64 i in dArr
+  // For each loop with index in dynamic array
 
 // C++
-string str = "This is a test.";
+int64_t arr[] = {1, 2, 3, 4};
+std::vector<int64_t> dArr = {1, 2, 3, 4};
 
-for (char c : str) {
-  // Loops through all the characters in the string
+for (int64_t* arr_ptr = arr; arr_ptr < arr + sizeof(arr) / sizeof(arr[0]); arr_ptr++) {
+  int64_t el = *arr_ptr;
+  // For each loop in array
+}
+for (int64_t el : dArr) {
+  // For each loop in dynamic array
 }
 
-for (int64_t i = 0; i < str.size(); i++) {
-  char c = str[i];
-  // Loops through all the characters and has the index
+for (int64_t i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
+  int64_t el = arr[i];
+  // For each loop with index in array
 }
-
-for (int64_t i = 0; i < 100; i++) {
-  // You can also do normal for loops
+for (int64_t i = 0; i < arr.size(); i++) {
+  int64_t el = arr[i];
+  // For each loop with index in dynamic array
 }
 ```
 
@@ -396,7 +413,8 @@ for (int8_t i = 0; i < abcs.size(); i++){
 ## [Containers](#neo-c)
 
 ### [Structs and Unions](#neo-c)
-In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public. In Neo-C structs behave similarly to structs in C.
+In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public.
+- In Neo-C, structs and unions behave similarly to structs and unions in C.
 
 ### [Classes](#neo-c)
 Neo-C makes 3 notable changes to classes
@@ -621,18 +639,19 @@ try { func()
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
 
 ## [All Keywords](#neo-c)
-- auto, void, const
 - bool, i8, i16, i32, i64, u8, char, u16, u32, u64, string, dynamic
-- true, false
+- auto, void
+- const, true, false
+- Control flow
+  - if, else
+  - for, in
+  - do, while
+  - match, case, default
+  - break, continue
 - import, export
-- if, else
-- for, in
-- match, case, default
-- do, while
-- break, continue
 - return
-- interface, class, this
-- struct, union, object, enum
+- interface, class, struct, union, this, object
+- enum
 - try, catch, throw
 
 - Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.
