@@ -1,6 +1,10 @@
 # Neo-C
 Neo-C is a programming language like C++, but tries to have a consistent and pleasant to use syntax. It has relatively simple features and tries not to be overly complex. It isn't backwards compatible C++.
 
+- A language designed to solve all of my problems with C++.
+- How use Syntax highlighting
+  - Copy and past into ~/.vscode/extensions
+
 <img src="./neo_c_logo.svg" width=400>
 
 <!-- TOC -->
@@ -31,6 +35,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
 - [Removing gotos](#removing-gotos)
 - [Template Literals](#template-literals)
+- [Casting](#casting)
 - [Other changes](#other-changes)
 - [All Keywords](#all-keywords)
 
@@ -83,6 +88,8 @@ int main(int argc, char** argv) {
   - C++: `int8_t`, `int16_t`, `int32_t`, `int64_t`
 - `u8`/`char`, `u16`, `u32`, `u64`
   - C++: `uint8_t`, `uint16_t`, `uint32_t`, `uint64_t`
+- `f32`, `f64`
+  - C++: `float`, `double`
 - `string`
   - C++: `std::string`
 - type[size]
@@ -619,6 +626,56 @@ string str = "x: " + to_string(x) + "\ny: " + y;
 ```
 
 - `\${}` allows you to escape the template literal.
+
+## [Casting](#neo-c)
+Data is defined in the real world. Protocols are agreed upon standards used to extract information from that data.
+For example, when you drive up to a traffic light, the color and whether the lights are on or off are the data. The protocol is: red light on equals stop, yellow light on equals slow down, and green light on equals maintain speed. The information is obtained when you see the lights, apply the protocol, and extract useful information that can be translated into an action.
+
+In programming languages, the data is the underlying bits, the protocol is the data type, and the information extracted is how that data is used by different functions.
+
+The purpose of casting is to change the protocol/data type of a variable. There are two ways of achieving this.
+1. Changing the underlying data/bits and keeping the information the same.
+
+```C++
+// Neo-C
+f32 x = 1.5
+i32 y = x
+  // or
+i32 y = (i32)x
+  // or
+i32 y = (i32)(x)
+
+printLine(y) // 1
+
+// C++
+float x = 1.5;
+int32_t y = x;
+  // or
+int32_t y = static_cast<int32_t>(x);
+
+std::cout << y << "\n";
+```
+
+Functions could be used to change the data type, but since it's such a common thing that needs to be done, Neo-C allows for implicit conversions and C-style casting syntax.
+- In Neo-C, C-style casting is translated to `static_cast` and not the variety of casts like in C++.
+
+2. Not changing the underlying data/bits, and possibly have the information change.
+
+```C++
+// Neo-C
+f32 x = 1.5
+i32 y = *(i32*)&x
+
+printLine(y) // 1069547520
+
+// C++
+float x = 1.5;
+int32_t y = *reinterpret_cast<int32_t*>(&x);
+
+std::cout << y << "\n";
+```
+
+In order to change the data type without changing the bits, you have to cast them as pointers. Casting to a pointer always gets translated to `reinterpret_cast`.
 
 ## [Other changes](#neo-c)
 - `**` can be used for exponents.

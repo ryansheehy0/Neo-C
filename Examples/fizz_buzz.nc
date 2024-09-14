@@ -1,16 +1,15 @@
 import {printLine, printLineError} <Terminal>
-import {toI64} <Convert>
 
-i32 main(string[dynamic] args)
+i32 main(string[] args)
 	if args.size() != 2
-		printLineError("The argument is the number of iterations.\nfizzBuzz numOfIterations\n")
+		printLineError("The argument is the number of iterations.\nfizzBuzz numOfIterations")
 		return 1
-	for i64 i = 0; i < toI64(args[1]); i++
+	for i64 i = 0; i < (i64)args[1]; i++
 		if i % 3 == 0 && i % 5 == 0
-			printLine("FizzBuzz\n")
+			printLine("FizzBuzz")
 		else if i % 3 == 0
-			printLine("Fizz\n")
+			printLine("Fizz")
 		else if i % 5 == 0
-			printLine("Buzz\n")
+			printLine("Buzz")
 		else
-			printLine("${i}\n")
+			printLine(i)

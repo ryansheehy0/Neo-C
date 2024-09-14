@@ -1,8 +1,6 @@
 ## Todo
-- casting
-	- I like the syntax of C-style casting.
-	- What about const_cast? How to cast consts
-
+- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
+	- The `explicit` keyword is used on all constructors.
 - templates
 	- Remove template meta programming
 - new and delete
@@ -33,11 +31,20 @@
 - `constexpr`, `consteval`, `constinit`
 - Use the `?` to wrap things in `std::optional`
 - Macros
+- Better error handling than try catch
+	- Problem with try, catch: You don't know what error can be thrown.
+		- If you force the parent function to return the errors, then you have to check for errors for each function.
+		- If you throw an exception in the function you have to specify its type.
+			- Any parent function which implements a child function has to also specify the throw errors.
+			- Thrown errors are automatically bubbled up until they reatch a catch.
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
-- All constructors are given the `explicit` keyword to prevent confusing implicit conversions.
-	- There should be a common syntax for creating objects from variables.
+- No implicit conversions. Only can use Convert library.
+- Maybe have a special syntax that allows you to return multiple values.
+	- They are automatically converted to arguments.
+	- This makes sure that all arguments are only vars being used and not being returned.
+	- Probably not. This diverges too much from C++.
 
 ### Change how default arguments work
 Unnecessary to include
