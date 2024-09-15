@@ -3,8 +3,10 @@
 	- The `explicit` keyword is used on all constructors.
 - templates
 	- Remove template meta programming
+	- https://www.youtube.com/watch?v=sjsnuirLyKM
 - new and delete
 	- Allows easy creation of objects on the heap instead of the stack.
+	- https://www.youtube.com/watch?v=sjsnuirLyKM
 - static
 - volatile
 	- So compiler doesn't optimize things out
@@ -31,12 +33,6 @@
 - `constexpr`, `consteval`, `constinit`
 - Use the `?` to wrap things in `std::optional`
 - Macros
-- Better error handling than try catch
-	- Problem with try, catch: You don't know what error can be thrown.
-		- If you force the parent function to return the errors, then you have to check for errors for each function.
-		- If you throw an exception in the function you have to specify its type.
-			- Any parent function which implements a child function has to also specify the throw errors.
-			- Thrown errors are automatically bubbled up until they reatch a catch.
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
