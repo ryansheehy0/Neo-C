@@ -28,6 +28,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 	- [Classes](#classes)
 	- [Interfaces](#interfaces)
 	- [Objects](#objects)
+- [Enums](#enums)
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
@@ -42,7 +43,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 
 ## [Basic syntax](#neo-c)
 - Semi-colons cannot be used.
-  - They are annoying to use and the ability to place multiple statements on one line is unnecessary.
+  - They are annoying and the ability to place multiple statements on one line is unnecessary.
 - Curly brackets cannot be used and are replaced by indentations.
   - Curly brackets are unnecessary. When a language requires curly brackets, indentation is already used, so it might as well be enforced by the language.
 	- You can either use tab or space indentation.
@@ -127,8 +128,8 @@ These are methods which are built into strings, arrays, and dynamic arrays.
 | .subString(startIndex, optional endIndex)   | Returns a string from startIndex to endIndex or the end of the string.      |
 | .sort()                                     | Returns a sorted array from lowest to highest.                              |
 | .reverse()                                  | Returns a reversed array.                                                   |
-| .contains(value)                            | Does the value exist in the array?                                          |
-| .bContains(value)                           | Contains function with binary search. Array is assumed to be sorted.        |
+| .contains(value) or .includes(value)        | Does the value exist in the array?                                          |
+| .bContains(value) or .bIncludes(value)      | Contains function with binary search. Array is assumed to be sorted.        |
 | .find(value)                                | Gets the index of the value. -1 if not found.                               |
 | .bFind(value)                               | Binary search to get the index of the value. Array is assumed to be sorted. |
 | .insert(index, value, optional value, etc.) | Inserts the value or values after the index.                                |
@@ -151,11 +152,6 @@ These are methods which are built into strings, arrays, and dynamic arrays.
 | .trimStart()           | Removes any white space in front of the string.       |
 | .trimEnd()             | Removes any white space at the back of the string.    |
 | .trim()                | Removes any white space in the front and at the back. |
-
-| Conversion methods     | Description                                                                           |
-|------------------------|---------------------------------------------------------------------------------------|
-| .join(stringSeparator) | Concatenates the array into a single string, separated by the stringSeparator.        |
-| .split(splitString)    | Divides a string into an array based on the occurrences of the specified splitString. |
 
 - You can use `array1 + array2` or `string1 + string2` to do concatenation.
 
@@ -304,11 +300,14 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
 
 ### [Built in/Standard libraries](#neo-c)
 - Terminal
-	- print(string msg)
-  - printLine() - Automatically adds a new line to the end.
-	- printError()
-  - printLineError()
-	- userInput()
+	- void print(string msg)
+  - void printLine(string msg)
+    - Automatically adds a new line to the end.
+	- void printError(string msg)
+  - void printLineError(string msg)
+  - string userInput()
+    - Doesn't return the new line in the string.
+    - The new line does get output to the terminal.
 - Math
   - abs()
   - sqrt()
@@ -551,6 +550,12 @@ obj.get_object().publicFunction();
 obj.get_object().publicVar;
 ```
 
+## [Enums](#neo-c)
+- Can use array functions
+- PascalCase for the names of enums
+- SCREAM_CASE for value in enums
+- `enum object`
+
 ## [Nested Comments](#neo-c)
 When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
 
@@ -627,54 +632,46 @@ string str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape the template literal.
 
 ## [Casting](#neo-c)
+Casting can be thought of as a special syntax for conversion functions. Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
+- Float literals have to have decimal points. Ex: `10.0`
+- Integer literals cannot have decimal points. Ex: `10`
+
+Errors:
+: InvalidConversion, OutOfRange
+
+Convert Library
+- bool toBool(auto var)
+- i8 toI8(auto var)
+	- toI16(), toI32(), toI64()
+- u8 toU8(auto var)
+	- toChar(), toU16(), toU32(), toU64()
+- f32 toF32(auto var)
+	- toF64()
+- string toString(auto var)
+- string join(auto[] arr, string stringSeparator)
+	- Concatenates the array into a single string, separated by the stringSeparator.
+- T toEnum<enum T>(auto var)
+- T toClass<class T>(auto var)
+- T toStruct<struct T>(auto var)
+- T toUnion<union T>(auto var)
+- T toInterface<interface T>(auto var)
+- T toPointer<auto* T>(auto var)
+- auto[] toArray(auto var)
+- auto[] split(string  str, string strSeparator)
+	- Divides a string into an array based on the occurrences of the specified splitString.
+
 Data is defined in the real world. Protocols are agreed upon standards used to extract information from that data.
 For example, when you drive up to a traffic light, the color and whether the lights are on or off are the data. The protocol is: red light on equals stop, yellow light on equals slow down, and green light on equals maintain speed. The information is obtained when you see the lights, apply the protocol, and extract useful information that can be translated into an action.
 
-In programming languages, the data is the underlying bits, the protocol is the data type, and the information extracted is how that data is used by different functions.
-
-The purpose of casting is to change the protocol/data type of a variable. There are two ways of achieving this.
-1. Changing the underlying data/bits and keeping the information the same.
+In programming languages, the data is the underlying bits, the protocol is the data type, and the information extracted is how that data is used by different functions. When converting you can either change the underlying bits and keep the information the same, or you can keep the underlying bits the same and possibly have the information change.
 
 ```C++
-// Neo-C
-f32 x = 1.5
-i32 y = x
-  // or
-i32 y = (i32)x
-  // or
-i32 y = (i32)(x)
-
-printLine(y) // 1
-
-// C++
-float x = 1.5;
-int32_t y = x;
-  // or
-int32_t y = static_cast<int32_t>(x);
-
-std::cout << y << "\n";
+f32 a = 1.5
+// Change the underlying bits
+i32 b = toI32(a) // 1
+// Keep the underlying bits the same
+i32 c = *toPointer<i32*>(&a) // 1069547520
 ```
-
-Functions could be used to change the data type, but since it's such a common thing that needs to be done, Neo-C allows for implicit conversions and C-style casting syntax.
-- In Neo-C, C-style casting is translated to `static_cast` and not the variety of casts like in C++.
-
-2. Not changing the underlying data/bits, and possibly have the information change.
-
-```C++
-// Neo-C
-f32 x = 1.5
-i32 y = *(i32*)&x
-
-printLine(y) // 1069547520
-
-// C++
-float x = 1.5;
-int32_t y = *reinterpret_cast<int32_t*>(&x);
-
-std::cout << y << "\n";
-```
-
-In order to change the data type without changing the bits, you have to cast them as pointers. Casting to a pointer always gets translated to `reinterpret_cast`.
 
 ## [Error handling](#neo-c)
 If you want to crash the program when an error is detected you can simply use `exit(1)` from the Error library. However, what happens when you want to continue to run your code even when there's an error?
@@ -791,10 +788,28 @@ f64 divide(f64 numerator, f64 denominator) : string
   return numerator / denominator
 ```
 
+- Use `catch` for the default catch instead of `catch ...`
+
 ## [Other changes](#neo-c)
 - `**` can be used for exponents.
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
 - String literals are converted to a string and not a character array. `std::string("String literal")`
+- Arrays and enums can be defined on multiple lines.
+
+```C++
+enum Enum {
+  VALUE1,
+  VALUE2,
+  ETC
+}
+// or
+string[] arr = {
+  "Value 1",
+  "Value 2",
+  "Etc"
+}
+```
+- Integer division by zero throws an error.
 
 ### [Removing gotos](#neo-c)
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
@@ -808,7 +823,7 @@ f64 divide(f64 numerator, f64 denominator) : string
 ## [All Keywords](#neo-c)
 Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.
 
-- bool, i8, i16, i32, i64, u8, char, u16, u32, u64, string, dynamic
+- bool, i8, i16, i32, i64, u8, char, u16, u32, u64, f32, f64, string, dynamic
 - auto, void
 - const, true, false
 - Control flow

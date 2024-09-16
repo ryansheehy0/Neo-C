@@ -1,9 +1,118 @@
 ## Todo
+- enum
+- special syntax for enum classes
+
+- Casting
+- enums and class enums
+	- no. Type.
+	- Can loop through type like an array.
+
+```C++
+// Casting that doesn't throw errors
+import {userInput, printLine, print} <Terminal>
+
+bool isInt(char el)
+	match el
+		case '0'...'9':
+			return true
+	return false
+
+i32 main()
+	enum DayOfTheWeek = {MON, TUE, WED, THU, FRI, SAT, SUN}
+
+	DayOfTheWeek day
+	while true
+		print("Day of the week (0-6): ")
+		string inputLine = userInput()
+		if inputLine.isEachElement(isInt)
+			i64 input = (i64)inputLine
+			if DayOfTheWeek.includes(input)
+				day = (DayOfTheWeek)input
+			else
+				printLine("Input has to be from 0 to 6.")
+				continue
+		else
+			printLine("Input has to be from 0 to 6.")
+			continue
+		break
+
+	printLine("This is your day of the week: ${day}")
+```
+
+```C++
+// No casting and Convert functions that throw errors
+import {userInput, printLine, print} <Terminal>
+import {toI64, toEnum} <Convert>
+
+i32 main()
+	enum DaysOfTheWeek = {MON, TUE, WED, THU, FRI, SAT, SUN}
+
+	DaysOfTheWeek day
+	while true
+		print("Day of the week (0-6): ")
+		string inputLine = userInput()
+		i64 input
+		try
+			input = toI64(inputLine)
+			day = toEnum<DaysOfTheWeek>(input)
+		catch string error
+			printLine("Input has to be from 0 to 6.")
+			continue
+		break
+
+	printLine("This is your day of the week: ${day}")
+```
+
+
+```C++
+DayOfTheWeek day = MON
+
+i64 userInput = 10
+if DayOfTheWeek.includes(userInput)
+	day = (DayOfTheWeek)userInput
+else
+	
+
+
+
+type DayOfTheWeek = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"
+
+DayOfTheWeek day = "Mon"
+
+// What if you do
+string input = "Invalid input"
+DayOfTheWeek day = input
+	// string cannot be converted to DayOfTheWeek
+
+string input = "Invalid input"
+if DayOfTheWeek.includes(input)
+	DayOfTheWeek day = (DayOfTheWeek)input
+else
+	// Handle error
+
+
+
+if DayOfTheWeek.includes(input)
+	DayOfTheWeek day = input
+else
+	// Handle error
+
+try DayOfTheWeek day = input
+	// It isn't a function so it shouldn't throw an error.
+catch 
+
+
+enum DayOfTheWeek = Mon, Tue, Wed, Thu, Fri, Sat, Sun
+
+DayOfTheWeek 
+```
+
 - There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
 	- The `explicit` keyword is used on all constructors.
 - templates
 	- Remove template meta programming
 	- https://www.youtube.com/watch?v=sjsnuirLyKM
+	- auto as a function argument
 - new and delete
 	- Allows easy creation of objects on the heap instead of the stack.
 	- https://www.youtube.com/watch?v=sjsnuirLyKM
@@ -21,18 +130,21 @@
 - Assigning functions to variables
 	- Maybe don't include. Could be confusing.
 	- When you create a function you should be able to use it like a variable.
-- How to do functions as arguments
+- How to do functions as arguments. Lamda arguments.
 - Creating libraries
 	- Should be done through the compiler.
 	- Should have 2 settings. Include links or not.
 - asm keyword?
-- enums
-	- Make all enums, enum classes? Probably. Makes code more readable.
-- Smart pointers
+- Smart pointers and nullptr
 - `co_await`, `co_return`, `co_yield`?
 - `constexpr`, `consteval`, `constinit`
 - Use the `?` to wrap things in `std::optional`
+	- Don't use optionals for error handling.
 - Macros
+- All the types of errors
+	- InvalidConversion
+	- OutOfRange
+- Should split and join be in Convert Library?
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
@@ -92,4 +204,40 @@ if (a > 10 && a < 20)
 
 ```javascript
 let a = `Test ${Test} test`
+```
+
+## Casting
+
+```C++
+// Neo-C
+f32 x = 1.5
+i32 y = x
+  // or
+i32 y = (i32)x
+  // or
+i32 y = (i32)(x)
+
+printLine(y) // 1
+
+// C++
+float x = 1.5;
+int32_t y = x;
+  // or
+int32_t y = static_cast<int32_t>(x);
+
+std::cout << y << "\n";
+```
+
+```C++
+// Neo-C
+f32 x = 1.5
+i32 y = *(i32*)&x
+
+printLine(y)
+
+// C++
+float x = 1.5;
+int32_t y = *reinterpret_cast<int32_t*>(&x);
+
+std::cout << y << "\n";
 ```
