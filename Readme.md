@@ -315,6 +315,8 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
   - getFile(string fileName)
 - Error
 	- exit()
+  - Different error types
+    - OutOfRange
 - Regex
 - Convert
   - toI64()
@@ -551,10 +553,36 @@ obj.get_object().publicVar;
 ```
 
 ## [Enums](#neo-c)
-- Can use array functions
-- PascalCase for the names of enums
-- SCREAM_CASE for value in enums
-- `enum object`
+Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you want to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change some things.
+- Enums have in built methods like some of the ones found for arrays and strings.
+
+| Enum Methods                         | Description                                                                  |
+|--------------------------------------|------------------------------------------------------------------------------|
+| .size()                              | Gets the size/length of the array.                                           |
+| .at(index)                           | Allows for negative array indexing. Ex: -1 is the last element.              |
+| .contains(value) or .includes(value) | Does the value exist in the array?                                           |
+| .map(function)                       | Applies the function to each element of the array and returns that array.    |
+| .filter(function)                    | Returns a filtered array. If the function returns true it gets filtered out. |
+
+- The names of enums have to be in PascalCase.
+- The values in enums are const and have to have SCREAMING_SNAKE_CASE.
+- `enum object` is used instead of `enum class`, but instead of creating a namespace it creates an object.
+
+```C++
+// Neo-C
+enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
+DayOfTheWeek day = MON
+// or
+enum object DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
+DayOfTheWeek day = DayOfTheWeek.MON
+
+// C++
+enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
+DayOfTheWeek day = MON;
+// or
+enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
+DayOfTheWeek day = DayOfTheWeek::MON;
+```
 
 ## [Nested Comments](#neo-c)
 When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -641,7 +669,7 @@ Errors:
 
 Convert Library
 - bool toBool(auto var)
-- i8 toI8(auto var)
+- i8 toI8(auto var) : OutOfRange
 	- toI16(), toI32(), toI64()
 - u8 toU8(auto var)
 	- toChar(), toU16(), toU32(), toU64()
@@ -650,7 +678,7 @@ Convert Library
 - string toString(auto var)
 - string join(auto[] arr, string stringSeparator)
 	- Concatenates the array into a single string, separated by the stringSeparator.
-- T toEnum<enum T>(auto var)
+- T toEnum<enum T>(auto var) : OutOfRange
 - T toClass<class T>(auto var)
 - T toStruct<struct T>(auto var)
 - T toUnion<union T>(auto var)
@@ -794,9 +822,15 @@ f64 divide(f64 numerator, f64 denominator) : string
 - `**` can be used for exponents.
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
 - String literals are converted to a string and not a character array. `std::string("String literal")`
-- Arrays and enums can be defined on multiple lines.
+- Arrays, enums, and importing can be defined on multiple lines.
 
 ```C++
+import {
+  toI8,
+  toI16,
+  toI32
+} <Convert>
+// or
 enum Enum {
   VALUE1,
   VALUE2,
