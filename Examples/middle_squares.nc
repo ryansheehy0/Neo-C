@@ -1,10 +1,11 @@
 import {currentUnixTime} <Time>
+import {toString} <Convert>
 
 export object middleSquares
 	u64 _seed = currentUnixTime()
 
 	u64 _extractMiddle(u64 squaredSeed, u64 seedLength)
-		string strSquaredSeed = (string)(squaredSeed).reverse()
+		string strSquaredSeed = toString(squaredSeed).reverse()
 		string middle
 		for i64 i = 0; i < seedLength + seedLength / 2; i++
 			if i < seedLength / 2
@@ -13,7 +14,7 @@ export object middleSquares
 		return middle.reverse()
 
 	u64 _getSeedLength()
-		string seed = (string)_seed
+		string seed = toString(_seed)
 		return seed.size()
 
 	void setSeed(u64 seed)

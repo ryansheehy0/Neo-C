@@ -24,13 +24,19 @@
 			"include": "#functions"
 		},
 		{
-			"include": "#variables"
+			"include": "#camelCase"
+		},
+		{
+			"include": "#screamCase"
 		},
 		{
 			"include": "#multiLineComments"
 		},
 		{
 			"include": "#singleLineComments"
+		},
+		{
+			"include": "#pascalCase"
 		}
 	],
 	"repository": {
@@ -78,7 +84,7 @@
 		"dataTypes": {
 			"patterns": [{
 				"name": "storage.type.neo-c",
-				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|string|dynamic|true|false|void|const)\\b"
+				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|f32|f64|string|dynamic|true|false|void|const)\\b"
 			}]
 		},
 		"literals": {
@@ -90,13 +96,19 @@
 		"functions": {
 			"patterns": [{
 				"name": "entity.name.function.neo-c",
-				"match": "\\w+(?=\\()"
+				"match": "\\w+(?=[\\(|\\<])"
 			}]
 		},
-		"variables": {
+		"camelCase": {
 			"patterns": [{
 				"name": "variable.neo-c",
-				"match": "\\b_?[a-zA-Z](?!\\()\\b|\\b_?[a-zA-Z][a-zA-Z0-9]+(?!\\()\\b"
+				"match": "\\b_?[a-z](?!\\()\\b|\\b_?[a-z][a-zA-Z0-9]+(?!\\()\\b"
+			}]
+		},
+		"screamCase": {
+			"patterns": [{
+				"name": "variable.neo-c",
+				"match": "\\b_?[A-Z](?!\\()\\b|\\b_?[A-Z][A-Z0-9_]+(?!\\()\\b"
 			}]
 		},
 		"multiLineComments": {
@@ -113,6 +125,12 @@
 			"patterns": [{
 				"name": "comment.line.double-slash.neo-c",
 				"match": "\/\/.*"
+			}]
+		},
+		"pascalCase": {
+			"patterns": [{
+				"name": "entity.name.type.neo-c",
+				"match": "\\b_?[A-Z](?!\\()\\b|\\b_?[A-Z][a-zA-Z0-9]+(?!\\()\\b"
 			}]
 		}
 	},

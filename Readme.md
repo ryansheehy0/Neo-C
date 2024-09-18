@@ -59,7 +59,7 @@ Neo-C enforces naming conventions because it keeps things more consistent which 
 - Variables, functions, objects
   - camelCase
 - Constants
-  - SCREAMING_SNAKE_CASE
+  - SCREAMING_CASE
 - Classes, Structs, Enums, Interfaces, Template types
   - PascalCase
 
@@ -158,6 +158,7 @@ These are methods which are built into strings, arrays, and dynamic arrays.
 - You can use `array1 + array2` or `string1 + string2` to do concatenation.
 
 ### [Main function](#neo-c)
+- The main function doesn't have to return anything. If it doesn't return anything it's assumed to return 0.
 
 ```C++
 // Neo-C
@@ -568,7 +569,7 @@ Enums are a list of constants that are used to limit the values that can be assi
 | .filter(function)                    | Returns a filtered array. If the function returns true it gets filtered out. |
 
 - The names of enums have to be in PascalCase.
-- The values in enums are const and have to have SCREAMING_SNAKE_CASE.
+- The values in enums are const and have to have SCREAMING_CASE.
 - `enum object` is used instead of `enum class`, but instead of creating a namespace it creates an object.
 
 ```C++
@@ -669,7 +670,7 @@ In Neo-C templates are relatively simplified compared to C++. There is no templa
 
 ```C++
 // Neo-C
-T add<T>(T value1, T value2)
+Type add<Type>(Type value1, Type value2)
 	return value1 + value2
 
 add(1, 5)
@@ -677,8 +678,8 @@ add(1, 5)
 add<i64>(1, 5)
 
 // C++
-template <typename T>
-T add(T value1, T value2) {
+template <typename Type>
+Type add(Type value1, Type value2) {
 	return value1 + value2;
 }
 
