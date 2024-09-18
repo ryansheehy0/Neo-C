@@ -32,7 +32,8 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
-- [Template Literals](#template-literals)
+- [String Templates](#string-templates)
+- [Templates](#templates)
 - [Casting](#casting)
 - [Error handling](#error-handling)
 - [Other changes](#other-changes)
@@ -59,7 +60,7 @@ Neo-C enforces naming conventions because it keeps things more consistent which 
   - camelCase
 - Constants
   - SCREAMING_SNAKE_CASE
-- Classes, Structs, Enums, Interfaces
+- Classes, Structs, Enums, Interfaces, Template types
   - PascalCase
 
 ## [Data Types](#neo-c)
@@ -84,6 +85,7 @@ int main(int argc, char** argv) {
 
 ### [Built in data types](#neo-c)
 - `auto`
+  - You cannot use `auto` for types for function arguments or for return types.
 - `bool`
 - `i8`, `i16`, `i32`, `i64`
   - C++: `int8_t`, `int16_t`, `int32_t`, `int64_t`
@@ -182,15 +184,16 @@ It's important for a language to stay consistent with its syntax so people know 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
 - You cannot use switch statements in Neo-C. Match statements are used instead.
+- `:`s after cases cannot be used in Neo-C.
 
 The match statement is exactly like the switch statement, but the brakes are automatically included.
 
 ```C++
 // Neo-C
 match var
-  case 1:
-  case 2:
-  default:
+  case 1
+  case 2
+  default
 
 // C++
 switch (var) {
@@ -210,7 +213,7 @@ It is common to perform an action with a range of inputs, such as all lowercase 
 ```C++
 // Neo-C
 match var
-  case 'a'...'c':
+  case 'a'...'c'
     // Do something
 
 // C++
@@ -229,7 +232,7 @@ Instead of using fall-throughs for multiple case labels, you can use a comma `,`
 ```C++
 // Neo-C
 match var
-  case 'a', 'b':
+  case 'a', 'b'
 
 // C++
 switch (var) {
@@ -246,7 +249,7 @@ switch (var) {
 // Neo-C
 while true
   match 1
-    case 1:
+    case 1
       break
 
 // C++
@@ -268,9 +271,9 @@ C++ doesn't support using strings in switch statements, but Neo-C does for match
 // Neo-C
 std::string str = "abc"
 match str
-  case "a", "ab":
+  case "a", "ab"
     // Do something
-  case "abc":
+  case "abc"
     // Do something
 
 // C++
@@ -318,8 +321,6 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
   - Different error types
     - OutOfRange
 - Regex
-- Convert
-  - toI64()
 - Thread
 - Network
   - fetch
@@ -337,6 +338,8 @@ In Neo-C you can using the `import` keyword and the `export` keyword to explicit
 - Test
 - Bash
   - Running bash commands
+- Convert
+  - string typeof(T value)
 
 ## [Automatic function hoisting](#neo-c)
 When you define a function it is automatically given a function prototype at the start of the file to allow for automatic function hoisting. This prevents having to worry about matching the prototype and the declaration.
@@ -639,7 +642,7 @@ for (auto el : arr) {
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
 - If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_2`, `break_loops_3`, etc.
 
-## [Template Literals](#neo-c)
+## [String Templates](#neo-c)
 In C++, if you want to include a variable in a string you have to convert it to a string and concatenate it. This is annoying so Neo-C adds a special syntax to allow you to do this automatically, like many other languages.
 - Use `${code}` to insert into a string.
 - Strings can also span multiple lines.
@@ -657,7 +660,32 @@ string y = "10";
 string str = "x: " + to_string(x) + "\ny: " + y;
 ```
 
-- `\${}` allows you to escape the template literal.
+- `\${}` allows you to escape.
+
+## [Templates](#neo-c)
+In Neo-C templates are relatively simplified compared to C++. There is no template specialization, special keywords, or meta-programming.
+- The types for templates can be inferred by the argument types.
+- Template types have to be in PascalCase.
+
+```C++
+// Neo-C
+T add<T>(T value1, T value2)
+	return value1 + value2
+
+add(1, 5)
+// or
+add<i64>(1, 5)
+
+// C++
+template <typename T>
+T add(T value1, T value2) {
+	return value1 + value2;
+}
+
+add<int64_t>(1, 5);
+// or
+add<int64_t>(1, 5);
+```
 
 ## [Casting](#neo-c)
 Casting can be thought of as a special syntax for conversion functions. Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
@@ -668,15 +696,15 @@ Errors:
 : InvalidConversion, OutOfRange
 
 Convert Library
-- bool toBool(auto var)
-- i8 toI8(auto var) : OutOfRange
-	- toI16(), toI32(), toI64()
-- u8 toU8(auto var)
-	- toChar(), toU16(), toU32(), toU64()
-- f32 toF32(auto var)
-	- toF64()
-- string toString(auto var)
-- string join(auto[] arr, string stringSeparator)
+- bool toBool(T var)
+- i8 toI8(T var) : OutOfRange
+	- toI16, toI32, toI64
+- u8 toU8(T var)
+	- toChar, toU16, toU32, toU64
+- f32 toF32(T var)
+	- toF64
+- string toString(T var)
+- string join(T[] arr, string stringSeparator)
 	- Concatenates the array into a single string, separated by the stringSeparator.
 - T toEnum<enum T>(auto var) : OutOfRange
 - T toClass<class T>(auto var)

@@ -18,7 +18,7 @@ i32 main()
 		break
 
 	match day
-		case MON...FRI:
+		case MON...FRI
 			printLine("Get to work.")
-		case
+		default
 			printLine("It's the weekend. Relax.")

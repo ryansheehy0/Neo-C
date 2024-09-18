@@ -1,10 +1,6 @@
 ## Todo
 - There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
 	- The `explicit` keyword is used on all constructors.
-- templates
-	- Remove template meta programming
-	- https://www.youtube.com/watch?v=sjsnuirLyKM
-	- auto as a function argument
 - new and delete
 	- Allows easy creation of objects on the heap instead of the stack.
 	- https://www.youtube.com/watch?v=sjsnuirLyKM
@@ -37,6 +33,14 @@
 	- InvalidConversion
 	- OutOfRange
 - Should split and join be in Convert Library?
+- constexpr
+	- Tells the compiler it can be done at compile time instead of at run time.
+	- Maybe call it @compileTime or atCompileTime
+	- comptime
+	- compileTime
+	- This is used to replace macros
+- && for rvalues should not be used
+	- temp values
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
@@ -133,3 +137,8 @@ int32_t y = *reinterpret_cast<int32_t*>(&x);
 
 std::cout << y << "\n";
 ```
+
+## Templates
+- https://www.youtube.com/watch?v=sjsnuirLyKM
+	- use interfaces to define Types?
+	- auto as a function argument and return types.
