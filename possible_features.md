@@ -1,45 +1,36 @@
 ## Todo
 - There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
 	- The `explicit` keyword is used on all constructors.
-- new and delete
-	- Allows easy creation of objects on the heap instead of the stack.
-	- https://www.youtube.com/watch?v=sjsnuirLyKM
+	- What syntax used to create object? I like the =s sign syntax.
 - static
 - volatile
 	- So compiler doesn't optimize things out
 - async, await, and promises
 - multi threading
-- typeof
-- functions within functions?
-	- You cannot have a class within a class.
-- Inline functions
-	- Maybe don't include. Could be confusing.
-	- if included, should they be allowed to have curly brackets
-- Assigning functions to variables
-	- Maybe don't include. Could be confusing.
-	- When you create a function you should be able to use it like a variable.
 - How to do functions as arguments. Lamda arguments.
 - Creating libraries
 	- Should be done through the compiler.
 	- Should have 2 settings. Include links or not.
 - asm keyword?
-- Smart pointers and nullptr
+	- c++ keyword?
 - `co_await`, `co_return`, `co_yield`?
-- `constexpr`, `consteval`, `constinit`
 - Use the `?` to wrap things in `std::optional`
 	- Don't use optionals for error handling.
 - All the types of errors
 	- InvalidConversion
 	- OutOfRange
-- Should split and join be in Convert Library?
-- constexpr
-	- Tells the compiler it can be done at compile time instead of at run time.
-	- Maybe call it @compileTime or atCompileTime
-	- comptime
-	- compileTime
-	- This is used to replace macros
-- && for rvalues should not be used
+- Should split, join, and typeof be in Convert Library?
+- && for rvalues should not be used?
 	- temp values
+- This is the only syntax which can be used to create an instance of a class
+	- `Class instance(constructor arguments)`
+	- What happens when you set an object equal to another one? Does it create a copy or pass a reference?
+
+## Problem areas of Neo-C
+- Metaprogramming
+	- function like macros
+	- Limited template features
+- RAII
 
 ## Most likely not
 - Function like macros
@@ -49,6 +40,14 @@
 	- They are automatically converted to arguments.
 	- This makes sure that all arguments are only vars being used and not being returned.
 	- Probably not. This diverges too much from C++.
+- functions within functions?
+	- You cannot have a class within a class.
+- Inline functions
+	- Maybe don't include. Could be confusing.
+	- if included, should they be allowed to have curly brackets
+- Assigning functions to variables
+	- Maybe don't include. Could be confusing.
+	- When you create a function you should be able to use it like a variable.
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
