@@ -36,6 +36,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Templates](#templates)
 - [Casting](#casting)
 - [Error handling](#error-handling)
+- [Compile time operations](#compile-time-operations)
 - [Other changes](#other-changes)
 	- [Removing gotos](#removing-gotos)
 - [All Keywords](#all-keywords)
@@ -847,6 +848,32 @@ f64 divide(f64 numerator, f64 denominator) : string
 
 - Use `catch` for the default catch instead of `catch ...`
 
+## [Compile time operations](#neo-c)
+In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before the function call.
+
+```C++
+i32 main()
+	const i64 FIVE_FACTORIAL = compile factorial(5) // This is valid
+	i64 var = 6
+	const i64 SIX_FACTORIAL = compile factorial(var) // This is invalid
+
+i64 factorial(i64 value)
+	if value == 1 return 1
+	return value * factorial(value - 1)
+```
+
+Neo-C also allows constants to be copied and pasted by the compiler. The value of the constant has to be defined at compile time. This can be done using the `copy&paste` keyword.
+
+```C++
+copy&paste const i64 PI = 3.14
+```
+
+These two keywords can be combined to allow the values of constants to be calculated at compiled time and then copied and pasted into the code.
+
+```C++
+copy&paste const i64 FIVE_FACTORIAL = compile factorial(5)
+```
+
 ## [Other changes](#neo-c)
 - `**` can be used for exponents.
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
@@ -872,7 +899,24 @@ string[] arr = {
   "Etc"
 }
 ```
-- Integer division by zero throws an error.
+
+- If, else if, and else can all be evaluated on one line.
+
+```C++
+// Neo-C
+if x == 1 return 1
+else if x == 2 return 2
+else return 3
+
+// C++
+if (x == 1) return 1;
+else if (x == 2) return 2;
+else return 3;
+```
+
+- Things that throw errors
+  - Integer division by zero throws an error.
+  - Integer overflowing or underflowing throws an error.
 
 ### [Removing gotos](#neo-c)
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
@@ -900,3 +944,4 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 - interface, class, struct, union, this, object
 - enum
 - try, catch, throw
+- compile, copy&paste

@@ -28,7 +28,6 @@
 - `constexpr`, `consteval`, `constinit`
 - Use the `?` to wrap things in `std::optional`
 	- Don't use optionals for error handling.
-- Macros
 - All the types of errors
 	- InvalidConversion
 	- OutOfRange
@@ -42,13 +41,17 @@
 - && for rvalues should not be used
 	- temp values
 
-## Other notes/ideas
-- In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
-- No implicit conversions. Only can use Convert library.
+## Most likely not
+- Function like macros
+	- Need a whole new syntax for them to work. This is where metaprogramming is.
+	- It can get very confusing.
 - Maybe have a special syntax that allows you to return multiple values.
 	- They are automatically converted to arguments.
 	- This makes sure that all arguments are only vars being used and not being returned.
 	- Probably not. This diverges too much from C++.
+
+## Other notes/ideas
+- In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
 
 ### Change how default arguments work
 Unnecessary to include
