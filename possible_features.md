@@ -5,8 +5,9 @@
 - static
 - volatile
 	- So compiler doesn't optimize things out
-- async, await, and promises
 - multi threading
+	- async, await, and promises
+	- Built into the language
 - How to do functions as arguments. Lamda arguments.
 - Creating libraries
 	- Should be done through the compiler.
@@ -16,6 +17,8 @@
 - `co_await`, `co_return`, `co_yield`?
 - Use the `?` to wrap things in `std::optional`
 	- Don't use optionals for error handling.
+- Key value pairs built into the language?
+	- Map
 - All the types of errors
 	- InvalidConversion
 	- OutOfRange
