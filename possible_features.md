@@ -1,33 +1,55 @@
 ## Todo
-- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
-	- The `explicit` keyword is used on all constructors.
-	- What syntax used to create object? I like the =s sign syntax.
-- static
-- volatile
-	- So compiler doesn't optimize things out
-- multi threading
-	- async, await, and promises
-	- Built into the language
-- How to do functions as arguments. Lamda arguments.
-- Creating libraries
-	- Should be done through the compiler.
-	- Should have 2 settings. Include links or not.
-- asm keyword?
-	- c++ keyword?
-- `co_await`, `co_return`, `co_yield`?
-- Use the `?` to wrap things in `std::optional`
-	- Don't use optionals for error handling.
-- Key value pairs built into the language?
-	- Map
-- All the types of errors
-	- InvalidConversion
-	- OutOfRange
-- Should split, join, and typeof be in Convert Library?
-- && for rvalues should not be used?
-	- temp values
-- This is the only syntax which can be used to create an instance of a class
-	- `Class instance(constructor arguments)`
-	- What happens when you set an object equal to another one? Does it create a copy or pass a reference?
+- Should certain features be included in the language or be imported from a standard library?
+	- Included in the language:
+		- string
+		- dynamic arrays
+	- Through a standard library
+		- heap
+		- map
+		- optional
+
+- Minor syntax enforcements
+	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
+		- The `explicit` keyword is used on all constructors.
+		- What syntax used to create object? I like the =s sign syntax.
+	- This is the only syntax which can be used to create an instance of a class
+		- `Class instance(constructor arguments)`
+		- What happens when you set an object equal to another one? Does it create a copy or pass a reference?
+	- No function like macros, no functions within functions, no inline functions, no assigning functions to variables.
+	- && for rvalues should not be used?
+		- temp values
+
+- Keywords
+	- static
+	- volatile
+		- So compiler doesn't optimize things out
+	- asm keyword?
+		- c++ keyword?
+	- `co_await`, `co_return`, `co_yield`?
+
+- Built into the lang
+	- Use the `?` to wrap things in `std::optional`
+		- Don't use optionals for error handling.
+	- Key value pairs built into the language?
+		- Map
+		- `dictionary`, `keyValuePair`, `key`
+		- map<KeyType, ValueType>
+		- orderedMap
+
+- Libraries
+	- All the types of errors
+		- InvalidConversion
+		- OutOfRange
+	- Should split, join, and typeof be in Convert Library?
+
+- Other
+	- How to do functions as arguments. Lamda arguments.
+	- multi threading
+		- async, await, and promises
+		- Built into the language
+	- Creating libraries
+		- Should be done through the compiler.
+		- Should have 2 settings. Include links or not.
 
 ## Problem areas of Neo-C
 - Metaprogramming
