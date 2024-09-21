@@ -55,6 +55,15 @@ The Terminal library is used to interact with the terminal.
 - abs()
 - sqrt()
 
+| Trig functions  | Description |
+|-----------------|-------------|
+| f64 cos(f64 x)  |             |
+| f64 sin(f64 x)  |             |
+| f64 tan(f64 x)  |             |
+| f64 acos(f64 x) |             |
+| f64 asin(f64 x) |             |
+| f64 atan(f64 x) |             |
+
 ## [File](#neo-c-standard-libraries)
 - File
   - getFile(string fileName)

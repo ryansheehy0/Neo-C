@@ -322,7 +322,7 @@ void func(int arg){
 ```
 
 ## [For each loops](#neo-c)
-In C++, it's impossible to include the index in a for-each loop, which means you have to re-write the for loop. Neo-C adds this capability.
+In C++, it's impossible to include the index in a for each loop. In Neo-C, for each loops can include the index.
 
 ```C++
 // Neo-C
@@ -330,14 +330,14 @@ i64[] arr = {1, 2, 3, 4}
 i64[dynamic] dArr = {1, 2, 3, 4}
 
 for i64 el in arr
-  // For each loop in array
+  // For each element in array
 for i64 el in dArr
-  // For each loop in dynamic array
+  // For each element in dynamic array
 
 for i64 el, i64 i in arr
-  // For each loop with index in array
+  // For each element with index in array
 for i64 el, i64 i in dArr
-  // For each loop with index in dynamic array
+  // For each element with index in dynamic array
 
 // C++
 int64_t arr[] = {1, 2, 3, 4};
@@ -345,19 +345,19 @@ std::vector<int64_t> dArr = {1, 2, 3, 4};
 
 for (int64_t* arr_ptr = arr; arr_ptr < arr + sizeof(arr) / sizeof(arr[0]); arr_ptr++) {
   int64_t el = *arr_ptr;
-  // For each loop in array
+  // For each element in array
 }
 for (int64_t el : dArr) {
-  // For each loop in dynamic array
+  // For each element in dynamic array
 }
 
 for (int64_t i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
   int64_t el = arr[i];
-  // For each loop with index in array
+  // For each element with index in array
 }
 for (int64_t i = 0; i < arr.size(); i++) {
   int64_t el = arr[i];
-  // For each loop with index in dynamic array
+  // For each element with index in dynamic array
 }
 ```
 
@@ -378,19 +378,37 @@ for (int8_t i = 0; i < abcs.size(); i++){
 ```
 
 ## [Containers](#neo-c)
+In Neo-C, you can only create instances of structs, unions, or classes with this syntax: `Name instance = Name(constructorArguments)`
 
 ### [Structs and Unions](#neo-c)
 In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public.
 - In Neo-C, structs and unions behave similarly to structs and unions in C.
 
-### [Classes](#neo-c)
-Neo-C makes 3 notable changes to classes
+```C++
+// Neo-C
+struct Point(i64 x, i64 y)
 
-1. In C++, it's very common to create a class where the constructor arguments just are assigned directly to member variables. C++ provides a special syntax for this, but you still have to create those member variables. Neo-C adds a default constructor which automatically creates those member variables and assigns them.
-2. In C++, `private:` and `public:` usually require another indentation or are put on the same line as the class. This can create extra indentation or funny looking styling. This could be replaced by specifying `private` or `public` for each member entity, however this tends to be very verbose and annoying. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
+Point pt = Point(10, 20)
+
+// C++
+struct Point {
+  int64_t x;
+  int64_t y;
+
+  Point(int64_t x, int64_t y) : x(x), y(y) {}
+}
+
+Point pt = Point(10, 20);
+```
+
+### [Classes](#neo-c)
+Neo-C makes 3 notable changes to classes:
+
+1. In C++, it's very common to create a class where the constructor arguments just are assigned directly to member variables. Neo-C allows the arguments of the constructor to create the member variables automatically.
+2. In C++, `private:` and `public` require another indentation or are put on the same line as the class which looks messy. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
 3. Inheritance has been removed from Neo-C and composition is recommended instead.
-  - https://www.youtube.com/watch?v=hxGOiiR9ZKg
-  - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
+    - https://www.youtube.com/watch?v=hxGOiiR9ZKg
+    - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
 
 ```C++
 // Neo-C
@@ -406,9 +424,9 @@ class Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unkn
     pages = book.pages
 
   ~Book()
-    // This is the destructor
+    // Destructor
 
-  void display()
+  void displayInfo()
     print("title: ${title}\n")
     print("author: ${author}\n")
     print("pages: ${pages}\n")
@@ -435,10 +453,10 @@ class Book {
     }
 
     ~Book() {
-      // This is the destructor
+      // Destructor
     }
 
-    void display() {
+    void displayInfo() {
       std::cout << "title: " + title + "\n";
       std::cout << "author: " + author + "\n";
       std::cout << "pages: " + to_string(pages) + "\n";
@@ -447,25 +465,31 @@ class Book {
 ```
 
 - The `:` syntax to assign variables from a constructor isn't present in Neo-C because it's used for error handling instead.
+- Neo-C doesn't allow constructors to be private.
 
 ### [Interfaces](#neo-c)
-Composition and interfaces are preferred over inheritance because they allow the code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
-- Interfaces can only include public function declarations and public variable declarations. This includes declarations of Classes, Structs, Interfaces, and Unions, but does not include Objects or Enums because those automatically define variables.
-  - Unlike other languages, Neo-C allows interfaces to include public variable declarations because they are somewhat equivalent to having getter and setter methods for a private variables. This eliminates the need for redundant getter and setter methods in interfaces.
-- Multiple interfaces can be implemented with: `class Class() : Interface1, Interface2, Interface3`
-  - This means the class must define all the declared functions in the interfaces.
-- Interfaces cannot have other interfaces. This isn't allowed: `interface Interface1 : Interface2`
+Composition and interfaces are preferred over inheritance because they allow code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
+- Unlike other languages, Neo-C allows interfaces to include variable declarations. This avoids the need for redundant setter and getter methods.
+- Interfaces can be implemented with: `class Class() : Interface1, Interface2, Interface3`
 
 ```C++
 // Neo-C
 interface Interface
   i64 var
+  Class c
+  Struct s
+  Union u
+  // You cannot have objects or enums because they define values.
   void func()
 
 // C++
 class Interface {
   public:
     int64_t var;
+    Class c;
+    Struct s;
+    Union u;
+    // You cannot have objects or enums
     virtual void func() = 0;
   private:
     Interface() {}
@@ -473,7 +497,7 @@ class Interface {
 ```
 
 ### [Objects](#neo-c)
-Objects in Neo-C are like singletons in C++. There is only one instance of them. You can still make private members by include an underscore in front of the name. You access them like you would any other object.
+Objects in Neo-C are like singletons. There's only ever one instance of them.
 
 ```C++
 // Neo-C
@@ -512,56 +536,56 @@ obj.get_object().publicVar;
 ```
 
 ## [Enums](#neo-c)
-Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you want to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change some things.
-- Enums have in built methods like some of the ones found for arrays and strings.
+Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you wanted to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change some things.
+- Enums have some built in methods like some of the ones found for arrays and strings.
 
 | Enum Methods                         | Description                                                                  |
 |--------------------------------------|------------------------------------------------------------------------------|
-| .size()                              | Gets the size/length of the array.                                           |
+| .size() or .length()                 | Gets the size/length of the array.                                           |
 | .at(index)                           | Allows for negative array indexing. Ex: -1 is the last element.              |
 | .contains(value) or .includes(value) | Does the value exist in the array?                                           |
 | .map(function)                       | Applies the function to each element of the array and returns that array.    |
 | .filter(function)                    | Returns a filtered array. If the function returns true it gets filtered out. |
 
-- The names of enums have to be in PascalCase.
-- The values in enums are const and have to have SCREAMING_CASE.
+- The names of enums have to be PascalCase.
+- The values in enums have to be SCREAMING_CASE.
 - `enum object` is used instead of `enum class`, but instead of creating a namespace it creates an object.
 
 ```C++
 // Neo-C
 enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = MON
-// or
+  // or
 enum object DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = DayOfTheWeek.MON
 
 // C++
 enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
 DayOfTheWeek day = MON;
-// or
+  // or
 enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
 DayOfTheWeek day = DayOfTheWeek::MON;
 ```
 
 ## [Nested Comments](#neo-c)
-When you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
+In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
 
 ```javascript
 // Neo-C
 /*
-  /*inner comment*/
+  /*Inner comment*/
   This is also a comment
 */
 
 // C++
 /*
-  /*inner comment
+  /*Inner comment
   This is also a comment
 */
 ```
 
 ## [Do while loops](#neo-c)
-In C++, do and while statements are separated, with the condition being at the end. This means someone reading the code only knows the loop condition after reaching the end of the block. This could make it harder to understand what the code is doing. Additionally, without curly brackets, the ending while statement could be easily confused for a new while loop. So Neo-C puts the `do` and `while` keywords on the same line.
+In C++, `do` and `while` statements are separated, with the condition being at the end. In a language without curly brackets, the ending while statement could be easily confused for a new while loop. So Neo-C puts the `do` and `while` keywords on the same line.
 
 ```C++
 // Neo-C
@@ -575,7 +599,7 @@ do {
 ```
 
 ## [Breaking out of nested loops](#neo-c)
-If you have a loop in a loop you can add an additional break statement to break out of both loops.
+In Neo-C, if you have a loop nested in another loop, you can add an additional break statement to break out of both loops.
 
 ```C++
 // Neo-C
@@ -596,11 +620,9 @@ for (auto el : arr) {
 ```
 
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
-- If multiple multi-breaks are used inside the same function, a number is added to the end of the label to prevent conflicting goto jumps. Ex: `break_loops_2`, `break_loops_3`, etc.
 
 ## [String Templates](#neo-c)
-In C++, if you want to include a variable in a string you have to convert it to a string and concatenate it. This is annoying so Neo-C adds a special syntax to allow you to do this automatically, like many other languages.
-- Use `${code}` to insert into a string.
+In C++, if you want to include a variable in a string, you have to convert it to a string and concatenate it. This is annoying so Neo-C adds the ability to insert code into strings.
 - Strings can also span multiple lines.
 
 ```C++
@@ -619,9 +641,8 @@ string str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape.
 
 ## [Templates](#neo-c)
-In Neo-C templates are relatively simplified compared to C++. There is no template specialization, special keywords, or meta-programming.
+In Neo-C, templates are relatively simplified compared to C++.
 - `auto` cannot be used for function arguments.
-- The types for templates can be inferred by the argument types.
 - Template types have to be in PascalCase.
 
 ```C++
@@ -630,7 +651,7 @@ Type add<Type>(Type value1, Type value2)
 	return value1 + value2
 
 add(1, 5)
-// or
+  // or
 add<i64>(1, 5)
 
 // C++
@@ -640,9 +661,12 @@ Type add(Type value1, Type value2) {
 }
 
 add<int64_t>(1, 5);
-// or
+  // or
 add<int64_t>(1, 5);
 ```
+
+- If the type isn't specified and the arguments are literals, then Neo-C assumes them to be the largest type possible.
+  - Ex: `add(1, 5)` is assumed to be of type `i64`. Or `add(1.0, 5.0)` is assumed to be of type `f64`.
 
 ## [Casting](#neo-c)
 Casting can be thought of as a special syntax for conversion functions. Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.

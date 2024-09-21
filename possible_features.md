@@ -13,7 +13,6 @@
 		- The `explicit` keyword is used on all constructors.
 		- What syntax used to create object? I like the =s sign syntax.
 	- This is the only syntax which can be used to create an instance of a class
-		- `Class instance(constructor arguments)`
 		- What happens when you set an object equal to another one? Does it create a copy or pass a reference?
 	- No function like macros, no functions within functions, no inline functions, no assigning functions to variables.
 	- && for rvalues should not be used?
