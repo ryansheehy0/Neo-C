@@ -2,6 +2,7 @@
 Neo-C is a programming language like C++, but tries to have a consistent and pleasant to use syntax. C++ gives so many features to users that it becomes up to them how they want to program in C++. This often leads to inconsistency and over-complexity. In contrast, Neo-C has relatively simple features and tries not to be overly complex. It isn't backwards compatible C++.
 
 - **Compile still in development.**
+  - If there's a disagreement between the compiler and the documentation, then the documentation is correct.
 - In order to implement syntax highlighting in vs code, copy and paste the **Neo_C_Syntax_Highlighter** folder in **~/.vscode/extensions/**.
 - Neo-C files have the **.nc** file extension.
 
@@ -27,15 +28,14 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Containers](#containers)
 	- [Structs and Unions](#structs-and-unions)
 	- [Classes](#classes)
-	- [Interfaces](#interfaces)
-	- [Objects](#objects)
+- [Interfaces](#interfaces)
 - [Enums](#enums)
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
 - [String Templates](#string-templates)
 - [Templates](#templates)
-- [Casting](#casting)
+- [Casting/Converting](#castingconverting)
 - [Error handling](#error-handling)
 - [Compile time operations](#compile-time-operations)
 - [Heap memory](#heap-memory)
@@ -76,7 +76,7 @@ C++ has some problems with its default data types, which Neo-C corrects.
 2. Dynamic arrays aren't built into the language.
   - Dynamic arrays(`std::vector`) and strings(`std::string`) aren't built into the language even when they are so commonly used. This can be annoying having to include such a common feature.
 3. There are multiple ways of making arrays with `std::array` and C-style arrays.
-  - Each style of creating arrays has different features and limitation which creates confusion and is unnecessary.
+  - Each style of creating arrays has different features and limitations, which can create confusion and unnecessary complexity.
 
 ### [Built in data types](#neo-c)
 - `auto`
@@ -88,23 +88,11 @@ C++ has some problems with its default data types, which Neo-C corrects.
 - `f32`, `f64`
   - C++: `float`, `double`
 - `string`
-  - C++: `std::string`
+  - C++: `String_`
 - `type[size] name`
-  - C++: `array_<type> name(size)`
+  - C++: `Array_<type> name = Array_(size);` or `Array_<type> name = Array_(anotherArray);`
 - `type[dynamic] name`
-  - C++: `std::vector<type> name`
-
-```C++
-// Neo-C
-i64[] arr = {1, 2, 3}
-i64[3] arr2
-i64[dynamic] dArray = {1, 2, 3}
-
-// C++
-array_<int64_t> arr = {1, 2, 3};
-array_<int64_t> arr2(3);
-std::vector<int64_t> dArray = {1, 2, 3};
-```
+  - C++: `DynamicArray_<type> name = DynamicArray_(size);` or `DynamicArray_<type> name = DynamicArray_(anotherArray);`
 
 ### [Built in string and array methods](#neo-c)
 
@@ -160,10 +148,10 @@ i32 main()
 i32 main(string[] args)
 
 // C++
-int main() {
-}
+int main() {}
   // or
 int main(int arg_c, char** arg_v) {
+  String_ args[arg_c] = String_()
   std::string args[arg_c];
   for (int i = 0; i < arg_c; i++) {
     args[i] = arg_v[i];
@@ -271,7 +259,7 @@ match str
     // Do something
 
 // C++
-std::string str = "abc";
+String_ str = String_("abc");
 if (str == "a" || str == "ab") {
   // Do something
 }else if (str == "abc") {
@@ -303,20 +291,20 @@ Neo-C allows for automatic function hoisting so that you can define functions be
 
 ```C++
 // Neo-C
-int main()
+i32 main()
   func(1)
 
-void func(int arg)
+void func(i64 arg)
   // Do something
 
 // C++
-void func(int);
+void func(int64_t);
 
 int main() {
   func(1);
 }
 
-void func(int arg){
+void func(int64_t arg) {
   // Do something
 }
 ```
@@ -327,58 +315,31 @@ In C++, it's impossible to include the index in a for each loop. In Neo-C, for e
 ```C++
 // Neo-C
 i64[] arr = {1, 2, 3, 4}
-i64[dynamic] dArr = {1, 2, 3, 4}
 
 for i64 el in arr
-  // For each element in array
-for i64 el in dArr
-  // For each element in dynamic array
-
+  // or
 for i64 el, i64 i in arr
-  // For each element with index in array
-for i64 el, i64 i in dArr
-  // For each element with index in dynamic array
 
 // C++
-int64_t arr[] = {1, 2, 3, 4};
-std::vector<int64_t> dArr = {1, 2, 3, 4};
+Array_<int64_t> arr = Array_({1, 2, 3, 4});
 
-for (int64_t* arr_ptr = arr; arr_ptr < arr + sizeof(arr) / sizeof(arr[0]); arr_ptr++) {
-  int64_t el = *arr_ptr;
-  // For each element in array
-}
-for (int64_t el : dArr) {
-  // For each element in dynamic array
-}
-
-for (int64_t i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
-  int64_t el = arr[i];
-  // For each element with index in array
-}
+for (int64_t el : arr) {}
+  // or
 for (int64_t i = 0; i < arr.size(); i++) {
   int64_t el = arr[i];
-  // For each element with index in dynamic array
-}
-```
-
-- This can also work for reference variables.
-
-```C++
-// Neo-C
-char[26] abcs
-for char &letter, i8 i in abcs
-  letter = 97 + i
-
-// C++
-char abcs[26];
-for (int8_t i = 0; i < abcs.size(); i++){
-  char &letter = abcs[i];
-  letter = 97 + i;
 }
 ```
 
 ## [Containers](#neo-c)
-In Neo-C, you can only create instances of structs, unions, or classes with this syntax: `Name instance = Name(constructorArguments)`
+In Neo-C, there are only 3 ways of creating instance of structs, unions, or classes.
+
+```C++
+Container instance = Container()
+  // or
+Container instance()
+  // or
+Container instance
+```
 
 ### [Structs and Unions](#neo-c)
 In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public.
@@ -389,6 +350,12 @@ In C++, the only difference between structs and classes are whether they default
 struct Point(i64 x, i64 y)
 
 Point pt = Point(10, 20)
+  // or
+Point pt(10, 20)
+  // or
+Point pt
+pt.x = 10
+pt.y = 20
 
 // C++
 struct Point {
@@ -396,9 +363,16 @@ struct Point {
   int64_t y;
 
   Point(int64_t x, int64_t y) : x(x), y(y) {}
-}
+  Point() {}
+};
 
 Point pt = Point(10, 20);
+  // or
+Point pt(10, 20);
+  // or
+Point pt;
+pt.x = 10;
+pt.y = 20;
 ```
 
 ### [Classes](#neo-c)
@@ -407,7 +381,6 @@ Neo-C makes 3 notable changes to classes:
 1. In C++, it's very common to create a class where the constructor arguments just are assigned directly to member variables. Neo-C allows the arguments of the constructor to create the member variables automatically.
 2. In C++, `private:` and `public` require another indentation or are put on the same line as the class which looks messy. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
 3. Inheritance has been removed from Neo-C and composition is recommended instead.
-    - https://www.youtube.com/watch?v=hxGOiiR9ZKg
     - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
 
 ```C++
@@ -436,11 +409,13 @@ class Book {
   private:
     int64_t _copiesAvailable;
   public:
-    std::string title;
-    std::string author;
-    int64_t pages;
+    String_ title = "Unknown";
+    String_ author = "Unknown";
+    int64_t pages = 0;
 
-    Book(int64_t _copiesAvailable, std::string title = "Unknown", std::string author = "Unknown", int64_t pages = 0) : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
+    Book() {}
+
+    Book(int64_t _copiesAvailable, String_ = "Unknown", String_ author = "Unknown", int64_t pages = 0) : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
       // Initialization constructor code. This is optional.
     }
 
@@ -465,9 +440,9 @@ class Book {
 ```
 
 - The `:` syntax to assign variables from a constructor isn't present in Neo-C because it's used for error handling instead.
-- Neo-C doesn't allow constructors to be private.
+- The `this` keyword can be used to differentiate between a variable belonging to the class and a local variable.
 
-### [Interfaces](#neo-c)
+## [Interfaces](#neo-c)
 Composition and interfaces are preferred over inheritance because they allow code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
 - Unlike other languages, Neo-C allows interfaces to include variable declarations. This avoids the need for redundant setter and getter methods.
 - Interfaces can be implemented with: `class Class() : Interface1, Interface2, Interface3`
@@ -479,7 +454,7 @@ interface Interface
   Class c
   Struct s
   Union u
-  // You cannot have objects or enums because they define values.
+  // You cannot have enums because they define values.
   void func()
 
 // C++
@@ -489,50 +464,11 @@ class Interface {
     Class c;
     Struct s;
     Union u;
-    // You cannot have objects or enums
+    // You cannot have enums because they define values.
     virtual void func() = 0;
   private:
     Interface() {}
 }
-```
-
-### [Objects](#neo-c)
-Objects in Neo-C are like singletons. There's only ever one instance of them.
-
-```C++
-// Neo-C
-object obj
-  string _privateVar
-  string publicVar = "Example"
-
-  void publicFunction()
-
-// Accessing the object
-obj.publicFunction()
-obj.publicVar
-
-// C++
-class obj {
-  public:
-    static obj& get_object() {
-      return object_instance;
-    }
-
-    void publicFunction(){
-    }
-
-    std::string publicVar = "Example";
-
-  private:
-    obj() {}
-    static obj object_instance;
-
-    std::string _privateVar;
-}
-
-// Accessing the object
-obj.get_object().publicFunction();
-obj.get_object().publicVar;
 ```
 
 ## [Enums](#neo-c)
@@ -549,22 +485,19 @@ Enums are a list of constants that are used to limit the values that can be assi
 
 - The names of enums have to be PascalCase.
 - The values in enums have to be SCREAMING_CASE.
-- `enum object` is used instead of `enum class`, but instead of creating a namespace it creates an object.
 
 ```C++
 // Neo-C
 enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = MON
   // or
-enum object DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
+enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = DayOfTheWeek.MON
 
 // C++
-enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
-DayOfTheWeek day = MON;
-  // or
-enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
-DayOfTheWeek day = DayOfTheWeek::MON;
+class DayOfTheWeek {
+  
+}
 ```
 
 ## [Nested Comments](#neo-c)
@@ -668,23 +601,71 @@ add<int64_t>(1, 5);
 - If the type isn't specified and the arguments are literals, then Neo-C assumes them to be the largest type possible.
   - Ex: `add(1, 5)` is assumed to be of type `i64`. Or `add(1.0, 5.0)` is assumed to be of type `f64`.
 
-## [Casting](#neo-c)
-Casting can be thought of as a special syntax for conversion functions. Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
-- Float literals have to have decimal points. Ex: `10.0`
-- Integer literals cannot have decimal points. Ex: `10`
+- Maybe make templates for complex
+
+```C++
+template <ints | uints | floats Type>
+Type add(Type value1, Type value2)
+  return value1 + value2
+```
+
+- templates have to be one the line above the functions
+
+| Special Template keywords | Description             |
+|---------------------------|-------------------------|
+| auto                      | Any data type           |
+| ints                      | i8, i16, i32, i64       |
+| uints                     | u8, char, u16, u32, u64 |
+| floats                    | f32, f64                |
+| bool | |
+| string | |
+| enum | |
+| 
+
+enable_if
+
+## [Casting/Converting](#neo-c)
+Casting can be thought of as a special syntax for conversion functions.
+In Neo-C, casting has been replaced with the Convert Library.
+
+doesn't have this special syntax and instead handles conversions through the Convert Library.
+This simplifies the syntax of the language and allows for more consistency in handling error handlings.
+
+Casting can be seen as a special syntax for conversion functions.
+In Neo-C, casting is replaced with the Convert Library, which handles all conversions. This approach simplifies the language's syntax and ensures more consistent error handling.
+
+Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
+
+- There is no implicit casting/converting in C++.
+  - Float literals have to have decimal points. Ex: `10.0`
+  - Integer literals cannot have decimal points. Ex: `10`
 
 Errors:
-: InvalidConversion, OutOfRange
+: OutOfRange, InvalidInputType
 
 Convert Library
-- bool toBool(T var)
-- i8 toI8(T var) : OutOfRange
+- `bool toBool<Type>(Type val)`
+- `i8 toI8<Type>(Type val) : OutOfRange`
 	- toI16, toI32, toI64
-- u8 toU8(T var)
+- `u8 toU8<Type>(Type val) : OutOfRange`
 	- toChar, toU16, toU32, toU64
-- f32 toF32(T var)
+- `f32 toF32<Type>(Type val) : OutOfRange`
 	- toF64
-- string toString(T var)
+- `string toString<Type>(Type val)`
+
+- `Enum toEnum<Enum, Type>(Type val) : OutOfRange, InvalidInputType`
+
+
+
+- `char[] toArray(string val)`
+
+- Cannot convert to an object. Object isn't a type.
+
+
+dynamic
+- interface, class, struct, union, this, object
+
+
 - string join(T[] arr, string stringSeparator)
 	- Concatenates the array into a single string, separated by the stringSeparator.
 - T toEnum<enum T>(auto var) : OutOfRange
@@ -828,13 +809,13 @@ f64 divide(f64 numerator, f64 denominator) : string
 - Use `catch` for the default catch instead of `catch ...`
 
 ## [Compile time operations](#neo-c)
-In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before the function call.
+In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before a function call.
 
 ```C++
 i32 main()
 	const i64 FIVE_FACTORIAL = compile factorial(5) // This is valid
 	i64 var = 6
-	const i64 SIX_FACTORIAL = compile factorial(var) // This is invalid
+	const i64 SIX_FACTORIAL = compile factorial(var) // This is invalid because var isn't known at compile time.
 
 i64 factorial(i64 value)
 	if value == 1 return 1
@@ -860,13 +841,12 @@ In C++, to allocate memory on the heap you use the `new` keyword. Once done bein
 2. Deleting memory twice.
 3. Using memory that was already deleted.
 
-To solve these problems Resource Acquisition is Initialization(RAII) was created. RAII is an idea in which a corresponding pointer on the stack is created when heap memory is allocated. When this pointer gets popped, aka goes out of scope, then the corresponding heap memory also gets deleted. This removes the need for a `delete` keyword, thus solving those 3 problems.
+To solve these problems Resource Acquisition is Initialization(RAII) was created. RAII is an idea in which a corresponding pointer on the stack is created when heap memory is allocated. When this pointer gets popped, aka goes out of scope, then the corresponding heap memory also gets deleted. This removes the need for a `delete` keyword and solves those 3 problems.
 
-Neo-C only allows heap memory to be created with a corresponding stack pointer. This can be done using the inbuilt `heap` class. This does have the overhead of using a little bit of extra memory, but it's worth it to prevent those three problems.
-- Neo-C removes the `new` and `delete` keywords.
+Neo-C removes the `new` and `delete` keywords and only allows heap memory to be created with a corresponding stack pointer. This can be done using the inbuilt `Heap` class.
 
 ```C++
-heap<i64> mem(10)
+Heap<i64> mem = Heap(10) // Initializes the i64 with 10.
 printLine(*mem)
 ```
 
@@ -874,7 +854,7 @@ printLine(*mem)
 - `**` can be used for exponents.
 - `->` is valid for double dereferencing pointers.
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
-- String literals are converted to a string and not a character array. `std::string("String literal")`
+- String literals are converted to a string and not a character array.
 - Arrays, enums, and importing can be defined on multiple lines.
 
 ```C++
@@ -928,6 +908,7 @@ else return 3;
 ## [All Keywords](#neo-c)
 Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.
 
+- main
 - bool, i8, i16, i32, i64, u8, char, u16, u32, u64, f32, f64, string, dynamic
 - auto, void
 - const, true, false
@@ -939,8 +920,17 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
   - break, continue
 - import, export
 - return
-- interface, class, struct, union, this, object
+- class, struct, union, this
+- interface
 - enum
 - try, catch, throw
 - compile, copy&paste
-- heap
+
+Problems:
+  - Templates
+    - What are all of the types
+  - Casting
+    - What are all the converting functions?
+  - Object
+    - Enum Object
+    - What type is it?

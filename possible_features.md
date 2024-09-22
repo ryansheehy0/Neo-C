@@ -1,12 +1,5 @@
 ## Todo
-- Should certain features be included in the language or be imported from a standard library?
-	- Included in the language:
-		- string
-		- dynamic arrays
-	- Through a standard library
-		- heap
-		- map
-		- optional
+- Have less things built into the language.
 
 - Minor syntax enforcements
 	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
@@ -168,3 +161,47 @@ std::cout << y << "\n";
 - https://www.youtube.com/watch?v=sjsnuirLyKM
 	- use interfaces to define Types?
 	- auto as a function argument and return types.
+
+
+### [Objects](#neo-c)
+Probably don't include. It doesn't really solve a problem.
+
+- Neo-C doesn't allow constructors to be private.
+
+Objects in Neo-C are like singletons. There's only ever one instance of them.
+
+```C++
+// Neo-C
+object obj
+  string _privateVar
+  string publicVar = "Example"
+
+  void publicFunction()
+
+// Accessing the object
+obj.publicFunction()
+obj.publicVar
+
+// C++
+class obj {
+  public:
+    static obj& get_object() {
+      return object_instance;
+    }
+
+    void publicFunction(){
+    }
+
+    std::string publicVar = "Example";
+
+  private:
+    obj() {}
+    static obj object_instance;
+
+    std::string _privateVar;
+}
+
+// Accessing the object
+obj.get_object().publicFunction();
+obj.get_object().publicVar;
+```

@@ -20,6 +20,7 @@
 - [Arguments](#arguments)
 - [Draw](#draw)
 - [ML](#ml)
+- [Map](#map)
 
 <!-- /TOC -->
 
@@ -109,3 +110,6 @@ A library for handling args when the compiled program is called from the termina
 - Pen functions
 
 ## [ML](#neo-c-standard-libraries)
+
+## [Map](#neo-c-standard-libraries)
+## [Optional](#neo-c-standard-libraries)
