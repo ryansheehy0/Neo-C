@@ -286,6 +286,13 @@ In Neo-C, you can use the `import` keyword and the `export` keyword to explicitl
 
 See the [standard libraries](./standard_libraries.md) which are built into Neo-C.
 
+In C++, namespaces are mainly a result of how C++ does its importing. In C++, when you `#include` a file, the contents of that file get copied and pasted at that location. If you are including multiple files and there's a naming conflict between the files, then that would cause a problem. Namespaces 
+Neo-C doesn't have 
+
+- Explain why namespaces have been removes
+- Librayr names should be camelCase bcause they are objects
+- remove namespaces form ## Enums
+
 ## [Automatic function hoisting](#neo-c)
 Neo-C allows for automatic function hoisting so that you can define functions below where they are actually used.
 
@@ -472,33 +479,26 @@ class Interface {
 ```
 
 ## [Enums](#neo-c)
-Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you wanted to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change some things.
-- Enums have some built in methods like some of the ones found for arrays and strings.
-
-| Enum Methods                         | Description                                                                  |
-|--------------------------------------|------------------------------------------------------------------------------|
-| .size() or .length()                 | Gets the size/length of the array.                                           |
-| .at(index)                           | Allows for negative array indexing. Ex: -1 is the last element.              |
-| .contains(value) or .includes(value) | Does the value exist in the array?                                           |
-| .map(function)                       | Applies the function to each element of the array and returns that array.    |
-| .filter(function)                    | Returns a filtered array. If the function returns true it gets filtered out. |
-
-- The names of enums have to be PascalCase.
-- The values in enums have to be SCREAMING_CASE.
+Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you wanted to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change the syntax a bit because Neo-C doesn't have namespaces.
 
 ```C++
 // Neo-C
 enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
-DayOfTheWeek day = MON
-  // or
-enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = DayOfTheWeek.MON
 
+enum Color = {RED, GREEN, BLUE}
+Color color = DayOfTheWeek.MON // This gives a compiler error
+
 // C++
-class DayOfTheWeek {
-  
-}
+enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
+DayOfTheWeek day = DayOfTheWeek::MON;
+
+enum class Color = {RED, GREEN, BLUE};
+Color color = DayOfTheWeek.MON; // This gives a compiler error
 ```
+
+- The default type for enum constants are i64
+- You can change them by using the `:`. Ex: `enum Name : i32`.
 
 ## [Nested Comments](#neo-c)
 In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -567,8 +567,8 @@ y: ${y}"
 
 // C++
 int64_t x = 10;
-string y = "10";
-string str = "x: " + to_string(x) + "\ny: " + y;
+String_ y = "10";
+String_ str = "x: " + to_string(x) + "\ny: " + y;
 ```
 
 - `\${}` allows you to escape.
@@ -741,7 +741,7 @@ Error<f64, string> divide(f64 numerator, f64 denominator)
   return {numerator / denominator, ""}
 ```
 
-How most languages have solve these problems is through `try`, `catch`, and `throw`. Throwing an error allows that error to bubble up until it is caught by a corresponding catch statement. If it doesn't get caught, the program crashes.
+How most languages have solve these problems is through `try`, `catch`, and `throw`. Throwing an error allows that error to bubble up until it is caught by a corresponding catch statement. If it doesn't get caught, the program crashes. This removes a lot of boiler plate code.
 
 ```C++
 f64 func()
@@ -843,11 +843,16 @@ In C++, to allocate memory on the heap you use the `new` keyword. Once done bein
 
 To solve these problems Resource Acquisition is Initialization(RAII) was created. RAII is an idea in which a corresponding pointer on the stack is created when heap memory is allocated. When this pointer gets popped, aka goes out of scope, then the corresponding heap memory also gets deleted. This removes the need for a `delete` keyword and solves those 3 problems.
 
-Neo-C removes the `new` and `delete` keywords and only allows heap memory to be created with a corresponding stack pointer. This can be done using the inbuilt `Heap` class.
+Neo-C removes the `new` and `delete` keywords and only allows heap memory to be created with a corresponding stack pointer. This can be done using the inbuilt `#` syntax.
 
 ```C++
-Heap<i64> mem = Heap(10) // Initializes the i64 with 10.
-printLine(*mem)
+// Neo-C
+#i64 mem = 10
+printLine(mem)
+
+// C++
+Heap_<int64_t> mem = Heap_(10);
+printLine(mem.get_())
 ```
 
 ## [Other changes](#neo-c)
@@ -925,12 +930,3 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 - enum
 - try, catch, throw
 - compile, copy&paste
-
-Problems:
-  - Templates
-    - What are all of the types
-  - Casting
-    - What are all the converting functions?
-  - Object
-    - Enum Object
-    - What type is it?

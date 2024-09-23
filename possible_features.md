@@ -1,5 +1,5 @@
 ## Todo
-- Have less things built into the language.
+- Casting can be done at compile time, where convert functions are done at run time.
 
 - Minor syntax enforcements
 	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
@@ -47,7 +47,6 @@
 - Metaprogramming
 	- function like macros
 	- Limited template features
-- RAII
 
 ## Most likely not
 - Function like macros
@@ -205,3 +204,9 @@ class obj {
 obj.get_object().publicFunction();
 obj.get_object().publicVar;
 ```
+
+## Need to implement classes
+- String_
+- Array_
+- DynamicArray_
+- Heap_
