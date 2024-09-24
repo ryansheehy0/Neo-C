@@ -1,9 +1,22 @@
+
+
 ## Todo
 - Casting can be done at compile time, where convert functions are done at run time.
 - You cannot have containers in other containers.
 	- Ex: You can't have a struct defined in a class.
 
-- Is `copy&paste` necessary? Couldn't this be done by the compiler automatically?
+- Heap memory accessed like a regular variable or has to be dereferenced?
+```C++
+// Neo-C
+#i64 test = 10
+printLine(test)
+	// or
+printLine(*test)
+// C++
+Heap_<int64_t> test = Heap_(10);
+printLine(test.get());
+```
+- Probably just `test`
 
 - Minor syntax enforcements
 	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
@@ -214,3 +227,33 @@ obj.get_object().publicVar;
 - Array_
 - DynamicArray_
 - Heap_
+
+## Remove namespaces
+
+- In C++, when you `#include` the compiler simply copies and pastes that file at that location. This could be a problem if different files have the same element names.
+In C++, one of the primary purposes fo namespace is to fix some of the problems that happens with `#include`. In C++
+In C++, namespaces are mainly a result of how C++ does its importing. In C++, when you `#include` a file, the contents of that file get copied and pasted at that location. If you are including multiple files and there's a naming conflict between the files, then that would cause a problem. Namespaces 
+Neo-C doesn't have 
+
+- Explain why namespaces have been removes
+- Librayr names should be camelCase bcause they are objects
+- remove namespaces form ## Enums
+
+## Enums
+```C++
+// Same as enum class
+
+class Color()
+  static enum Colors = {RED, GREEN, BLUE}
+
+  void set(Colors c)
+    _color = c
+
+  Colors get()
+    return _color
+
+  i64 _color
+
+Color color
+color.set()
+```

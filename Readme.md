@@ -276,22 +276,15 @@ C++ has some notable problems when it comes to importing and exporting with head
 
 In Neo-C, you can use the `import` keyword and the `export` keyword to explicitly import or export what you want from other Neo-C files or libraries. You cannot have duplicate names in a Neo-C file.
 - Importing
-  - `import Name <Library>` imports the entire Library under the object Name.
-  - `import Name "./localFile.nc"` imports all of the exported entities in that local file under the object Name.
+  - `import name <Library>` imports the entire Library under the object name.
+  - `import name "./localFile.nc"` imports all of the exported entities in that local file under the object name.
   - `import {var, func} <Library>` imports only the exported entities with the name `var` and `func` from the Library.
-  - `import Name, {var, func} <Library>` imports `var` and `func` from Library and all of the exports in Library under the object Name.
+  - `import name, {var, func} <Library>` imports `var` and `func` from Library and all of the exports in Library under the object name.
 - Exporting
   - `export i64 var = 0` exports the i64 variable named `var`.
   - `export void func()` exports the function `func`.
 
 See the [standard libraries](./standard_libraries.md) which are built into Neo-C.
-
-In C++, namespaces are mainly a result of how C++ does its importing. In C++, when you `#include` a file, the contents of that file get copied and pasted at that location. If you are including multiple files and there's a naming conflict between the files, then that would cause a problem. Namespaces 
-Neo-C doesn't have 
-
-- Explain why namespaces have been removes
-- Librayr names should be camelCase bcause they are objects
-- remove namespaces form ## Enums
 
 ## [Automatic function hoisting](#neo-c)
 Neo-C allows for automatic function hoisting so that you can define functions below where they are actually used.
@@ -499,24 +492,6 @@ Color color = DayOfTheWeek.MON; // This gives a compiler error
 
 - The default type for enum constants are i64
 - You can change them by using the `:`. Ex: `enum Name : i32`.
-
-```C++
-// Same as enum class
-
-class Color()
-  static enum Colors = {RED, GREEN, BLUE}
-
-  void set(Colors c)
-    _color = c
-
-  Colors get()
-    return _color
-
-  i64 _color
-
-Color color
-color.set()
-```
 
 ## [Nested Comments](#neo-c)
 In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -862,7 +837,7 @@ printLine(mem)
 
 // C++
 Heap_<int64_t> mem = Heap_(10);
-printLine(mem.get_())
+std::cout << mem.get_() << "\n";
 ```
 
 ## [Other changes](#neo-c)
