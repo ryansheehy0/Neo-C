@@ -500,6 +500,24 @@ Color color = DayOfTheWeek.MON; // This gives a compiler error
 - The default type for enum constants are i64
 - You can change them by using the `:`. Ex: `enum Name : i32`.
 
+```C++
+// Same as enum class
+
+class Color()
+  static enum Colors = {RED, GREEN, BLUE}
+
+  void set(Colors c)
+    _color = c
+
+  Colors get()
+    return _color
+
+  i64 _color
+
+Color color
+color.set()
+```
+
 ## [Nested Comments](#neo-c)
 In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
 
@@ -574,13 +592,27 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape.
 
 ## [Templates](#neo-c)
-In Neo-C, templates are relatively simplified compared to C++.
-- `auto` cannot be used for function arguments.
-- Template types have to be in PascalCase.
+In Neo-C, templates are simplified compared to C++, but they offer an additional feature that allows you to specify exactly which types are allowed for a template argument. You can define the allowed types using a pipe(`|`) symbol between them. For example, `void func<i8 | i16 | i32 Type>()` specifies that the template argument `Type` can only be one of the specified types(`i8`, `i16`, or `i32`).
+- All templates have to be defined right after the name of the entity they apply to.
+
+Keywords that specify the template types:
+- `auto` - Allows any type.
+- `bool`
+- `i8`, `i16`, `i32`, `i64`
+- `int` - The same as `i8 | i16 | i32 | i64`
+- `u8`, `char`, `u16`, `u32`, `u64`
+- `uint` - The same as `u8 | char | u16 | u32 | u64`
+- `f32`, `f64`
+- `float` - The same as `f32 | f64`
+- `string`
+- `class`, `struct`, `union`
+- `interface`
+- `enum`
+- `[]`s for arrays, and `*`s for pointers
 
 ```C++
 // Neo-C
-Type add<Type>(Type value1, Type value2)
+Type add<int | uint | float Type>(Type value1, Type value2)
 	return value1 + value2
 
 add(1, 5)
@@ -588,6 +620,7 @@ add(1, 5)
 add<i64>(1, 5)
 
 // C++
+// This feature is enforced by the Neo-C compiler and not the C++ compiler.
 template <typename Type>
 Type add(Type value1, Type value2) {
 	return value1 + value2;
@@ -600,29 +633,6 @@ add<int64_t>(1, 5);
 
 - If the type isn't specified and the arguments are literals, then Neo-C assumes them to be the largest type possible.
   - Ex: `add(1, 5)` is assumed to be of type `i64`. Or `add(1.0, 5.0)` is assumed to be of type `f64`.
-
-- Maybe make templates for complex
-
-```C++
-template <ints | uints | floats Type>
-Type add(Type value1, Type value2)
-  return value1 + value2
-```
-
-- templates have to be one the line above the functions
-
-| Special Template keywords | Description             |
-|---------------------------|-------------------------|
-| auto                      | Any data type           |
-| ints                      | i8, i16, i32, i64       |
-| uints                     | u8, char, u16, u32, u64 |
-| floats                    | f32, f64                |
-| bool | |
-| string | |
-| enum | |
-| 
-
-enable_if
 
 ## [Casting/Converting](#neo-c)
 Casting can be thought of as a special syntax for conversion functions.
@@ -928,5 +938,6 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 - class, struct, union, this
 - interface
 - enum
+- int, uint, float
 - try, catch, throw
 - compile, copy&paste

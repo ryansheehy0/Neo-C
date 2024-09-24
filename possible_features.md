@@ -1,5 +1,9 @@
 ## Todo
 - Casting can be done at compile time, where convert functions are done at run time.
+- You cannot have containers in other containers.
+	- Ex: You can't have a struct defined in a class.
+
+- Is `copy&paste` necessary? Couldn't this be done by the compiler automatically?
 
 - Minor syntax enforcements
 	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
