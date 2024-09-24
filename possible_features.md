@@ -257,3 +257,13 @@ class Color()
 Color color
 color.set()
 ```
+
+## Casting
+
+doesn't have this special syntax and instead handles conversions through the Convert Library.
+This simplifies the syntax of the language and allows for more consistency in handling error handlings.
+
+Casting can be seen as a special syntax for conversion functions.
+In Neo-C, casting is replaced with the Convert Library, which handles all conversions. This approach simplifies the language's syntax and ensures more consistent error handling.
+
+Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
