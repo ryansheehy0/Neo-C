@@ -1,22 +1,8 @@
-
-
 ## Todo
-- Casting can be done at compile time, where convert functions are done at run time.
+- Remove the default constructors in classes? Why?
+	- Should I have a special syntax? Nah
 - You cannot have containers in other containers.
 	- Ex: You can't have a struct defined in a class.
-
-- Heap memory accessed like a regular variable or has to be dereferenced?
-```C++
-// Neo-C
-#i64 test = 10
-printLine(test)
-	// or
-printLine(*test)
-// C++
-Heap_<int64_t> test = Heap_(10);
-printLine(test.get());
-```
-- Probably just `test`
 
 - Minor syntax enforcements
 	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
@@ -259,6 +245,7 @@ color.set()
 ```
 
 ## Casting
+- Casting can be done at compile time, where convert functions are done at run time.
 
 doesn't have this special syntax and instead handles conversions through the Convert Library.
 This simplifies the syntax of the language and allows for more consistency in handling error handlings.

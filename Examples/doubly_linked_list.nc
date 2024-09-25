@@ -1,8 +1,13 @@
+// Not Done
 
 struct Node(Type* parent, Type value, Type* child)
 
-export class LinkedList<auto Type>()
-	Node[dynamic] _nodeList
+export class LinkedList<auto Type>(i64 _value = 0)
+	Node* head
+
+	LinkedList(Type value)
+		#Node first(0,value,0)
+		head = &first
 
 	void push(Type value)
 		// Get the last node

@@ -378,23 +378,26 @@ pt.y = 20;
 ### [Classes](#neo-c)
 Neo-C makes 3 notable changes to classes:
 
-1. In C++, it's very common to create a class where the constructor arguments just are assigned directly to member variables. Neo-C allows the arguments of the constructor to create the member variables automatically.
+1. Instead of using `:` for member initializer lists, it has been replaced with the `init` keyword and has to be placed on it's own line. This is because Neo-C uses `:` for error handling purposes.
 2. In C++, `private:` and `public` require another indentation or are put on the same line as the class which looks messy. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
 3. Inheritance has been removed from Neo-C and composition is recommended instead.
     - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
 
 ```C++
-// Neo-C
-class Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unknown", i64 pages = 0)
-  Book
-    // Initialization constructor code. This is optional.
+// Nep-C
+class Book
+  i64 _copiesAvailable
+  string title
+  string author
+  i64 pages
+
+  Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unknown", i64 pages = 0)
+  init _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages)
+    // Other constructor code can go here.
 
   Book(Book book)
-    // Constructor overloading example.
-    _copiesAvailable = 100
-    title = book.title
-    author = book.author
-    pages = book.pages
+  init _copiesAvailable(100), title(book.title), author(book.author), pages(books.pages)
+    // Other constructor code can go here.
 
   ~Book()
     // Destructor
@@ -409,22 +412,18 @@ class Book {
   private:
     int64_t _copiesAvailable;
   public:
-    String_ title = "Unknown";
-    String_ author = "Unknown";
-    int64_t pages = 0;
+    String_ title;
+    String_ author;
+    int64_t pages;
 
-    Book() {}
-
-    Book(int64_t _copiesAvailable, String_ = "Unknown", String_ author = "Unknown", int64_t pages = 0) : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
-      // Initialization constructor code. This is optional.
+    Book(int64_t _copiesAvailable, String_ title = "Unknown", String_ author = "Unknown", int64_t pages = 0)
+    : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
+      // Other constructor code can go here.
     }
 
-    Book(Book book) {
-      // Constructor overloading example.
-      _copiesAvailable = 100;
-      title = book.title;
-      author = book.author;
-      pages = book.pages;
+    Book(Book book)
+    : _copiesAvailable(100), title(book.title), author(book.author), pages(books.pages) {
+      // Other constructor code can go here.
     }
 
     ~Book() {
@@ -439,8 +438,7 @@ class Book {
 }
 ```
 
-- The `:` syntax to assign variables from a constructor isn't present in Neo-C because it's used for error handling instead.
-- The `this` keyword can be used to differentiate between a variable belonging to the class and a local variable.
+- The `this` keyword can be used and it behaves the same as in C++.
 
 ## [Interfaces](#neo-c)
 Composition and interfaces are preferred over inheritance because they allow code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
@@ -899,7 +897,7 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
   - break, continue
 - import, export
 - return
-- class, struct, union, this
+- class, init, struct, union, this
 - interface
 - enum
 - int, uint, float
