@@ -37,7 +37,6 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Templates](#templates)
 - [Casting/Converting](#castingconverting)
 - [Error handling](#error-handling)
-- [Compile time operations](#compile-time-operations)
 - [Heap memory](#heap-memory)
 - [Other changes](#other-changes)
 	- [Removing gotos](#removing-gotos)
@@ -470,26 +469,27 @@ class Interface {
 ```
 
 ## [Enums](#neo-c)
-Enums are a list of constants that are used to limit the values that can be assigned to a variable. For example, if you want to represent the states of a coin you can use a bool, but if you wanted to represent something with 3 or more states you would normally use an enum. Neo-C doesn't change too much about enums compared to C++, but it does change the syntax a bit because Neo-C doesn't have namespaces.
+There are 2 main problems with the regular `enum` in C++ that `enum class` was designed to solve:
+1. Naming conflicts
+    - You cannot reuse the names defined in the enum.
+2. Implicit int conversion
+    - Enums can be compared to or assigned from integers, which can case confusion and invalid values.
+
+Because of these problems, Neo-C doesn't have a regular `enum` like in C++. `enum`s in Neo-C behave very similarly to `enum class` in C++.
+- Enum names have to be in PascalCase.
+- Enum values have to be in SCREAMING_CASE.
 
 ```C++
 // Neo-C
 enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = DayOfTheWeek.MON
 
-enum Color = {RED, GREEN, BLUE}
-Color color = DayOfTheWeek.MON // This gives a compiler error
-
 // C++
-enum class DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
+enum class DayOfTheWeek : int64_t {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
 DayOfTheWeek day = DayOfTheWeek::MON;
-
-enum class Color = {RED, GREEN, BLUE};
-Color color = DayOfTheWeek.MON; // This gives a compiler error
 ```
 
-- The default type for enum constants are i64
-- You can change them by using the `:`. Ex: `enum Name : i32`.
+- You can change the default underlying type of the enum by doing `enum Name<type> = {}`
 
 ## [Nested Comments](#neo-c)
 In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -612,6 +612,12 @@ Casting can be thought of as a special syntax for conversion functions. To simpl
 - There is no implicit casting/converting in C++.
   - Float literals have to have decimal points. Ex: `10.0`
   - Integer literals cannot have decimal points. Ex: `10`
+
+There shouldn't be a convert library. Just treat the data type as a function. Ex:  `bool(Type val)`
+  - This can be inbuilt into the language without needing any extra keywords.
+  - Avoids having to include a library
+  - Can be evaluated at compile time if applicable by the compiler.
+    - The user shouldn't have to worry about that.
 
 Not Done:
 
@@ -780,32 +786,6 @@ f64 divide(f64 numerator, f64 denominator) : string
 
 - Use `catch` for the default catch instead of `catch ...`
 
-## [Compile time operations](#neo-c)
-In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before a function call.
-
-```C++
-i32 main()
-	const i64 FIVE_FACTORIAL = compile factorial(5) // This is valid
-	i64 var = 6
-	const i64 SIX_FACTORIAL = compile factorial(var) // This is invalid because var isn't known at compile time.
-
-i64 factorial(i64 value)
-	if value == 1 return 1
-	return value * factorial(value - 1)
-```
-
-Neo-C also allows constants to be copied and pasted by the compiler. The value of the constant has to be defined at compile time. This can be done using the `copy&paste` keyword.
-
-```C++
-copy&paste const i64 PI = 3.14
-```
-
-These two keywords can be combined to allow the values of constants to be calculated at compiled time and then copied and pasted into the code.
-
-```C++
-copy&paste const i64 FIVE_FACTORIAL = compile factorial(5)
-```
-
 ## [Heap memory](#neo-c)
 In C++, to allocate memory on the heap you use the `new` keyword. Once done being used, this heap memory has to then be deallocated with the `delete` keyword. This has 3 main problems.
 
@@ -902,4 +882,3 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 - enum
 - int, uint, float
 - try, catch, throw
-- compile, copy&paste

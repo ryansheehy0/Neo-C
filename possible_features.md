@@ -215,7 +215,6 @@ obj.get_object().publicVar;
 - Heap_
 
 ## Remove namespaces
-
 - In C++, when you `#include` the compiler simply copies and pastes that file at that location. This could be a problem if different files have the same element names.
 In C++, one of the primary purposes fo namespace is to fix some of the problems that happens with `#include`. In C++
 In C++, namespaces are mainly a result of how C++ does its importing. In C++, when you `#include` a file, the contents of that file get copied and pasted at that location. If you are including multiple files and there's a naming conflict between the files, then that would cause a problem. Namespaces 
@@ -224,25 +223,6 @@ Neo-C doesn't have
 - Explain why namespaces have been removes
 - Librayr names should be camelCase bcause they are objects
 - remove namespaces form ## Enums
-
-## Enums
-```C++
-// Same as enum class
-
-class Color()
-  static enum Colors = {RED, GREEN, BLUE}
-
-  void set(Colors c)
-    _color = c
-
-  Colors get()
-    return _color
-
-  i64 _color
-
-Color color
-color.set()
-```
 
 ## Casting
 - Casting can be done at compile time, where convert functions are done at run time.
@@ -254,3 +234,30 @@ Casting can be seen as a special syntax for conversion functions.
 In Neo-C, casting is replaced with the Convert Library, which handles all conversions. This approach simplifies the language's syntax and ensures more consistent error handling.
 
 Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
+
+## [Compile time operations](#neo-c)
+This can be automatically done by the compile?
+In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before a function call.
+
+```C++
+i32 main()
+	const i64 FIVE_FACTORIAL = compile factorial(5) // This is valid
+	i64 var = 6
+	const i64 SIX_FACTORIAL = compile factorial(var) // This is invalid because var isn't known at compile time.
+
+i64 factorial(i64 value)
+	if value == 1 return 1
+	return value * factorial(value - 1)
+```
+
+Neo-C also allows constants to be copied and pasted by the compiler. The value of the constant has to be defined at compile time. This can be done using the `copy&paste` keyword.
+
+```C++
+copy&paste const i64 PI = 3.14
+```
+
+These two keywords can be combined to allow the values of constants to be calculated at compiled time and then copied and pasted into the code.
+
+```C++
+copy&paste const i64 FIVE_FACTORIAL = compile factorial(5)
+```
