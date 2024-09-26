@@ -38,6 +38,7 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Casting/Converting](#castingconverting)
 - [Error handling](#error-handling)
 - [Heap memory](#heap-memory)
+- [Compile time operations](#compile-time-operations)
 - [Other changes](#other-changes)
 	- [Removing gotos](#removing-gotos)
 	- [Things that throw errors](#things-that-throw-errors)
@@ -166,24 +167,27 @@ It's important for a language to stay consistent with its syntax so people know 
 ## [Match statements](#neo-c)
 Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
 - You cannot use switch statements in Neo-C. Match statements are used instead.
-- `:`s after cases cannot be used in Neo-C.
 
 The match statement is exactly like the switch statement, but the brakes are automatically included.
 
 ```C++
 // Neo-C
 match var
-  case 1
-  case 2
-  default
+  case 1: printLine(1)
+  case 2:
+    printLine(2)
+  default: printLine("default")
+    printLine("default")
 
 // C++
 switch (var) {
-  case 1:
+  case 1: std::cout << 1 << "\n";
     break;
   case 2:
+    std::cout << 2 << "\n";
     break;
-  default:
+  default: std::cout << "default" << "\n";
+    std::cout << "default" << "\n";
     break;
 }
 ```
@@ -194,8 +198,10 @@ It is common to perform an action with a range of inputs, such as all lowercase 
 ```C++
 // Neo-C
 match var
-  case 'a'...'c'
+  case 'a'...'c':
     // Do something
+  case 'A' ... 'C':
+    // Do something else
 
 // C++
 switch (var) {
@@ -203,6 +209,11 @@ switch (var) {
   case 'b':
   case 'c':
     // Do something
+    break;
+  case 'A':
+  case 'B':
+  case 'C':
+    // Do something else
     break;
 }
 ```
@@ -213,7 +224,7 @@ Instead of using fall-throughs for multiple case labels, you can use a comma `,`
 ```C++
 // Neo-C
 match var
-  case 'a', 'b'
+  case 'a', 'b':
 
 // C++
 switch (var) {
@@ -230,7 +241,7 @@ switch (var) {
 // Neo-C
 while true
   match 1
-    case 1
+    case 1:
       break
 
 // C++
@@ -252,9 +263,9 @@ C++ doesn't support using strings in switch statements, but Neo-C does for match
 // Neo-C
 string str = "abc"
 match str
-  case "a", "ab"
+  case "a", "ab":
     // Do something
-  case "abc"
+  case "abc":
     // Do something
 
 // C++
@@ -481,7 +492,7 @@ Because of these problems, Neo-C doesn't have a regular `enum` like in C++. `enu
 
 ```C++
 // Neo-C
-enum DayOfTheWeek = {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
+enum DayOfTheWeek {MON = 1, TUE, WED, THU, FRI, SAT, SUN}
 DayOfTheWeek day = DayOfTheWeek.MON
 
 // C++
@@ -489,7 +500,7 @@ enum class DayOfTheWeek : int64_t {MON = 1, TUE, WED, THU, FRI, SAT, SUN};
 DayOfTheWeek day = DayOfTheWeek::MON;
 ```
 
-- You can change the default underlying type of the enum by doing `enum Name<type> = {}`
+- The default underlying type is i64. You can change the default underlying type of the enum by doing `enum Name : type {}`
 
 ## [Nested Comments](#neo-c)
 In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
@@ -565,6 +576,8 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape.
 
 ## [Templates](#neo-c)
+NOT DONE.
+
 In Neo-C, templates are simplified compared to C++, but they offer an additional feature that allows you to specify exactly which types are allowed for a template argument. You can define the allowed types using a pipe(`|`) symbol between them. For example, `void func<i8 | i16 | i32 Type>()` specifies that the template argument `Type` can only be one of the specified types(`i8`, `i16`, or `i32`).
 - All templates have to be defined right after the name of the entity they apply to.
 
@@ -606,55 +619,35 @@ add<int64_t>(1, 5);
 
 - If the type isn't specified and the arguments are literals, then Neo-C assumes them to be the largest type possible.
   - Ex: `add(1, 5)` is assumed to be of type `i64`. Or `add(1.0, 5.0)` is assumed to be of type `f64`.
+- You cannot use `auto` as an argument type. Instead use a template. This is done to simplify things.
 
 ## [Casting/Converting](#neo-c)
-Casting can be thought of as a special syntax for conversion functions. To simplify things, casting in Neo-C has been replaced with the Convert Library.
+NOT DONE.
+In Neo-C, castings are treated the exact same as functions.
 - There is no implicit casting/converting in C++.
-  - Float literals have to have decimal points. Ex: `10.0`
-  - Integer literals cannot have decimal points. Ex: `10`
+  - Float literals have to have decimal points. Ex: `f64 x = 10.0`
+  - Integer literals cannot have decimal points. Ex: `i64 x = 10`
+  - There is no implicit conversion for assigning to classes. Ex: `Class c = "str"` is not allowed.
 
-There shouldn't be a convert library. Just treat the data type as a function. Ex:  `bool(Type val)`
-  - This can be inbuilt into the language without needing any extra keywords.
-  - Avoids having to include a library
-  - Can be evaluated at compile time if applicable by the compiler.
-    - The user shouldn't have to worry about that.
+- bool
+  - 0 is falsy, everything else is truthy. Just like C++.
+- i8, i16, i32, i64
+  - OutOfRange
+- u8, char, u16, u32, u64
+  - OutOfRange
+- f32, f64
+  - OutOfRange
+- string
+- arrays?
+  - `ReturnType[] array<ReturnType, Type>(Type val)`
+- pointers?
+- class
+- struct
+- union
+- interface
+- enum
+  - `Enum enum<Enum, Type>(Type val) : OutOfRange`
 
-Not Done:
-
-Convert Library
-- `bool toBool<Type>(Type val)`
-- `i8 toI8<Type>(Type val) : OutOfRange`
-	- toI16, toI32, toI64
-- `u8 toU8<Type>(Type val) : OutOfRange`
-	- toChar, toU16, toU32, toU64
-- `f32 toF32<Type>(Type val) : OutOfRange`
-	- toF64
-- `string toString<Type>(Type val)`
-
-- `Enum toEnum<Enum, Type>(Type val) : OutOfRange, InvalidInputType`
-
-
-
-- `char[] toArray(string val)`
-
-- Cannot convert to an object. Object isn't a type.
-
-
-dynamic
-- interface, class, struct, union, this, object
-
-
-- string join(T[] arr, string stringSeparator)
-	- Concatenates the array into a single string, separated by the stringSeparator.
-- T toEnum<enum T>(auto var) : OutOfRange
-- T toClass<class T>(auto var)
-- T toStruct<struct T>(auto var)
-- T toUnion<union T>(auto var)
-- T toInterface<interface T>(auto var)
-- T toPointer<auto* T>(auto var)
-- auto[] toArray(auto var)
-- auto[] split(string  str, string strSeparator)
-	- Divides a string into an array based on the occurrences of the specified splitString.
 
 Data is defined in the real world. Protocols are agreed upon standards used to extract information from that data.
 For example, when you drive up to a traffic light, the color and whether the lights are on or off are the data. The protocol is: red light on equals stop, yellow light on equals slow down, and green light on equals maintain speed. The information is obtained when you see the lights, apply the protocol, and extract useful information that can be translated into an action.
@@ -664,9 +657,9 @@ In programming languages, the data is the underlying bits, the protocol is the d
 ```C++
 f32 a = 1.5
 // Change the underlying bits
-i32 b = toI32(a) // 1
+i32 b = i32(a) // 1
 // Keep the underlying bits the same
-i32 c = *toPointer<i32*>(&a) // 1069547520
+i32 c = *pointer<i32*>(&a) // 1069547520
 ```
 
 ## [Error handling](#neo-c)
@@ -806,6 +799,34 @@ printLine(mem)
 Heap_<int64_t> mem = Heap_(10);
 std::cout << mem.get_() << "\n";
 ```
+
+## [Compile time operations](#neo-c)
+In Neo-C, you can avoid worrying about functions or constants being executed at runtime when they can be computed during compile time. Specifically, the following conditions must be met for functions or constants to be processed at compile time:
+1. Compile time functions:
+  - All the arguments must be known at compile time.
+  - The function is pure. It must not use any inputs other than the arguments. Ex: using a pointer, static variables, etc.
+2. Compile time constants:
+  - Its value must be known at compile time.
+  - No other part of the program references it's address.
+
+```C++
+// Neo-C
+const i64 FIVE_FACTORIAL = factorial(5)
+
+i64 factorial(i64 value)
+  if value == 0 return 1
+  return value * factorial(value - 1)
+
+// Compiled C++
+const int64_t FIVE_FACTORIAL = 120;
+
+int64_t factorial(nt64_t value) {
+  if (value == 0) return 1;
+  return value * factorial(value - 1);
+}
+```
+
+This avoids the need for magic numbers and comments by utilizing functions instead. Unlike comments, which may not reflect the current code, functions consistently produce the intended results.
 
 ## [Other changes](#neo-c)
 - `**` can be used for exponents.

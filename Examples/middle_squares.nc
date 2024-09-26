@@ -1,24 +1,23 @@
-import {currentUnixTime} <Time>
-import {toString} <Convert>
+export class MiddleSquaresRandomNumber
+	u64 _seed
 
-export object middleSquares
-	u64 _seed = currentUnixTime()
+	MiddleSquaresRandomNumber(u64 seed)
+	init _seed(seed)
 
 	u64 _extractMiddle(u64 squaredSeed, u64 seedLength)
-		string strSquaredSeed = toString(squaredSeed).reverse()
+		string reversedSquaredSeed = string(squaredSeed).reverse()
 		string middle
 		for i64 i = 0; i < seedLength + seedLength / 2; i++
 			if i < seedLength / 2
 				continue
-			middle += strSquaredSeed[i]
+			middle += reversedSquaredSeed[i]
 		return middle.reverse()
 
 	u64 _getSeedLength()
-		string seed = toString(_seed)
-		return seed.size()
+		return string(_seed).size()
 
 	void setSeed(u64 seed)
 		_seed = seed
 
-	u64 getNext()
+	u64 next()
 		return _extractMiddle(_seed ** 2, _getSeedLength())

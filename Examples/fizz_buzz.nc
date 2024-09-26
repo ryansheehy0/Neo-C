@@ -1,5 +1,4 @@
 import {printLine, printLineError} <Terminal>
-import {toU64} <Convert>
 import {OutOfRange} <Error>
 
 i32 main(string[] args)
@@ -7,9 +6,9 @@ i32 main(string[] args)
 		printLineError("The argument is the number of iterations.\nfizzBuzz numOfIterations")
 		return 1
 
-	try u64 numOfIterations = toU64(args[1])
+	try u64 numOfIterations = u64(args[1])
 	catch OutOfRange error
-		printLineError("numOfIterations needs to be postive and within 64 bits.")
+		printLineError("numOfIterations needs to be a postive integer.")
 		return 1
 
 	for u64 i = 0; i < numOfIterations; i++

@@ -15,13 +15,13 @@
 			"include": "#libraries"
 		},
 		{
+			"include": "#functions"
+		},
+		{
 			"include": "#dataTypes"
 		},
 		{
 			"include": "#literals"
-		},
-		{
-			"include": "#functions"
 		},
 		{
 			"include": "#camelCase"
@@ -43,7 +43,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|default|try|catch|continue)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|default|try|catch|continue|init)\\b"
 			}]
 		},
 		"strings": {
@@ -81,6 +81,12 @@
 				}
 			}]
 		},
+		"functions": {
+			"patterns": [{
+				"name": "entity.name.function.neo-c",
+				"match": "\\w+(?=[\\(|\\<])"
+			}]
+		},
 		"dataTypes": {
 			"patterns": [{
 				"name": "storage.type.neo-c",
@@ -91,12 +97,6 @@
 			"patterns": [{
 				"name": "constant.numeric.neo-c",
 				"match": "(?<![a-zA-Z])-?\\b\\d+\\b"
-			}]
-		},
-		"functions": {
-			"patterns": [{
-				"name": "entity.name.function.neo-c",
-				"match": "\\w+(?=[\\(|\\<])"
 			}]
 		},
 		"camelCase": {

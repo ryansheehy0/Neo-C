@@ -1,18 +1,19 @@
 ## Todo
-- Remove the default constructors in classes? Why?
-	- Should I have a special syntax? Nah
-- You cannot have containers in other containers.
-	- Ex: You can't have a struct defined in a class.
+- Need to re-think casting and templates.
+	- All metaprogramming should be done through templates.
+	- Need template requirements. `concept` and `requires`
+	- Optional requirements for classes
+	- typename..., sizeof..., args...
+		- compile time if. if constexpr
 
 - Minor syntax enforcements
-	- There is no implied conversion with instances of classes so that the syntax for creating an object from a class is consistent.
-		- The `explicit` keyword is used on all constructors.
-		- What syntax used to create object? I like the =s sign syntax.
-	- This is the only syntax which can be used to create an instance of a class
-		- What happens when you set an object equal to another one? Does it create a copy or pass a reference?
-	- No function like macros, no functions within functions, no inline functions, no assigning functions to variables.
 	- && for rvalues should not be used?
 		- temp values
+	- You cannot have containers in other containers.
+		- Ex: You can't have a struct defined in a class.
+	- You cannot have functions in other functions.
+	- There is no inline function in Neo-C.
+	- No assigning functions to variables. You can with a pointer?
 
 - Keywords
 	- static
@@ -35,7 +36,6 @@
 	- All the types of errors
 		- InvalidConversion
 		- OutOfRange
-	- Should split, join, and typeof be in Convert Library?
 
 - Other
 	- How to do functions as arguments. Lamda arguments.
@@ -45,11 +45,6 @@
 	- Creating libraries
 		- Should be done through the compiler.
 		- Should have 2 settings. Include links or not.
-
-## Problem areas of Neo-C
-- Metaprogramming
-	- function like macros
-	- Limited template features
 
 ## Most likely not
 - Function like macros
@@ -67,6 +62,8 @@
 - Assigning functions to variables
 	- Maybe don't include. Could be confusing.
 	- When you create a function you should be able to use it like a variable.
+- Function like macros
+	- This can be done with templates
 
 ## Other notes/ideas
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
@@ -121,42 +118,6 @@ if (a > 10 && a < 20)
 
 ```javascript
 let a = `Test ${Test} test`
-```
-
-## Casting
-
-```C++
-// Neo-C
-f32 x = 1.5
-i32 y = x
-  // or
-i32 y = (i32)x
-  // or
-i32 y = (i32)(x)
-
-printLine(y) // 1
-
-// C++
-float x = 1.5;
-int32_t y = x;
-  // or
-int32_t y = static_cast<int32_t>(x);
-
-std::cout << y << "\n";
-```
-
-```C++
-// Neo-C
-f32 x = 1.5
-i32 y = *(i32*)&x
-
-printLine(y)
-
-// C++
-float x = 1.5;
-int32_t y = *reinterpret_cast<int32_t*>(&x);
-
-std::cout << y << "\n";
 ```
 
 ## Templates
@@ -224,17 +185,6 @@ Neo-C doesn't have
 - Librayr names should be camelCase bcause they are objects
 - remove namespaces form ## Enums
 
-## Casting
-- Casting can be done at compile time, where convert functions are done at run time.
-
-doesn't have this special syntax and instead handles conversions through the Convert Library.
-This simplifies the syntax of the language and allows for more consistency in handling error handlings.
-
-Casting can be seen as a special syntax for conversion functions.
-In Neo-C, casting is replaced with the Convert Library, which handles all conversions. This approach simplifies the language's syntax and ensures more consistent error handling.
-
-Neo-C removes casting in order to simplify the language. Instead, Neo-C provides the Convert library that handles conversions explicitly between different types. There are no implicit conversions in Neo-C and all conversions must be performed deliberately using the Convert functions. These functions can throw errors if the conversion is not possible.
-
 ## [Compile time operations](#neo-c)
 This can be automatically done by the compile?
 In Neo-C, you can have functions be evaluated at compile time if the arguments to those functions can also be calculated at compile time. This can be done by putting the `compile` keyword before a function call.
@@ -261,3 +211,7 @@ These two keywords can be combined to allow the values of constants to be calcul
 ```C++
 copy&paste const i64 FIVE_FACTORIAL = compile factorial(5)
 ```
+
+This maybe needed.
+	- The compiler might not have enough information to know.
+	- Need a keyword for compile time if statements.
