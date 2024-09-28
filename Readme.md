@@ -64,7 +64,7 @@ Neo-C enforces naming conventions because it keeps things more consistent.
 
 | Category                                                    | Naming convention |
 |-------------------------------------------------------------|-------------------|
-| Variables, Functions, Objects                               | camelCase         |
+| Variables, Functions                                        | camelCase         |
 | Constants                                                   | SCREAMING_CASE    |
 | Classes, Structs, Unions, Enums, Interfaces, Template types | PascalCase        |
 
@@ -780,6 +780,10 @@ f64 divide(f64 numerator, f64 denominator) : string
 - Use `catch` for the default catch instead of `catch ...`
 
 ## [Heap memory](#neo-c)
+Not Done.
+
+How can you transfer ownership? How do smart pointers transfer ownership?
+
 In C++, to allocate memory on the heap you use the `new` keyword. Once done being used, this heap memory has to then be deallocated with the `delete` keyword. This has 3 main problems.
 
 1. Forgetting to call delete causing memory leaks.
@@ -894,12 +898,13 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
   - if, else
   - for, in
   - do, while
-  - match, case, default
+  - match, case, default, fall
   - break, continue
 - import, export
 - return
 - class, init, struct, union, this
 - interface
 - enum
-- int, uint, float
+- requirement
 - try, catch, throw
+- unique, shared

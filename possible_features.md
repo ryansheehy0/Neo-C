@@ -1,10 +1,85 @@
 ## Todo
-- Need to re-think casting and templates.
-	- All metaprogramming should be done through templates.
-	- Need template requirements. `concept` and `requires`
-	- Optional requirements for classes
-	- typename..., sizeof..., args...
-		- compile time if. if constexpr
+- Match statements
+	- Ranges(`...`) only work for constants
+	- `default` keyword
+	- `fall` keyword
+	- Can use `continue` and `break` in match statements to control outer loops.
+- Templates
+	- `requirement` keyword
+	- `auto` instead of typename or class
+	- Requirement library for all the basic requirements
+	- &&, ||, !, and () for requirements
+- Heap
+	- `unique<type>` and `shared<type>`
+	- No `new` and `delete` keywords.
+	- Remove RAII explanation
+- Define casting functions
+- Explain why namespaces have been removed.
+- Explain the advantages of compiling into C++.
+
+## Possible features
+- It compiles into C++
+  - Just as efficient as C++
+  - Doesn't compete with C++ compilers and their 
+
+- Variables in ranges for match statements?
+- `fall through` case statements
+  - Don't have case 'a'
+- RAII
+  - Function returning pointer to object.
+  - Maybe my idea of RAII is wong.
+  - Always use smart pointers.
+- AWK programming language.
+  - Associated arrays
+- Error handling
+  - Exceptions are raised when there's programming error.
+    - Return exception when file doesn't exist.
+  - Top level handles what can throw an error.
+    - Top level opens file and passes it to the leaf functions.
+- Inheritance
+  - Right tool for the right job.
+  - UI frameworks for inheritance.
+  - Don't want to implement your library with a sub class.
+
+
+
+- Templates
+	- Multiple arguments into templates
+		- typename..., sizeof..., args...
+			- compile time if. if constexpr
+	- Possible keywords
+		- `where`, `concept`, `requires`
+	- Sources
+		- https://www.youtube.com/watch?v=HqsEHG0QJXU
+
+```C++
+void printValue<HasMultiple Type>(Type value)
+	print(value)
+
+requirement HasAddition<auto Type>(Type a, Type b)
+	a + b
+
+requirement HasLessThan<auto Type>(Type a, Type b)
+	a < b
+
+requirement HasMultiple<HasAddition && HasLessThan Type>(Type value)
+	value
+
+requirement IsI8(i8 value)
+	value
+
+requirement IsI16(i16 value)
+	value
+
+requirement IsI32(i32 value)
+	value
+
+requirement IsI64(i64 value)
+	value
+
+requirement IsInt<IsI8 || IsI16 || IsI32 || IsI64 Type>(Type value)
+	value
+```
 
 - Minor syntax enforcements
 	- && for rvalues should not be used?
@@ -34,7 +109,6 @@
 
 - Libraries
 	- All the types of errors
-		- InvalidConversion
 		- OutOfRange
 
 - Other
@@ -45,6 +119,19 @@
 	- Creating libraries
 		- Should be done through the compiler.
 		- Should have 2 settings. Include links or not.
+	- Maybe no reference arguments and instead just use pointers.
+		- Less confusing syntax. Probably not.
+	- Maybe only allow single inheritance? But then I need all of those inheritance keywords.
+
+	- Heap
+		- Built in functions: `move`, `get`, `reset`, `release`, `count`, `swap`, `lock`, `expired`
+			- Maybe make all of these methods.
+		- Weak pointers
+
+```C++
+unique<i64> i = 10
+i.get()
+```
 
 ## Most likely not
 - Function like macros

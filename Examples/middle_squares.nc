@@ -1,23 +1,31 @@
-export class MiddleSquaresRandomNumber
+import {OutOfRange} <Error>
+
+export class MiddleSquaresRandomNumberGenerator
 	u64 _seed
+	u64 _seedLength
 
-	MiddleSquaresRandomNumber(u64 seed)
-	init _seed(seed)
+	MiddleSquaresRandomNumberGenerator(u64 seed)
+	init _seed(seed), _seedLength(string(seed).size())
 
-	u64 _extractMiddle(u64 squaredSeed, u64 seedLength)
+	u64 _extractMiddle(u64 squaredSeed)
 		string reversedSquaredSeed = string(squaredSeed).reverse()
+		// Extract the middle of the reversed squared seed
 		string middle
-		for i64 i = 0; i < seedLength + seedLength / 2; i++
-			if i < seedLength / 2
-				continue
+		for i64 i = _seedLength / 2; i < _seedLength + _seedLength / 2; i++
 			middle += reversedSquaredSeed[i]
-		return middle.reverse()
 
-	u64 _getSeedLength()
-		return string(_seed).size()
+		for i64 i = 0; i < _seedLength; i++
+			middle += reversedSquaredSeed[i + _seedLength / 2]
+		// return
+		try u64 newSeed = u64(middle.reverse())
+		catch OutOfRange error
+			//
+		return newSeed
 
 	void setSeed(u64 seed)
 		_seed = seed
+		_seedLength = string(seed).size()
 
 	u64 next()
-		return _extractMiddle(_seed ** 2, _getSeedLength())
+		_seed = _extractMiddle(_seed ** 2)
+		return _seed
