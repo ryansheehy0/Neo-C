@@ -1,23 +1,14 @@
 ## Todo
-- Match statements
-	- Ranges(`...`) only work for constants
-	- `default` keyword
-	- `fall` keyword
-	- Can use `continue` and `break` in match statements to control outer loops.
-- Templates
-	- `requirement` keyword
-	- `auto` instead of typename or class
-	- Requirement library for all the basic requirements
-	- &&, ||, !, and () for requirements
 - Heap
 	- `unique<type>` and `shared<type>`
 	- No `new` and `delete` keywords.
 	- Remove RAII explanation
 - Define casting functions
-- Explain why namespaces have been removed.
-- Explain the advantages of compiling into C++.
 
 ## Possible features
+- Functions with a variable number of arguments?
+- This language is designed to work with line wrap enabled. You cannot add new lines willy nilly.
+
 - It compiles into C++
   - Just as efficient as C++
   - Doesn't compete with C++ compilers and their 
@@ -52,9 +43,21 @@
 	- Sources
 		- https://www.youtube.com/watch?v=HqsEHG0QJXU
 
+Returns true if the body can support those lines.
+
 ```C++
 void printValue<HasMultiple Type>(Type value)
 	print(value)
+
+requirement HasMathOperators<auto Type>(Type a, Type b)
+	a ** b
+	a * b
+	a / b
+	a + b
+	a - b
+
+requirement IsArray<auto Type>(Type a)
+	a[0]
 
 requirement HasAddition<auto Type>(Type a, Type b)
 	a + b

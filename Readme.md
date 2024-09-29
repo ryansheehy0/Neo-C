@@ -1,17 +1,23 @@
 # Neo-C
-Neo-C is a programming language like C++, but tries to have a consistent and pleasant to use syntax. C++ gives so many features to users that it becomes up to them how they want to program in C++. This often leads to inconsistency and over-complexity. In contrast, Neo-C has relatively simple features and tries not to be overly complex. It isn't backwards compatible C++.
+Neo-C is a programming language that tries to solve all of my problems with C++.
+It compiles into C++, so it can be just as efficient.
 
-- **Compile still in development.**
-  - If there's a disagreement between the compiler and the documentation, then the documentation is correct.
-- In order to implement syntax highlighting in vs code, copy and paste the **Neo_C_Syntax_Highlighter** folder in **~/.vscode/extensions/**.
-- Neo-C files have the **.nc** file extension.
+- **Compiler still in development.**
+- **Syntax Highlighting in VS Code:** Copy and paste `Neo_C_Syntax_Highlighter` folder in `~/.vscode/extensions/`
+
+```C++
+import {printLine} <Terminal>
+
+i32 main()
+  printLine("Hello world!")
+```
 
 <img src="./neo_c_logo.svg" width=400>
 
 <!-- TOC -->
 
 - [Basic syntax](#basic-syntax)
-	- [Naming Conventions](#naming-conventions)
+	- [Enforced naming conventions](#enforced-naming-conventions)
 - [Data Types](#data-types)
 	- [Built in data types](#built-in-data-types)
 	- [Built in string and array methods](#built-in-string-and-array-methods)
@@ -19,8 +25,9 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 - [Removal of operator overloading](#removal-of-operator-overloading)
 - [Match statements](#match-statements)
 	- [Ranges](#ranges)
+	- [Fall throughs](#fall-throughs)
 	- [Multiple cases](#multiple-cases)
-	- [Breaks in match statements](#breaks-in-match-statements)
+	- [Breaks](#breaks)
 	- [Strings](#strings)
 - [Importing and Exporting](#importing-and-exporting)
 - [Automatic function hoisting](#automatic-function-hoisting)
@@ -47,36 +54,26 @@ Neo-C is a programming language like C++, but tries to have a consistent and ple
 <!-- /TOC -->
 
 ## [Basic syntax](#neo-c)
-- Semi-colons cannot be used.
-  - They are annoying and the ability to place multiple statements on one line is unnecessary.
-- Curly brackets cannot be used and are replaced by indentations.
-  - Curly brackets are unnecessary. Indentation is already commonly used, so it might as well be enforced as the standard.
-  - You can either use tab or space indentation.
-  - This language is designed to work with line wrap enabled. You cannot add new lines willy nilly.
-- Parenthesis cannot be used for conditionals.
-  - They are unnecessary and often don't lead to more readable code.
-  - Functions and classes still require `()` without the space. Ex: `void func()` and not `void func ()`
+- No semicolons
+- Curly brackets replaced by new lines and indentations
+  - Tabs and spaces can be used for indentation
+- No parenthesis for conditionals(if, for, while, etc.)
 
-### [Naming Conventions](#neo-c)
-Neo-C enforces naming conventions because it keeps things more consistent.
-- Names cannot start with underscore or numbers.
-- Names are case sensitive.
+### [Enforced naming conventions](#neo-c)
 
-| Category                                                    | Naming convention |
-|-------------------------------------------------------------|-------------------|
-| Variables, Functions                                        | camelCase         |
-| Constants                                                   | SCREAMING_CASE    |
-| Classes, Structs, Unions, Enums, Interfaces, Template types | PascalCase        |
+| Category                                                                  | Naming convention |
+|---------------------------------------------------------------------------|-------------------|
+| Variables, Functions                                                      | camelCase         |
+| Constants, Enum values                                                    | SCREAMING_CASE    |
+| Classes, Structs, Unions, Enums, Interfaces, Template types, Requirements | PascalCase        |
 
 ## [Data Types](#neo-c)
 C++ has some problems with its default data types, which Neo-C corrects.
 
 1. Data types don't have explicitly defined lengths.
-  - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if the code expects `int` to be 64 bits, but the platform only supports 32 bits.
-2. Dynamic arrays aren't built into the language.
-  - Dynamic arrays(`std::vector`) and strings(`std::string`) aren't built into the language even when they are so commonly used. This can be annoying having to include such a common feature.
-3. There are multiple ways of making arrays with `std::array` and C-style arrays.
-  - Each style of creating arrays has different features and limitations, which can create confusion and unnecessary complexity.
+    - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if the code expects `int` to be 64 bits, but the platform only supports 32 bits.
+2. Dynamic arrays and strings aren't built into the language.
+3. There are multiple ways of creating arrays with `std::array` and C-style arrays.
 
 ### [Built in data types](#neo-c)
 - `auto`
@@ -90,9 +87,9 @@ C++ has some problems with its default data types, which Neo-C corrects.
 - `string`
   - C++: `String_`
 - `type[size] name`
-  - C++: `Array_<type> name = Array_(size);` or `Array_<type> name = Array_(anotherArray);`
+  - C++: `Array_<type> name(size);` or `Array_<type> name(anotherArray);`
 - `type[dynamic] name`
-  - C++: `DynamicArray_<type> name = DynamicArray_(size);` or `DynamicArray_<type> name = DynamicArray_(anotherArray);`
+  - C++: `DynamicArray_<type> name(size);` or `DynamicArray_<type> name(anotherArray);`
 
 ### [Built in string and array methods](#neo-c)
 
@@ -105,9 +102,9 @@ C++ has some problems with its default data types, which Neo-C corrects.
 | .sort()                                   | Returns a sorted array/string from lowest to highest.                              |
 | .reverse()                                | Returns a reversed array/string.                                                   |
 | .contains(value) or .includes(value)      | Does the value exist in the array?                                                 |
-| .bContains(value) or .bIncludes(value)    | Contains function with binary search. Array/string is assumed to be sorted.        |
+| .binaryContains(value) or .binaryIncludes(value)    | Uses binary search. Array/string is assumed to be sorted.                |
 | .find(value)                              | Gets the index of the value. -1 if not found.                                      |
-| .bFind(value)                             | Binary search to get the index of the value. Array/string is assumed to be sorted. |
+| .binaryFind(value)                                  | Uses binary search. Array/string is assumed to be sorted.                |
 | .fill(value, start, optional end)         | Fills the value from the start index to the end index or to the end of the array.  |
 | .isEveryElement(function)                 | Tests if every element passes the function.                                        |
 | .isOneOrMoreElements(function)            | Tests if one or more elements passes the function.                                 |
@@ -136,10 +133,10 @@ C++ has some problems with its default data types, which Neo-C corrects.
 | .trim()        | Removes any white space in the front and at the back. |
 
 - You can use `array1 + array2` or `string1 + string2` to do concatenation.
-- Methods can throw errors if the index is out of range.
+- These methods can throw errors if the index is out of range.
 
 ## [Main function](#neo-c)
-The main function doesn't have to return. If it doesn't then it's assumed to return 0.
+If the main function doesn't return, then it's assumed to return 0.
 
 ```C++
 // Neo-C
@@ -151,9 +148,8 @@ i32 main(string[] args)
 int main() {}
   // or
 int main(int arg_c, char** arg_v) {
-  String_ args[arg_c] = String_()
-  std::string args[arg_c];
-  for (int i = 0; i < arg_c; i++) {
+  String_ args(arg_c);
+  for (int i = 0; i < arg_c ; i++) {
     args[i] = arg_v[i];
   }
 }
@@ -162,13 +158,10 @@ int main(int arg_c, char** arg_v) {
 ## [Removal of operator overloading](#neo-c)
 It's important for a language to stay consistent with its syntax so people know what's built into the language and what isn't. Operator overloading can break this consistency and therefore it has been removed from Neo-C.
 
-- Ex: The `<<` in `std::cout << "Hello World\n";` can be confused with the left shift operator. It isn't clear if `<<` is built into the language or comes from a library.
+- Ex: The `<<` in `std::cout << "Hello world!\n";` can be confused with the left shift operator. It isn't clear if `<<` is built into the language or comes from a library.
 
 ## [Match statements](#neo-c)
-Switch statements are often used to replace if-else statements, but they typically result in more lines of code due to the required break statements. Match statements are meant to solve this problem.
-- You cannot use switch statements in Neo-C. Match statements are used instead.
-
-The match statement is exactly like the switch statement, but the brakes are automatically included.
+In C++, switch statements take up more lines because of the mandatory break statements. Neo-C replaces switch statements with match statements, which don't require the breaks.
 
 ```C++
 // Neo-C
@@ -193,15 +186,13 @@ switch (var) {
 ```
 
 ### [Ranges](#neo-c)
-It is common to perform an action with a range of inputs, such as all lowercase characters, uppercase characters, or digits. Therefore, you can use `...` in match statements to automatically create a range of cases.
+Neo-C allows you to do case ranges with constants. Such as all lowercase characters.
 
 ```C++
 // Neo-C
 match var
   case 'a'...'c':
     // Do something
-  case 'A' ... 'C':
-    // Do something else
 
 // C++
 switch (var) {
@@ -210,16 +201,32 @@ switch (var) {
   case 'c':
     // Do something
     break;
-  case 'A':
-  case 'B':
-  case 'C':
+}
+```
+
+### [Fall throughs](#neo-c)
+Since break statements are automatically included, you can use the `fall` keyword to fall through to the next case.
+
+```C++
+// Neo-C
+match var
+  case 1:
+    // Do something
+    fall
+  case 2:
     // Do something else
-    break;
+
+// C++
+switch (var) {
+  case 1:
+    // Do something
+  case 2:
+    // Do something else
 }
 ```
 
 ### [Multiple cases](#neo-c)
-Instead of using fall-throughs for multiple case labels, you can use a comma `,` to separate different comparisons that should execute the same block of code.
+Instead of always using `fall`, you can use a comma to separate different comparisons.
 
 ```C++
 // Neo-C
@@ -234,19 +241,19 @@ switch (var) {
 }
 ```
 
-### [Breaks in match statements](#neo-c)
-`break`s in switch statements cannot be used to break out of the loop containing the switch statement, but this can be done in match statements in Neo-C.
+### [Breaks](#neo-c)
+Breaks can be used in match statements to break out of an outer loop.
 
 ```C++
 // Neo-C
 while true
-  match 1
+  match var
     case 1:
       break
 
 // C++
 while (true) {
-  switch (1) {
+  switch (var) {
     case 1:
       goto break_loop;
       break;
@@ -256,7 +263,7 @@ break_loop:
 ```
 
 ### [Strings](#neo-c)
-C++ doesn't support using strings in switch statements, but Neo-C does for match statements.
+Strings can word in match statements.
 - Ranges(`...`) don't work for strings
 
 ```C++
@@ -269,7 +276,7 @@ match str
     // Do something
 
 // C++
-String_ str = String_("abc");
+String_ str("abc");
 if (str == "a" || str == "ab") {
   // Do something
 }else if (str == "abc") {
@@ -278,44 +285,47 @@ if (str == "a" || str == "ab") {
 ```
 
 ## [Importing and Exporting](#neo-c)
-C++ has some notable problems when it comes to importing and exporting with header files.
-
-1. If you make a change to a definition in a cpp file you have to make the same corresponding change in the header file.
-2. When you include a header file you are including everything in that file instead of only what you want to use.
+In C++, header files have some problems:
+1. If you make a change to a definition in a cpp file, you have to make the same corresponding change in the header file.
+2. When you include a header file, you are including everything in that file instead of only what you want to use.
 3. When you use some code from an included header file, it isn't clear which header file that code comes from.
 
-In Neo-C, you can use the `import` keyword and the `export` keyword to explicitly import or export what you want from other Neo-C files or libraries. You cannot have duplicate names in a Neo-C file.
-- Importing
-  - `import name <Library>` imports the entire Library under the object name.
-  - `import name "./localFile.nc"` imports all of the exported entities in that local file under the object name.
-  - `import {var, func} <Library>` imports only the exported entities with the name `var` and `func` from the Library.
-  - `import name, {var, func} <Library>` imports `var` and `func` from Library and all of the exports in Library under the object name.
-- Exporting
-  - `export i64 var = 0` exports the i64 variable named `var`.
-  - `export void func()` exports the function `func`.
+In Neo-C, there are no header files.
 
-See the [standard libraries](./standard_libraries.md) which are built into Neo-C.
+| Importing                            | Description                                                                |
+|--------------------------------------|----------------------------------------------------------------------------|
+| `import name <Library>`              | Imports all exported things from Library under the object `name`.          |
+| `import name "file.nc"`              | Imports all exported things from file.nc under the object `name`.          |
+| `import {var, func} <Library>`       | Imports only `var` and `func` from the Library.                            |
+| `import name, {var, func} <Library>` | Imports all exported things from Library and `var` and `func` from library |
+
+| Exporting            | Description                           |
+|----------------------|---------------------------------------|
+| `export i64 var = 0` | Exports the i64 variable named `var`. |
+| `export void func()` | Exports the function `func`.          |
+
+See the [standard libraries](./standard_libraries.md) built into Neo-C.
+
+- Namespaces have been removed from Neo-C.
 
 ## [Automatic function hoisting](#neo-c)
-Neo-C allows for automatic function hoisting so that you can define functions below where they are actually used.
+Neo-C allows for automatic function hoisting so that you can use a function above where it's defined.
 
 ```C++
 // Neo-C
 i32 main()
-  func(1)
+  func()
 
-void func(i64 arg)
-  // Do something
+void func()
 
 // C++
-void func(int64_t);
+void func();
 
 int main() {
-  func(1);
+  func();
 }
 
-void func(int64_t arg) {
-  // Do something
+void func() {
 }
 ```
 
@@ -331,7 +341,7 @@ for i64 el in arr
 for i64 el, i64 i in arr
 
 // C++
-Array_<int64_t> arr = Array_({1, 2, 3, 4});
+Array_<int64_t> arr({1, 2, 3, 4});
 
 for (int64_t el : arr) {}
   // or
@@ -341,19 +351,9 @@ for (int64_t i = 0; i < arr.size(); i++) {
 ```
 
 ## [Containers](#neo-c)
-In Neo-C, there are only 3 ways of creating instance of structs, unions, or classes.
-
-```C++
-Container instance = Container()
-  // or
-Container instance()
-  // or
-Container instance
-```
 
 ### [Structs and Unions](#neo-c)
-In C++, the only difference between structs and classes are whether they default to private or public. However, it is commonly recommend to only use structs for storing related data together, and use a class when that data needs methods. Since this is already the norm in C++, Neo-C enforces this norm and doesn't allow structs to have methods and everything in them is public.
-- In Neo-C, structs and unions behave similarly to structs and unions in C.
+In Neo-C, structs and unions cannot have methods and behave similarly to those in C.
 
 ```C++
 // Neo-C
@@ -386,15 +386,13 @@ pt.y = 20;
 ```
 
 ### [Classes](#neo-c)
-Neo-C makes 3 notable changes to classes:
-
-1. Instead of using `:` for member initializer lists, it has been replaced with the `init` keyword and has to be placed on it's own line. This is because Neo-C uses `:` for error handling purposes.
-2. In C++, `private:` and `public` require another indentation or are put on the same line as the class which looks messy. Instead, Neo-C defines private member entities by having an underscore in front and public entities by not having an underscore in front.
-3. Inheritance has been removed from Neo-C and composition is recommended instead.
-    - All the C++ keywords associated with inheritance have been removed. `protected`, `virtual`, `override`, `final`, `friend`
+The changes Neo-C makes to classes:
+1. `:`s for member initializer lists have been replaced with the `init` keyword.
+2. `private:` has been replaced with an underscore in front. `public:` has been replace without an underscore in front.
+3. Inheritance and all its associated keywords have been removed.
 
 ```C++
-// Nep-C
+// Neo-C
 class Book
   i64 _copiesAvailable
   string title
@@ -403,19 +401,15 @@ class Book
 
   Book(i64 _copiesAvailable, string title = "Unknown", string author = "Unknown", i64 pages = 0)
   init _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages)
-    // Other constructor code can go here.
-
-  Book(Book book)
-  init _copiesAvailable(100), title(book.title), author(book.author), pages(books.pages)
-    // Other constructor code can go here.
+    // Constructor code
 
   ~Book()
     // Destructor
 
   void displayInfo()
-    print("title: ${title}\n")
-    print("author: ${author}\n")
-    print("pages: ${pages}\n")
+    printLine("title: ${title}")
+    printLine("author: ${author}")
+    printLine("pages: ${pages}")
 
 // C++
 class Book {
@@ -428,12 +422,7 @@ class Book {
 
     Book(int64_t _copiesAvailable, String_ title = "Unknown", String_ author = "Unknown", int64_t pages = 0)
     : _copiesAvailable(_copiesAvailable), title(title), author(author), pages(pages) {
-      // Other constructor code can go here.
-    }
-
-    Book(Book book)
-    : _copiesAvailable(100), title(book.title), author(book.author), pages(books.pages) {
-      // Other constructor code can go here.
+      // Constructor code
     }
 
     ~Book() {
@@ -459,20 +448,12 @@ Composition and interfaces are preferred over inheritance because they allow cod
 // Neo-C
 interface Interface
   i64 var
-  Class c
-  Struct s
-  Union u
-  // You cannot have enums because they define values.
   void func()
 
 // C++
 class Interface {
   public:
-    int64_t var;
-    Class c;
-    Struct s;
-    Union u;
-    // You cannot have enums because they define values.
+    int64_t var; // Enforced by the Neo-C compiler.
     virtual void func() = 0;
   private:
     Interface() {}
@@ -503,7 +484,7 @@ DayOfTheWeek day = DayOfTheWeek::MON;
 - The default underlying type is i64. You can change the default underlying type of the enum by doing `enum Name : type {}`
 
 ## [Nested Comments](#neo-c)
-In C++, when you need to comment out a large chunk of code that already contains a multi-line comment, you have to remove the inner `*/` in order to avoid breaking the comment. This can be annoying, so Neo-C supports nested multi-line comments.
+Neo-C allows for nested multi-line comments.
 
 ```javascript
 // Neo-C
@@ -520,17 +501,17 @@ In C++, when you need to comment out a large chunk of code that already contains
 ```
 
 ## [Do while loops](#neo-c)
-In C++, `do` and `while` statements are separated, with the condition being at the end. In a language without curly brackets, the ending while statement could be easily confused for a new while loop. So Neo-C puts the `do` and `while` keywords on the same line.
+In Neo-C, since there are no curly brackets, the ending while statement for do-while loops could be confused with another while loop. So Neo-C, puts the do and while keywords on the same line.
 
 ```C++
 // Neo-C
-do while true
+do while false
   // Do something at least once
 
 // C++
 do {
   // Do something at least once
-} while (true);
+} while (false);
 ```
 
 ## [Breaking out of nested loops](#neo-c)
@@ -557,8 +538,7 @@ for (auto el : arr) {
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
 
 ## [String Templates](#neo-c)
-In C++, if you want to include a variable in a string, you have to convert it to a string and concatenate it. This is annoying so Neo-C adds the ability to insert code into strings.
-- Strings can also span multiple lines.
+Neo-C adds the ability to insert code into strings. Strings can also span multiple lines.
 
 ```C++
 // Neo-C
@@ -576,6 +556,21 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape.
 
 ## [Templates](#neo-c)
+In Neo-C, templates are simplified compared to C++, but there are some changes.
+
+1. Templates 
+
+- Requirements
+  - Requirements return true, at compile time, if the expresses is supported by the arguments.
+- &&, ||, !, and ()s for requirements
+- auto instead of typename/class
+- Requirement library for all the basic requirements
+
+```C++
+requirement IsArray<auto Type>(Type a)
+  a[0]
+```
+
 NOT DONE.
 
 In Neo-C, templates are simplified compared to C++, but they offer an additional feature that allows you to specify exactly which types are allowed for a template argument. You can define the allowed types using a pipe(`|`) symbol between them. For example, `void func<i8 | i16 | i32 Type>()` specifies that the template argument `Type` can only be one of the specified types(`i8`, `i16`, or `i32`).
@@ -881,6 +876,8 @@ else return 3;
   - This has been replaced by allowing `break`s to work in match statements.
 3. Error handling in a scalable way
   - This is address with Neo-C error handling features.
+
+- Labels cannot be used in Neo-C
 
 ### [Things that throw errors](#neo-c)
 - Integer division by zero throws an error.
