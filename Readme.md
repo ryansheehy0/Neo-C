@@ -1,16 +1,10 @@
 # Neo-C
 Neo-C is a programming language that tries to solve all of my problems with C++.
+
 It compiles into C++, so it can be just as efficient.
 
 - **Compiler still in development.**
 - **Syntax Highlighting in VS Code:** Copy and paste `Neo_C_Syntax_Highlighter` folder in `~/.vscode/extensions/`
-
-```C++
-import {printLine} <Terminal>
-
-i32 main()
-  printLine("Hello world!")
-```
 
 <img src="./neo_c_logo.svg" width=400>
 
@@ -222,6 +216,7 @@ switch (var) {
     // Do something
   case 2:
     // Do something else
+    break;
 }
 ```
 
@@ -556,65 +551,44 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 - `\${}` allows you to escape.
 
 ## [Templates](#neo-c)
-In Neo-C, templates are simplified compared to C++, but there are some changes.
-
-1. Templates 
-
-- Requirements
-  - Requirements return true, at compile time, if the expresses is supported by the arguments.
-- &&, ||, !, and ()s for requirements
-- auto instead of typename/class
-- Requirement library for all the basic requirements
+In Neo-C, templates are defined by placing angle brackets `<>`s after the name. The `auto` keyword can be used to define a template argument that accepts any type. This replaces C++'s `typename` and `class`.
 
 ```C++
-requirement IsArray<auto Type>(Type a)
-  a[0]
+auto add<auto Type1, auto Type2>(Type1 value1, Type2 value2)
+  return value1 + value2
 ```
 
-NOT DONE.
-
-In Neo-C, templates are simplified compared to C++, but they offer an additional feature that allows you to specify exactly which types are allowed for a template argument. You can define the allowed types using a pipe(`|`) symbol between them. For example, `void func<i8 | i16 | i32 Type>()` specifies that the template argument `Type` can only be one of the specified types(`i8`, `i16`, or `i32`).
-- All templates have to be defined right after the name of the entity they apply to.
-
-Keywords that specify the template types:
-- `auto` - Allows any type.
-- `bool`
-- `i8`, `i16`, `i32`, `i64`
-- `int` - The same as `i8 | i16 | i32 | i64`
-- `u8`, `char`, `u16`, `u32`, `u64`
-- `uint` - The same as `u8 | char | u16 | u32 | u64`
-- `f32`, `f64`
-- `float` - The same as `f32 | f64`
-- `string`
-- `class`, `struct`, `union`
-- `interface`
-- `enum`
-- `[]`s for arrays, and `*`s for pointers
+In Neo-C, you can create requirements for template arguments that are checked at compile time. Requirements can only have one template argument defined.
 
 ```C++
-// Neo-C
-Type add<int | uint | float Type>(Type value1, Type value2)
-	return value1 + value2
+requirement Addable<auto Type>
+  Type + Type
 
-add(1, 5)
-  // or
-add<i64>(1, 5)
-
-// C++
-// This feature is enforced by the Neo-C compiler and not the C++ compiler.
-template <typename Type>
-Type add(Type value1, Type value2) {
-	return value1 + value2;
-}
-
-add<int64_t>(1, 5);
-  // or
-add<int64_t>(1, 5);
+Type add<Addable Type>(Type value1, Type value2)
+  return value1 + value2
 ```
 
-- If the type isn't specified and the arguments are literals, then Neo-C assumes them to be the largest type possible.
-  - Ex: `add(1, 5)` is assumed to be of type `i64`. Or `add(1.0, 5.0)` is assumed to be of type `f64`.
-- You cannot use `auto` as an argument type. Instead use a template. This is done to simplify things.
+The logical operators `&&`, `||`, `!`, and parentheses `()` are supported for combining requirements inside templates.
+
+```C++
+requirement Subtractable<auto Type>
+  Type - Type
+
+requirement Addable<auto Type>
+  Type + Type
+
+auto someMathFunc<Addable && Subtractable Type1, Addable && Subtractable Type2>(Type1 value1, Type2 value2)
+  return value1 + value2 - value1
+```
+
+You can also define specific types required for template arguments.
+
+```C++
+requirement Int<i8 || i16 || i32 || i64 Type>
+  Type
+```
+
+See the [requirement library](./requirement_library.md) for the built in requirements in Neo-C.
 
 ## [Casting/Converting](#neo-c)
 NOT DONE.
