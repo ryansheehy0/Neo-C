@@ -42,7 +42,6 @@ It compiles into C++, so it can be just as efficient.
 - [Compile time operations](#compile-time-operations)
 - [Other changes](#other-changes)
 	- [Removing gotos](#removing-gotos)
-	- [Things that throw errors](#things-that-throw-errors)
 - [All Keywords](#all-keywords)
 
 <!-- /TOC -->
@@ -564,7 +563,7 @@ In Neo-C, you can create requirements for template arguments that are checked at
 requirement Addable<auto Type>
   Type + Type
 
-Type add<Addable Type>(Type value1, Type value2)
+auto add<Addable Type1, Addable Type2>(Type1 value1, Type2 value2)
   return value1 + value2
 ```
 
@@ -588,18 +587,47 @@ requirement Int<i8 || i16 || i32 || i64 Type>
   Type
 ```
 
-See the [requirement library](./requirement_library.md) for the built in requirements in Neo-C.
+See the [requirement library](./requirement_library.md) for built in requirements.
 
 ## [Casting/Converting](#neo-c)
-NOT DONE.
-In Neo-C, castings are treated the exact same as functions.
-- There is no implicit casting/converting in C++.
+In Neo-C, there is no implicit casting/converting like in C++. All castings/conversions should be called like a function.
   - Float literals have to have decimal points. Ex: `f64 x = 10.0`
   - Integer literals cannot have decimal points. Ex: `i64 x = 10`
-  - There is no implicit conversion for assigning to classes. Ex: `Class c = "str"` is not allowed.
 
-- bool
-  - 0 is falsy, everything else is truthy. Just like C++.
+Converting to a bool:
+
+```C++
+bool bool<Int || UInt || Float || Pointer Type>(Type value)
+  if value == 0 return false
+  return true
+
+bool bool<string Type>(Type value)
+  if value == "" return false
+  return true
+```
+
+Converting to an integer:
+
+```C++
+i8 i8<Float Type>(Type value) : OutOfRange
+  i8 result = 0
+  bool isNegative = value < 0
+  if isNegative value *= -1 // Sets value to positive
+  // Counts how many times 1 can be subtracted from value before it becomes negative
+  while value < 0
+    value--
+    result++
+    if result < 0 // Checks if there's an overflow
+      throw OutOfRange
+  if isNegative result *= -1
+  return result
+
+
+i8 i8<bool || (Int && !i8) || UInt Type>(Type value)
+
+```
+
+
 - i8, i16, i32, i64
   - OutOfRange
 - u8, char, u16, u32, u64
@@ -852,11 +880,6 @@ else return 3;
   - This is address with Neo-C error handling features.
 
 - Labels cannot be used in Neo-C
-
-### [Things that throw errors](#neo-c)
-- Integer division by zero throws an error.
-- Integer overflowing or underflowing throws an error.
-- `[]` indexing out of range.
 
 ## [All Keywords](#neo-c)
 Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.

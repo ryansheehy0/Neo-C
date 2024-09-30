@@ -305,3 +305,9 @@ copy&paste const i64 FIVE_FACTORIAL = compile factorial(5)
 This maybe needed.
 	- The compiler might not have enough information to know.
 	- Need a keyword for compile time if statements.
+
+### [Things that throw errors](#neo-c)
+Should these things throw errors?
+- Integer division by zero throws an error.
+- Integer overflowing or underflowing throws an error.
+- `[]` indexing out of range.
