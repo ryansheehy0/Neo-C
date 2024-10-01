@@ -43,7 +43,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|default|try|catch|continue|init)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|default|try|catch|throw|continue|init)\\b"
 			}]
 		},
 		"strings": {

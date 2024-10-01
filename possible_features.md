@@ -32,7 +32,40 @@
   - UI frameworks for inheritance.
   - Don't want to implement your library with a sub class.
 
+- Variadic arguments(`...`)
+	- Allows for a string called args. Have to be cast to the appropriate values.
+- Functions as arguments.
 
+```C++
+// For strings
+string map(char (*function)(char element, i64 index, string array))
+	string outputStr = ""
+	for char el, i64 i in this->_data
+		outputStr += function(el, i, this->_data)
+	return outputStr
+
+string map(char (*function)(char element, i64 index))
+	string outputStr = ""
+	for char el, i64 i in this->_data
+		outputStr += function(el, i)
+	return outputStr
+
+string map(char (*function)(char element))
+	string outputStr = ""
+	for char el, i64 i in this->_data
+		outputStr += function(el)
+	return outputStr
+
+// -----------------------------
+
+string test = "abc"
+test = test.map(toUpper)
+
+char toUpper(char element)
+	match element
+		case 'a'...'z': return element - 32
+		default: return element
+```
 
 - Templates
 	- Multiple arguments into templates
@@ -159,7 +192,6 @@ i.get()
 - In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
 
 ### Change how default arguments work
-Unnecessary to include
 - Default arguments don't have to be in order
 
 ```C++
@@ -176,12 +208,14 @@ func(0, b); // int
 
 ```C++
 // Neo-C
-int func(int a, int b = 0) // init
-func(a) // calling
+int func(int a, int b = 0)
+func(a)
+	// or
+func(a,)
 
 // C++
-int func(int a, int b = 0) {} // init
-func(a); // int
+int func(int a, int b = 0) {}
+func(a);
 ```
 
 ### Code formatting nazi?

@@ -594,37 +594,16 @@ In Neo-C, there is no implicit casting/converting like in C++. All castings/conv
   - Float literals have to have decimal points. Ex: `f64 x = 10.0`
   - Integer literals cannot have decimal points. Ex: `i64 x = 10`
 
-Converting to a bool:
+Converting to a **bool**:
 
 ```C++
 bool bool<Int || UInt || Float || Pointer Type>(Type value)
-  if value == 0 return false
-  return true
-
 bool bool<string Type>(Type value)
-  if value == "" return false
-  return true
 ```
 
-Converting to an integer:
+Converting to an **integer**:
 
 ```C++
-i8 i8<Float Type>(Type value) : OutOfRange
-  i8 result = 0
-  bool isNegative = value < 0
-  if isNegative value *= -1 // Sets value to positive
-  // Counts how many times 1 can be subtracted from value before it becomes negative
-  while value < 0
-    value--
-    result++
-    if result < 0 // Checks if there's an overflow
-      throw OutOfRange
-  if isNegative result *= -1
-  return result
-
-
-i8 i8<bool || (Int && !i8) || UInt Type>(Type value)
-
 ```
 
 
@@ -900,5 +879,6 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 - interface
 - enum
 - requirement
+- pointer
 - try, catch, throw
 - unique, shared
