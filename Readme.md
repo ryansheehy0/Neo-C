@@ -1,7 +1,7 @@
 # Neo-C
 Neo-C is a programming language that tries to solve all of my problems with C++.
 
-It compiles into C++, so it can be just as efficient.
+It compiles to C++, so it can be just as efficient and work on the same platforms as C++.
 
 - **Compiler still in development.**
 - **Syntax Highlighting in VS Code:** Copy and paste `Neo_C_Syntax_Highlighter` folder in `~/.vscode/extensions/`
@@ -24,7 +24,7 @@ It compiles into C++, so it can be just as efficient.
 	- [Breaks](#breaks)
 	- [Strings](#strings)
 - [Importing and Exporting](#importing-and-exporting)
-- [Automatic function hoisting](#automatic-function-hoisting)
+- [Automatic hoisting](#automatic-hoisting)
 - [For each loops](#for-each-loops)
 - [Containers](#containers)
 	- [Structs and Unions](#structs-and-unions)
@@ -302,8 +302,8 @@ See the [standard libraries](./standard_libraries.md) built into Neo-C.
 
 - Namespaces have been removed from Neo-C.
 
-## [Automatic function hoisting](#neo-c)
-Neo-C allows for automatic function hoisting so that you can use a function above where it's defined.
+## [Automatic hoisting](#neo-c)
+Neo-C allows for automatic function, class, interface, struct, and union hoisting so that you can use them above where they are defined.
 
 ```C++
 // Neo-C
@@ -351,7 +351,9 @@ In Neo-C, structs and unions cannot have methods and behave similarly to those i
 
 ```C++
 // Neo-C
-struct Point(i64 x, i64 y)
+struct Point
+  i64 x
+  i64 y
 
 Point pt = Point(10, 20)
   // or
@@ -378,6 +380,8 @@ Point pt;
 pt.x = 10;
 pt.y = 20;
 ```
+
+- You cannot use `{}`s to initialize structs in Neo-C
 
 ### [Classes](#neo-c)
 The changes Neo-C makes to classes:
@@ -432,6 +436,8 @@ class Book {
 ```
 
 - The `this` keyword can be used and it behaves the same as in C++.
+- Use the `.` to define methods outside of classes instead of `::`
+  - `void Class.method()` instead of `void Class::method()`
 
 ## [Interfaces](#neo-c)
 Composition and interfaces are preferred over inheritance because they allow code to be more flexible (see [The Flaws of Inheritance](https://www.youtube.com/watch?v=hxGOiiR9ZKg)). Therefore, Neo-C removes inheritances and adds interfaces.
@@ -597,20 +603,28 @@ In Neo-C, there is no implicit casting/converting like in C++. All castings/conv
 Converting to a **bool**:
 
 ```C++
-bool bool<Int || UInt || Float || Pointer Type>(Type value)
-bool bool<string Type>(Type value)
+bool bool<Int || UInt || Float || Pointer || String Type>(Type value)
 ```
 
 Converting to an **integer**:
 
 ```C++
+i8 i8<(Int && !i8) || UInt || Float || Pointer || String Type>(Type value) : OutOfRange
+```
+
+Converting to an **unsigned integer**:
+
+```C++
+u8 u8<Int || (UInt && !u8) || Float || Pointer || String Type>(Type value) : OutOfRange
+```
+
+Converting to a **float**:
+
+```C++
+f32 f32<Int || UInt || (Float && ! f32) || Pointer || String Type>(Type value) : OutOfRange
 ```
 
 
-- i8, i16, i32, i64
-  - OutOfRange
-- u8, char, u16, u32, u64
-  - OutOfRange
 - f32, f64
   - OutOfRange
 - string

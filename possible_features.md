@@ -4,14 +4,40 @@
 	- No `new` and `delete` keywords.
 	- Remove RAII explanation
 - Define casting functions
+	- Why not just use c++ casting? It doesn't throw errors.
+		- Why not check for errors and then use c++ casting?
+			- Could I actually write a better conversion algorithm? Probably not.
+- Force there to be setter and getter methods. No public variables.
+	- Why? Later when you realize your setters need to do more that just set the value, you'll have to change everywhere that property has been used directly.
+	- Interfaces can only have methods
+	- Special syntax like with c#
+	- Any public variables are given two functions with the name of the variable. Ex: `i64 x` has the methods `i64 x() const` to get and `void x(i64 input)`. What if you don't want those to be public? Then make it private and define your own methods. Is there another way?
 
 ## Possible features
+- The `const` after a method says that no member variables are being changed.
+	- `void method() const`
+	- Allows you to call that method on a const object.
+
+- Classes don't need to call their own getters and setters for private variables.
+	- Getters and setters should not be automatically enforced.
+
+- OverRange, UnderRange, and OutOfRange.
+	- How could I express that hierarchy? Maybe have something in the OutOfRange class that specifies which direction it's out of range.
+- [] should not throw errors. Use .at if you want to throw an error.
+- Should be allowed to create a class inside another class.
+- Should be allowed to create a function inside another function.
+
 - Functions with a variable number of arguments?
 - This language is designed to work with line wrap enabled. You cannot add new lines willy nilly.
 
+- Functions start with upper case and methods start with lower case?
+
 - It compiles into C++
   - Just as efficient as C++
-  - Doesn't compete with C++ compilers and their 
+  - Doesn't compete with C++ compilers and their
+
+- `...` is the same as `string[] args`
+	- Why not do `i32 main(...)`?
 
 - Variables in ranges for match statements?
 - `fall through` case statements

@@ -21,6 +21,7 @@
 - [Draw](#draw)
 - [ML](#ml)
 - [Map](#map)
+- [Optional](#optional)
 
 <!-- /TOC -->
 
@@ -91,6 +92,9 @@ The Terminal library is used to interact with the terminal.
 ## [LinkedList](#neo-c-standard-libraries)
 ## [Test](#neo-c-standard-libraries)
 - Library for test driven development.
+- Automatic checks
+- Only fails are printed
+
 ## [Bash](#neo-c-standard-libraries)
 Library for running bash commands
 
