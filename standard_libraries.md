@@ -28,6 +28,8 @@
 ## [Terminal](#neo-c-standard-libraries)
 The Terminal library is used to interact with the terminal.
 
+void print(string msg, string end = "\n")
+
 | Output Functions                                   | Description                                              |
 |----------------------------------------------------|----------------------------------------------------------|
 | void print(string msg)                             | Prints the message without a new line.                   |

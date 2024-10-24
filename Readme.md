@@ -404,7 +404,7 @@ class Book
   ~Book()
     // Destructor
 
-  void displayInfo()
+  void displayInfo() const
     printLine("title: ${title}")
     printLine("author: ${author}")
     printLine("pages: ${pages}")
@@ -427,7 +427,7 @@ class Book {
       // Destructor
     }
 
-    void displayInfo() {
+    void displayInfo() const {
       std::cout << "title: " + title + "\n";
       std::cout << "author: " + author + "\n";
       std::cout << "pages: " + to_string(pages) + "\n";
@@ -768,6 +768,8 @@ f64 divide(f64 numerator, f64 denominator) : string
 ```
 
 - Use `catch` for the default catch instead of `catch ...`
+- In classes, when you use `const` it has to be before any specified errors.
+  - Ex: `void func() const : ErrorType`
 
 ## [Heap memory](#neo-c)
 Not Done.

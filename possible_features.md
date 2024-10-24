@@ -13,10 +13,77 @@
 	- Special syntax like with c#
 	- Any public variables are given two functions with the name of the variable. Ex: `i64 x` has the methods `i64 x() const` to get and `void x(i64 input)`. What if you don't want those to be public? Then make it private and define your own methods. Is there another way?
 
+- Organize possible features
+- Converting/Casting
+- Learn smart points and finish heap
+- Special getters and setters syntax?
+- The big 3? How to do without operator overloading?
+- Double check
+	- std::string was replaced by String_
+	- Syntax highlighting on github
+- Multi-threading with async/await
+- Math library
+- Translate examples into C++
+- Implement different classes in C++
+- Doubly linked list example
+	- Just contains a head pointer
+	- Have a node class
+- LeetCode in Neo-C and C++
+- HolyC
+
 ## Possible features
+- It is recommended to use code folding so that you can easily see the signatures of the things that are exported in a file.
+
+- When you assign an object to another object and it's already initialized, in order to do a deep copy, you need to overload the = operator.
+	- Ex: `obj2 = obj1`
+
+```C++
+MyClass& MyClass::operator=(const MyClass& rhs) {
+	if (this != &rhs) { // Don't self assign
+		delete num; // Free old memory
+		num = new int; // Create new memory
+		*num = *(rhs.num); // Assign new memory
+	}
+	return *this;
+}
+```
+	- How to do without operator overloading? Maybe combine with constructor copying(probably not, they do different things)?
+	- Maybe have special syntax for the rule of three. You have to define all of them if you use heap memory in a class.
+
+- No operator overloading
+	- I like having a very clear distinction between what's in the language and what's made by a user.
+
+- Interfaces
+	- There should be the overriding keyboard for Interfaces.
+	- Should not allow interfaces to have variables. Only methods.
+	- Force the user to use the `override` so that it's clear they are overloading something from an interface.
+
+- `void func() const : ErrorType;`
+
+- header files are nice because you can easily see the methods and variables you can use.
+	- Problems with header files:
+		- Namespaces
+		- Don't know what methods come from which file.
+		- Private variables in header files
+		- Having to go back and forth between .h and .cpp when you change a method header.
+		- Allow only the changed files to be compiled.
+			- If the exports are in their own header file, then this isn't a problem.
+
+- `...` for the spread operator.
+	- `func(...arr)` is the same as `func(arr[0], arr[1], arr[2])` for all the elements of the array.
+
+- The `new` keyword returns a special heap pointer
+	- `#i64 xPtr = new i64` or `#i64* xPtr = new i64` or `i64# xPtr = new i64`
+	- If the value of the pointer is used(not dereference, but just used), then it becomes set to null.
+	- Once it goes out of scope it is automatically dealocated
+		- There is no `delete` keyword
+	- If someone does `&(*xPtr)`, then the user can break the compiler and have memory leaks. Programmers do this only when they know exactly what they are doing.
+	- New should return a special heap pointer: `i64# heapPtr = new i64`
+
 - The `const` after a method says that no member variables are being changed.
 	- `void method() const`
 	- Allows you to call that method on a const object.
+	- Is this necessary? Why can't the compiler automatically detect this?
 
 - Classes don't need to call their own getters and setters for private variables.
 	- Getters and setters should not be automatically enforced.
@@ -371,3 +438,8 @@ Should these things throw errors?
 - Integer division by zero throws an error.
 - Integer overflowing or underflowing throws an error.
 - `[]` indexing out of range.
+
+
+
+
+I have noticed that if I have longer and longer conversations with your AI it starts to slow down it's time to respond. My guess is that this is because it has to re-read all of the previous conversations. Would it be possible for the AI to continually be summarizing it's past conversations with me on its backend(not visible to the user), therefore when I continue to talk with it it doesn't have to re-read everything and can instead just re-read its own summary?
