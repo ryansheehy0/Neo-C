@@ -1,6 +1,11 @@
 # Neo-C
 Neo-C is a programming language that tries to solve all of my problems with C++.
 
+It has three specific goals:
+1. Force the user to code in a specific style
+2. Simplify the syntax of C++
+3. Solve specific problems of C++
+
 It compiles to C++, so it can be just as efficient and work on the same platforms as C++.
 
 - **Compiler still in development.**

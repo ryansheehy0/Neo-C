@@ -31,46 +31,28 @@
 - LeetCode in Neo-C and C++
 - HolyC
 
-## Possible features
-- It is recommended to use code folding so that you can easily see the signatures of the things that are exported in a file.
+## Heap
+In C++, the new keyword creates memory on the heap and returns a pointer to it. The delete keyword frees that memory. There are 3 main problems with this.
+- Forgetting to delete memory causing a memory leak
+- Deleting the same memory twice
+- Using memory that was deleted
 
-- When you assign an object to another object and it's already initialized, in order to do a deep copy, you need to overload the = operator.
-	- Ex: `obj2 = obj1`
+All of these problems would be solved if the freeing/deleting of heap memory could be handled automatically. There are two sort of approaches to do this.
+1. It to keep track of all the references to the heap memory and when there are no more references to it, then free/delete it.
+	- This is garbage collection in most other languages or shared pointers in c++.
+	- This is nice to use, but it has some run time costs.
+2. To only allow one reference to heap memory that gets passed around. If this reference goes out of scope it frees/deletes the heap memory associated with it.
+	- This is unique pointers in c++.
+	- It has very little run time costs, but is annoying to use.
+
+What if you could combine the nice to use part of the first approach with the little run time costs of the second approach?
+
+That's sort of what Neo-C does. It provides a wrapper syntax around unique pointers that make them nice to use.
 
 ```C++
-MyClass& MyClass::operator=(const MyClass& rhs) {
-	if (this != &rhs) { // Don't self assign
-		delete num; // Free old memory
-		num = new int; // Create new memory
-		*num = *(rhs.num); // Assign new memory
-	}
-	return *this;
-}
+// Neo-C
+int# heapPtr = new int
 ```
-	- How to do without operator overloading? Maybe combine with constructor copying(probably not, they do different things)?
-	- Maybe have special syntax for the rule of three. You have to define all of them if you use heap memory in a class.
-
-- No operator overloading
-	- I like having a very clear distinction between what's in the language and what's made by a user.
-
-- Interfaces
-	- There should be the overriding keyboard for Interfaces.
-	- Should not allow interfaces to have variables. Only methods.
-	- Force the user to use the `override` so that it's clear they are overloading something from an interface.
-
-- `void func() const : ErrorType;`
-
-- header files are nice because you can easily see the methods and variables you can use.
-	- Problems with header files:
-		- Namespaces
-		- Don't know what methods come from which file.
-		- Private variables in header files
-		- Having to go back and forth between .h and .cpp when you change a method header.
-		- Allow only the changed files to be compiled.
-			- If the exports are in their own header file, then this isn't a problem.
-
-- `...` for the spread operator.
-	- `func(...arr)` is the same as `func(arr[0], arr[1], arr[2])` for all the elements of the array.
 
 - The `new` keyword returns a special heap pointer
 	- `#i64 xPtr = new i64` or `#i64* xPtr = new i64` or `i64# xPtr = new i64`
@@ -80,31 +62,85 @@ MyClass& MyClass::operator=(const MyClass& rhs) {
 	- If someone does `&(*xPtr)`, then the user can break the compiler and have memory leaks. Programmers do this only when they know exactly what they are doing.
 	- New should return a special heap pointer: `i64# heapPtr = new i64`
 
-- The `const` after a method says that no member variables are being changed.
-	- `void method() const`
-	- Allows you to call that method on a const object.
-	- Is this necessary? Why can't the compiler automatically detect this?
+## Templates
+- Just change the syntax for c++ templates. Don't do anything fancy.
+- Templates in Neo-C should have a 1to1 corelation to templates in c++
 
-- Classes don't need to call their own getters and setters for private variables.
-	- Getters and setters should not be automatically enforced.
+```C++
+// Neo-C
+void func<auto T>(T arg)
 
-- OverRange, UnderRange, and OutOfRange.
-	- How could I express that hierarchy? Maybe have something in the OutOfRange class that specifies which direction it's out of range.
-- [] should not throw errors. Use .at if you want to throw an error.
-- Should be allowed to create a class inside another class.
-- Should be allowed to create a function inside another function.
+// C++
+template<auto T>
+void func(T arg) {
 
-- Functions with a variable number of arguments?
+}
+```
+
+- Templates are used so the same piece of code can be used for different data types. This is only useful if the data types can perform the same operations.
+	- Maybe this is a good argument to allow for operator overloading.
+		- How do you know if a template needs a certain operation? Have conditions.
+
+## Possible features
+- Function arguments can only be const references or pointers.
+	- Have a special syntax for this.
+	- If you are changing, then use a pointer.
+	- If you aren't changing, then use a const reference.
+	- When you call a function, you know what arguments are being changed and which ones aren't.
+
+- Variables are by default consts and you have to use `var` keyword if you want to have them modifiable.
+	- Should this be the case? You might have to remove screaming case for constants.
+
+- Maybe allow operator overloading so template classes can be made easier. Ex: overloading the > or =s so that it behaves the same as default types.
+- This should be the inbuilt way to do function arguments. Function points aren't allowed.
+	- `#include <functional>`
+	- `function<void(int&, int&)> operation`
+	- Should there be a function keyword? No. Just do.
+		- `void operation(int&, int&)` which translates into `std::function<void(int&, int&)> operation`
+		- You can't do function pointers.
+- Remove the capture list for inline functions.
+	- `(int& x, int& y){}` translates into `[&](int& x, int& y){}`
+	- These can only be used inside other functions.
+	- These can be assigned to variables? Yeah.
+- Maybe operator overloading is good. It makes the syntax nice.
+	- But it is often confusing.
+- Naming conventions
+	- `_var` for private
+	- `_var_` for protected
+- `?` for optional
+- No operator overloading
+	- Destructors cannot have arguments.
+	- You need to operator overload the =s operator to do a deep copy(copy pointer values instead of the pointer itself).
+		- The only difference between that and a copy constructor is a destructor call.
+			- The destructor call has to be after the check that you're not assigning to yourself.
+		- Use the `copy` keyword in front of the constructor to make it a copy constructor which also overloads the =s operator.
+			- The destructor is automatically called when =s is used and not called when it
+			s used as a constructor.
+		- This is just overloading the =s with extra steps. Maybe just have them call a method instead of using the assignment(=) operator. The assignment operator always means a shallow copy.
+		- A method cannot call it's own destructor.
+- Inheritance
+	- The `virtual` keyword is needed so a child class can override
+	- The `override` keyword is needed to override a parent's virtual method
+	- Use the `pure` keyword in front of the `virtual` keyword to make a pure virtual method.
+- Method declarations `void func() const : ErrorType`
+- `export` keyword puts the declaration in a .h file and the definitions in the .cpp files.
+	- Imported file objects have to be in PascalCase. They are wrapped in namespaces that get converted from `.`s to `::`s.
+	- It is recommended to use code folding so that you can easily see the signatures of the things that are exported in a file.
+- `...` for the spread operator.
+	- `func(...arr)` is the same as `func(arr[0], arr[1], arr[2])` for all the elements of the array.
+	- Functions with a variable number of arguments?
+		- Use the `...` syntax. It's treated like an array of args. Maybe it has to be `args...`. You can change the name to what you want.
+		- `...` is the same as `string[] args`
+			- Why not do `i32 main(...)`?
+- Don't allow a function to be created in another function.
+	- Inline functions?
+- Don't allow a class to be defined in another class.
+	- Don't allow a struct in a class
+- OverRange, UnderRange, and OutOfRange errors.
 - This language is designed to work with line wrap enabled. You cannot add new lines willy nilly.
-
-- Functions start with upper case and methods start with lower case?
-
 - It compiles into C++
   - Just as efficient as C++
   - Doesn't compete with C++ compilers and their
-
-- `...` is the same as `string[] args`
-	- Why not do `i32 main(...)`?
 
 - Variables in ranges for match statements?
 - `fall through` case statements

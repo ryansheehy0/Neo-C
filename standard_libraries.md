@@ -29,6 +29,8 @@
 The Terminal library is used to interact with the terminal.
 
 void print(string msg, string end = "\n")
+How to print arrays? Spread operator?
+  - Convert array to string. (string)array
 
 | Output Functions                                   | Description                                              |
 |----------------------------------------------------|----------------------------------------------------------|
