@@ -82,6 +82,11 @@ void func(T arg) {
 		- How do you know if a template needs a certain operation? Have conditions.
 
 ## Possible features
+- Enforce pass by reference and pass by values rules. Only allow pass by values, pass by const reference, and pass by pointer.
+	- `void func(void (*func2)(int, int))` or `void func(void (const &func2)(int, int) )`
+	- `void func(int (*arr)[])` or `void func(int (const &arr)[])`
+	- How do you enforce this?
+
 - Function arguments can only be const references or pointers.
 	- Have a special syntax for this.
 	- If you are changing, then use a pointer.
