@@ -1,4 +1,14 @@
+- Taking the simplicity of the syntax in other languages and applying them to c++.
+	- C++ tends to be very verbose compared to other languages
+- To make the difference between pseudo-code and code as minimal as possible
+
 ## Todo
+- `!` are errors
+- `:` are 
+
+- The cache keyword can be used to cache a function's value for a certain set of inputs.
+	- If the function is called again with the same inputs, the cached value is returned
+
 - Heap
 	- `unique<type>` and `shared<type>`
 	- No `new` and `delete` keywords.
@@ -30,6 +40,18 @@
 	- Have a node class
 - LeetCode in Neo-C and C++
 - HolyC
+
+## Function arguments
+- Functions can only have 3 types of arguments.
+	- Pass by value
+	- Pass by const reference
+	- And pass by pointer
+- Types can have `?` after them to make them optional
+
+```C++
+// Neo-C
+void func(i64 a, const i64&? y)
+```
 
 ## Heap
 In C++, the new keyword creates memory on the heap and returns a pointer to it. The delete keyword frees that memory. There are 3 main problems with this.
@@ -82,6 +104,9 @@ void func(T arg) {
 		- How do you know if a template needs a certain operation? Have conditions.
 
 ## Possible features
+- Have a `copy&paste` keyword and `cache` keyword.
+	- `copy&paste` tells the compiler to copy and paste the value.
+	- `cache` can be used to cache a function so when you call it again it doesn't have to recalculate it can just give its previous result.
 - Enforce pass by reference and pass by values rules. Only allow pass by values, pass by const reference, and pass by pointer.
 	- `void func(void (*func2)(int, int))` or `void func(void (const &func2)(int, int) )`
 	- `void func(int (*arr)[])` or `void func(int (const &arr)[])`

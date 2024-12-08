@@ -62,7 +62,7 @@ It compiles to C++, so it can be just as efficient and work on the same platform
 | Category                                                                  | Naming convention |
 |---------------------------------------------------------------------------|-------------------|
 | Variables, Functions                                                      | camelCase         |
-| Constants, Enum values                                                    | SCREAMING_CASE    |
+| Constants, Enum values                                                    | kConsts           |
 | Classes, Structs, Unions, Enums, Interfaces, Template types, Requirements | PascalCase        |
 
 ## [Data Types](#neo-c)
@@ -278,7 +278,7 @@ match str
 String_ str("abc");
 if (str == "a" || str == "ab") {
   // Do something
-}else if (str == "abc") {
+} else if (str == "abc") {
   // Do something
 }
 ```
@@ -351,6 +351,19 @@ for (int64_t i = 0; i < arr.size(); i++) {
 
 ## [Containers](#neo-c)
 
+To prevent the most vexing parsing, Neo-C only allows you to create structs, unions, and class instances with these specific syntaxes.
+  - `Point pt()` is the most vexing parse.
+
+```C++
+// Neo-C
+Point pt = Point()
+Point pt = Point(10, 20)
+
+// Not allowed
+Point pt
+Point pt() // The most vexing parse
+```
+
 ### [Structs and Unions](#neo-c)
 In Neo-C, structs and unions cannot have methods and behave similarly to those in C.
 
@@ -389,6 +402,9 @@ pt.y = 20;
 - You cannot use `{}`s to initialize structs in Neo-C
 
 ### [Classes](#neo-c)
+- Use the 3 keywords `public`, `private`, and `protected`
+- All private or protected member variables have to have `_` in front of them
+
 The changes Neo-C makes to classes:
 1. `:`s for member initializer lists have been replaced with the `init` keyword.
 2. `private:` has been replaced with an underscore in front. `public:` has been replace without an underscore in front.
@@ -466,6 +482,19 @@ class Interface {
 ```
 
 ## [Enums](#neo-c)
+
+```C++
+// Neo-C
+enum i64 DayOfTheWeek = kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
+DayOfTheWeek day = DayOfTheWeek.kMon
+
+// C++
+enum class
+```
+
+
+
+
 There are 2 main problems with the regular `enum` in C++ that `enum class` was designed to solve:
 1. Naming conflicts
     - You cannot reuse the names defined in the enum.
