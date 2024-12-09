@@ -1,6 +1,8 @@
 - Taking the simplicity of the syntax in other languages and applying them to c++.
 	- C++ tends to be very verbose compared to other languages
 - To make the difference between pseudo-code and code as minimal as possible
+- You cannot have methods on one line.
+	- Neo-C is designed to work with code folding. if things look too cluttered, then fold code.
 
 ## Todo
 - `!` are errors
@@ -134,9 +136,6 @@ void func(T arg) {
 	- These can be assigned to variables? Yeah.
 - Maybe operator overloading is good. It makes the syntax nice.
 	- But it is often confusing.
-- Naming conventions
-	- `_var` for private
-	- `_var_` for protected
 - `?` for optional
 - No operator overloading
 	- Destructors cannot have arguments.
@@ -148,10 +147,6 @@ void func(T arg) {
 			s used as a constructor.
 		- This is just overloading the =s with extra steps. Maybe just have them call a method instead of using the assignment(=) operator. The assignment operator always means a shallow copy.
 		- A method cannot call it's own destructor.
-- Inheritance
-	- The `virtual` keyword is needed so a child class can override
-	- The `override` keyword is needed to override a parent's virtual method
-	- Use the `pure` keyword in front of the `virtual` keyword to make a pure virtual method.
 - Method declarations `void func() const : ErrorType`
 - `export` keyword puts the declaration in a .h file and the definitions in the .cpp files.
 	- Imported file objects have to be in PascalCase. They are wrapped in namespaces that get converted from `.`s to `::`s.
@@ -168,13 +163,8 @@ void func(T arg) {
 	- Don't allow a struct in a class
 - OverRange, UnderRange, and OutOfRange errors.
 - This language is designed to work with line wrap enabled. You cannot add new lines willy nilly.
-- It compiles into C++
-  - Just as efficient as C++
-  - Doesn't compete with C++ compilers and their
 
 - Variables in ranges for match statements?
-- `fall through` case statements
-  - Don't have case 'a'
 - RAII
   - Function returning pointer to object.
   - Maybe my idea of RAII is wong.
@@ -391,16 +381,10 @@ It's annoying to have to write the variable name again. If nothing is provided t
 
 ```C++
 // Neo-C
-if a > 10 && < 20
-	// Or you can do
-if a > 10 && _ < 20
+if (a > 10 && _ < 20)
 
 // C++
 if (a > 10 && a < 20)
-```
-
-```javascript
-let a = `Test ${Test} test`
 ```
 
 ## Templates
@@ -408,49 +392,6 @@ let a = `Test ${Test} test`
 	- use interfaces to define Types?
 	- auto as a function argument and return types.
 
-
-### [Objects](#neo-c)
-Probably don't include. It doesn't really solve a problem.
-
-- Neo-C doesn't allow constructors to be private.
-
-Objects in Neo-C are like singletons. There's only ever one instance of them.
-
-```C++
-// Neo-C
-object obj
-  string _privateVar
-  string publicVar = "Example"
-
-  void publicFunction()
-
-// Accessing the object
-obj.publicFunction()
-obj.publicVar
-
-// C++
-class obj {
-  public:
-    static obj& get_object() {
-      return object_instance;
-    }
-
-    void publicFunction(){
-    }
-
-    std::string publicVar = "Example";
-
-  private:
-    obj() {}
-    static obj object_instance;
-
-    std::string _privateVar;
-}
-
-// Accessing the object
-obj.get_object().publicFunction();
-obj.get_object().publicVar;
-```
 
 ## Need to implement classes
 - String_
@@ -504,8 +445,3 @@ Should these things throw errors?
 - Integer division by zero throws an error.
 - Integer overflowing or underflowing throws an error.
 - `[]` indexing out of range.
-
-
-
-
-I have noticed that if I have longer and longer conversations with your AI it starts to slow down it's time to respond. My guess is that this is because it has to re-read all of the previous conversations. Would it be possible for the AI to continually be summarizing it's past conversations with me on its backend(not visible to the user), therefore when I continue to talk with it it doesn't have to re-read everything and can instead just re-read its own summary?

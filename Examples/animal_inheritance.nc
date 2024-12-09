@@ -2,17 +2,21 @@
 class Animal
 	public
 		Animal()
-		Animal(f64 weight) init _weight = weight
+		Animal(f64 weight)
+			init _weight(weight)
 
-		f64 weight() const return _weight
+		f64 weight() const
+			return _weight
 		pure virtual string name() const
-		virtual bool canEat(const Animal& animal) const return animal.name() == name()
+		virtual bool canEat(const Animal& animal) const
+			return animal.name() == name()
 
 	private
 		f64 _weight
 
 	protected
-		void setWeight(f64 weight) _weight = weight
+		void setWeight(f64 weight)
+			_weight = weight
 
 // Fox -------------------------------------------------------------------------
 
