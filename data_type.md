@@ -42,8 +42,8 @@ int64_t arr[] = {1, 2, 3, 4, 5};
 |-------------------------------------------|------------------------------------------------------------------------------------|
 | .size() or .length()                      | Gets the size/length.                                                              |
 | .at(index)                                | Allows for negative array indexing. Ex: -1 is the last element.                    |
-| .subArray(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.           |
-| .subString(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.             |
+| .subarr(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.           |
+| .substr(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.             |
 | .sort(optional function)                  | Returns a sorted array/string from lowest to highest.                              |
 | .reverse()                                | Returns a reversed array/string.                                                   |
 | .contains(value) or .includes(value)      | Does the value exist in the array?                                                 |

@@ -1,22 +1,23 @@
-import {printLine, printLineError} <Terminal>
-import {OutOfRange} <Error>
+import
+	(print, printError) <Terminal>
+	(OutOfRange) <Error>
 
 i32 main(string[] args)
-	if args.size() != 2
-		printLineError("The argument is the number of iterations.\nfizzBuzz numOfIterations")
+	if (args.size() != 2)
+		printError("The argument is the number of iterations.\nfizzBuzz numOfIterations")
 		return 1
 
 	try u64 numOfIterations = u64(args[1])
-	catch OutOfRange error
-		printLineError("numOfIterations needs to be a postive integer.")
+	catch (OutOfRange error)
+		printError("numOfIterations needs to be a positive integer.")
 		return 1
 
-	for u64 i = 0; i < numOfIterations; i++
-		if i % 3 == 0 && i % 5 == 0
-			printLine("FizzBuzz")
-		else if i % 3 == 0
-			printLine("Fizz")
-		else if i % 5 == 0
-			printLine("Buzz")
+	for (u64 i = 0; i < numOfIterations; i++)
+		if (i % 3 == 0 && i % 5 == 0)
+			print("FizzBuzz")
+		else if (i % 3 == 0)
+			print("Fizz")
+		else if (i % 5 == 0)
+			print("Buzz")
 		else
-			printLine(i)
+			print(string(i))

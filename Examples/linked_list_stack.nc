@@ -3,7 +3,7 @@ struct ListNode
 	ListNode* next
 
 export class LinkedListStack
-	public:
+	public
 		~LinkedList()
 			ListNode* curNode = _head
 			while (curNode != nullptr)
@@ -48,7 +48,7 @@ export class LinkedListStack
 				_head = nullptr
 			return value
 
-	private:
+	private
 		ListNode* _head
 
 		void forEachNode(void func(ListNode*))

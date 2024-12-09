@@ -90,7 +90,7 @@
 		"dataTypes": {
 			"patterns": [{
 				"name": "storage.type.neo-c",
-				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|f32|f64|string|dynamic|true|false|void|const|enum|class|struct|union|requirement|public|private|protected|null|nullptr|pure|virtual|inherits)\\b"
+				"match": "\\b(auto|bool|i8|i16|i32|i64|u8|char|u16|u32|u64|f32|f64|string|dynamic|true|false|void|const|enum|class|struct|union|requirement|public|private|protected|null|nullptr|pure|virtual|inherits|override|cache)\\b"
 			}]
 		},
 		"literals": {

@@ -36,6 +36,9 @@ You can also define specific types required for template arguments.
 ```C++
 requirement Int<i8 || i16 || i32 || i64 Type>
   Type
+
+requirement Addable<auto Type>
+  Type + Type
 ```
 
 See the [requirement library](./requirement_library.md) for built in requirements.

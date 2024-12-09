@@ -11,18 +11,18 @@ In C, functions often return -1 when there's an error. However, there are a few 
 ```C++
 f64 func()
   f64 result = func2()
-  if result == -1
+  if (result == -1)
     // Handle error
   // Use result
 
 f64 func2()
   f64 result = divide(1, 0)
-  if result == -1
+  if (result == -1)
     return -1
   // Use result
 
 f64 divide(f64 numerator, f64 denominator)
-  if denominator == 0
+  if (denominator == 0)
     return -1
   return numerator / denominator
 ```
@@ -33,19 +33,19 @@ What's often done to solve the 1st and 2nd problems are to wrap the output of th
 ```C++
 f64 func()
   Error<f64, string> result = func2()
-  if result.error()
+  if (result.error())
     string error = result
     // Handle error
   // Use result
 
 Error<f64, string> func2()
   Error<f64, string> result = divide(1, 0)
-  if result.error()
+  if (result.error())
     return result
   // Use result
 
 Error<f64, string> divide(f64 numerator, f64 denominator)
-  if denominator == 0
+  if (denominator == 0)
     return {0, "Cannot divide by zero."}
   return {numerator / denominator, ""}
 ```
@@ -57,7 +57,7 @@ f64 func()
   f64 result
   try
     result = func2()
-  catch string error
+  catch (string error)
     // Handle error
   // Use result
 
@@ -66,7 +66,7 @@ f64 func2()
   // Use result
 
 f64 divide(f64 numerator, f64 denominator)
-  if denominator == 0
+  if (denominator == 0)
     throw "Cannot divide by zero."
   return numerator / denominator
 ```
@@ -82,7 +82,7 @@ f64 func()
   f64 result
   try
     result = func2()
-  catch string error
+  catch (string error)
     // Handle error
   // Use result
 
@@ -91,7 +91,7 @@ f64 func2() : string
   // Use result
 
 f64 divide(f64 numerator, f64 denominator) : string
-  if denominator == 0
+  if (denominator == 0)
     throw "Cannot divide by 0."
   return numerator / denominator
 ```
@@ -101,7 +101,7 @@ One annoying thing about try-catch blocks is their scoping. Any variable declare
 ```C++
 f64 func()
   try f64 result = func2()
-  catch string error
+  catch (string error)
     // Handle error
   // Use result
 
@@ -110,11 +110,11 @@ f64 func2() : string
   // Use result
 
 f64 divide(f64 numerator, f64 denominator) : string
-  if denominator == 0
+  if (denominator == 0)
     throw "Cannot divide by 0."
   return numerator / denominator
 ```
 
-- Use `catch` for the default catch instead of `catch ...`
+- Use  `catch (...)` to catch every error
 - In classes, when you use `const` it has to be before any specified errors.
   - Ex: `void func() const : ErrorType`

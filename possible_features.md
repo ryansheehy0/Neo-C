@@ -1,8 +1,11 @@
 - Taking the simplicity of the syntax in other languages and applying them to c++.
 	- C++ tends to be very verbose compared to other languages
 - To make the difference between pseudo-code and code as minimal as possible
-- You cannot have methods on one line.
-	- Neo-C is designed to work with code folding. if things look too cluttered, then fold code.
+
+- `defer:` keyword that gets called when you want to return.
+	- Return goto's the defer label and is rand, then returns the original value. Defer in odin?
+- Lambdas don't need `[]`s
+	- `(args){body}` -> C++ `[&](args){body}`
 
 ## Todo
 - `!` are errors

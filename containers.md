@@ -1,5 +1,12 @@
 [Back](./Readme.md)
 
+<!-- TOC -->
+
+- [Structs and Unions](#structs-and-unions)
+- [Classes](#classes)
+
+<!-- /TOC -->
+
 # Containers
 To prevent the most vexing parsing, Neo-C only allows you to create structs, unions, and class instances with these specific syntaxes.
 
@@ -14,7 +21,7 @@ Point pt() // The most vexing parse. The compiler thinks this is a function.
 Point pt(10, 20)
 ```
 
-### [Structs and Unions](#neo-c)
+## [Structs and Unions](#containers)
 In Neo-C, structs and unions cannot have methods and behave similarly to those in C.
 
 ```C++
@@ -47,9 +54,10 @@ pt.y = 20;
 
 - You cannot use `{}`s to initialize structs in Neo-C
 
-### [Classes](#neo-c)
+## [Classes](#containers)
 The changes Neo-C makes to classes:
-1. `public:`, `protected:`, and `private:` have to be indented when used.
+1. `public`, `protected`, and `private` have to be indented when used.
+  - `:`s have been removed from these keywords
 1. All private or protected member variables have to have `_` in front of them.
 1. The keyword `inherits` is used instead of `:`.
 1. Pure virtual methods have the keyword `pure` instead of assigning them to 0s.
@@ -61,7 +69,7 @@ The changes Neo-C makes to classes:
 ```C++
 // Neo-C
 class Animal
-  public:
+  public
     Animal()
     Animal(f64 weight) init _weight(weight)
 
@@ -69,11 +77,11 @@ class Animal
     f64 weight() const return _weight
     void setWeight(f64 weight) _weight = weight
 
-  protected:
+  protected
     f64 _weight = 10.0
 
 class Fox inherits public Animal
-  public:
+  public
     override string name() const return "Fox"
 
 // C++

@@ -40,7 +40,8 @@ It transpiles to C++, so it can be just as efficient and work on all the same pl
 ## [Basic syntax](#neo-c)
 - No semicolons
 - Curly brackets replaced by new lines and indentations
-  - Tabs and spaces can be used for indentation
+  - Tabs and 2 spaces can be used for indentation
+  - Functions and methods cannot be one one line. Neo-C is designed to work with code folding. If things look too cluttered, then fold code.
 
 ### [Enforced naming conventions](#neo-c)
 
@@ -82,17 +83,17 @@ In C++, header files have some problems:
 
 In Neo-C, there are no header files.
 
-| Importing                            | Description                                                                |
-|--------------------------------------|----------------------------------------------------------------------------|
-| `import name <Library>`              | Imports all exported things from Library under the object `name`.          |
-| `import name "file.nc"`              | Imports all exported things from file.nc under the object `name`.          |
-| `import {var, func} <Library>`       | Imports only `var` and `func` from the Library.                            |
-| `import name, {var, func} <Library>` | Imports all exported things from Library and `var` and `func` from library |
+```C++
+import
+  libName <Library> // Imports all exported things form Library under the object libName
+  fileName "./file" // Assumed to be .nc
+  (var, func) <Lib> // Imports only var and func from the OtherLib
+  name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the object name and imports var2 and func2.
 
-| Exporting            | Description                           |
-|----------------------|---------------------------------------|
-| `export i64 var = 0` | Exports the i64 variable named `var`. |
-| `export void func()` | Exports the function `func`.          |
+export i64 var = 0
+export void func()
+  // Function body
+```
 
 See the [standard libraries](./standard_libraries.md) built into Neo-C.
 
@@ -152,11 +153,14 @@ Because of these problems, Neo-C doesn't have a regular enums like in C++. Enums
 
 ```C++
 // Neo-C
-enum i64 DayOfTheWeek kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
+enum i64 DayOfTheWeek
+  kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
 DayOfTheWeek day = DayOfTheWeek.kMon
 
 // C++
-enum class DayOfTheWeek : int64_t {kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun};
+enum class DayOfTheWeek : int64_t {
+  kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
+};
 DayOfTheWeek day = DayOfTheWeek::kMon;
 ```
 

@@ -25,7 +25,6 @@ cache i64 houseCountAround(i64 row, i64 col)
 	for (i64 rowI = startRow; rowI < endRow; rowI++)
 		for (i64 colI = startCol; colI < endCol; colI++)
 			houseCount += kHouseCounts[rowI][colI]
-
 	return houseCount
 
 void printMostPopulous()
@@ -38,13 +37,12 @@ void printMostPopulous()
 				maxHouseCountRow = rowI
 				maxHouseCountCol = colI
 				macHouseCount = houseCountAround(rowI, colI)
-
 	print("The most populous house is located at " +
 				"${maxHouseCountRow},${maxHouseCountCol}" +
 				" with ${maxHouseCount}" +
-				"${maxHouseCount == 1 ? "house" : "houses"}" +
+				" ${maxHouseCount == 1 ? "house" : "houses"}" +
 				" around it.")
 
 bool isBuildSite(i64 row, i64 col, i64 maxHouseCount)
 	if (kHouseCounts[row][col] > 0) return false
-	return houseCountAround(row, col) <= macHouseCount
+	return houseCountAround(row, col) <= maxHouseCount

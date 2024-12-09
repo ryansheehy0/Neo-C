@@ -7,9 +7,10 @@ class Animal
 
 		f64 weight() const
 			return _weight
+
 		pure virtual string name() const
-		virtual bool canEat(const Animal& animal) const
-			return animal.name() == name()
+		virtual bool canEat(const Animal& kAnimal) const
+			return kAnimal.name() == name()
 
 	private
 		f64 _weight
@@ -22,33 +23,42 @@ class Animal
 
 class Fox inherits public Animal
 	public
-		override string name() const return "Fox"
-		override bool canEat(const Animal& animal) const
-			return animal.name() == "Rabbit"
+		override string name() const
+			return "Fox"
+
+		override bool canEat(const Animal& kAnimal) const
+			return kAnimal.name() == "Rabbit"
 
 // Rabbit ----------------------------------------------------------------------
 
 class Rabbit inherits public Animal
 	public
-		override string name() const return "Rabbit"
-		override bool canEat(const Animal& animal) const
-			return animal.name() == "Grasshopper"
+		override string name() const
+			return "Rabbit"
+
+		override bool canEat(const Animal& kAnimal) const
+			return kAnimal.name() == "Grasshopper"
 
 // Grasshopper -----------------------------------------------------------------
 
 class Grasshopper inherits public Animal
 	public
-		override string name() const return "Grasshopper"
-		override bool canEat(const Animal& animal) const return false
+		override string name() const
+			return "Grasshopper"
+
+		override bool canEat(const Animal& kAnimal) const
+			return false
 
 // Cage ------------------------------------------------------------------------
 
 class Cage
 	public
 		Cage()
+		u64 count() const
+			return _animals.size()
 
-		u64 count() const return _animals.size()
-		void addAnimal(Animal* animal) _animals.push(animal)
+		void addAnimal(Animal* animal)
+			_animals.push(animal)
 
 	private
 		Animal*[dynamic] _animals

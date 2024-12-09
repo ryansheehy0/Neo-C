@@ -6,10 +6,10 @@ In C++, switch statements take up more lines because of the mandatory break stat
 ```C++
 // Neo-C
 match (var)
-  case 1: printLine(1)
-  case 2:
+  case (1) printLine(1)
+  case (2)
     printLine(2)
-  default: printLine("default")
+  case (...): printLine("default")
     printLine("default")
 
 // C++
@@ -31,7 +31,7 @@ Neo-C allows you to do case ranges with constants. Such as all lowercase charact
 ```C++
 // Neo-C
 match (var)
-  case 'a'...'c':
+  case ('a'...'c')
     // Do something
 
 // C++
@@ -50,10 +50,10 @@ Since break statements are automatically included, you can use the `fall` keywor
 ```C++
 // Neo-C
 match (var)
-  case 1:
+  case (1)
     // Do something
     fall
-  case 2:
+  case (2)
     // Do something else
 
 // C++
@@ -72,7 +72,7 @@ Instead of always using `fall`, you can use a comma to separate different compar
 ```C++
 // Neo-C
 match (var)
-  case 'a', 'b':
+  case ('a', 'b')
 
 // C++
 switch (var) {
@@ -89,7 +89,7 @@ Breaks can be used in match statements to break out of an outer loop.
 // Neo-C
 while (true)
   match (var)
-    case 1:
+    case (1)
       break
 
 // C++
@@ -111,9 +111,9 @@ Strings can work in match statements.
 // Neo-C
 string str = "abc"
 match (str)
-  case "a", "ab":
+  case ("a", "ab")
     // Do something
-  case "abc":
+  case ("abc")
     // Do something
 
 // C++

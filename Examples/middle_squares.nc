@@ -1,31 +1,24 @@
-import {OutOfRange} <Error>
-
 export class MiddleSquaresRandomNumberGenerator
-	u64 _seed
-	u64 _seedLength
+	public
+		MiddleSquaresRandomNumberGenerator(u64 seed)
+			init _seed(seed), _seedLength(string(seed).size())
 
-	MiddleSquaresRandomNumberGenerator(u64 seed)
-	init _seed(seed), _seedLength(string(seed).size())
+		void setSeed(u64 seed)
+			_seed = seed
+			_seedLength = string(seed).size()
 
-	u64 _extractMiddle(u64 squaredSeed)
-		string reversedSquaredSeed = string(squaredSeed).reverse()
-		// Extract the middle of the reversed squared seed
-		string middle
-		for i64 i = _seedLength / 2; i < _seedLength + _seedLength / 2; i++
-			middle += reversedSquaredSeed[i]
+		u64 next()
+			_seed = extractMiddle(_seed ** 2)
+			return _seed
 
-		for i64 i = 0; i < _seedLength; i++
-			middle += reversedSquaredSeed[i + _seedLength / 2]
-		// return
-		try u64 newSeed = u64(middle.reverse())
-		catch OutOfRange error
-			//
-		return newSeed
+	private
+		u64 _seed
+		u64 _seedLength
 
-	void setSeed(u64 seed)
-		_seed = seed
-		_seedLength = string(seed).size()
-
-	u64 next()
-		_seed = _extractMiddle(_seed ** 2)
-		return _seed
+		u64 extractMiddle(u64 squaredSeed)
+			string squaredStr = string(squaredSeed).padLeft(_seedLength * 2, '0')
+			i64 start = _seedLength / 2
+			string middle = squaredStr.substr(start, _seedLength)
+			try u64 newSeed = u64(middle)
+			catch (...) // Won't throw an error
+			return newSeed
