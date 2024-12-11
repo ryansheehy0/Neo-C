@@ -86,7 +86,7 @@ In Neo-C, there are no header files.
 ```C++
 import
   libName <Library> // Imports all exported things form Library under the object libName
-  fileName "./file" // Assumed to be .nc
+  fileName "./file.nc"
   (var, func) <Lib> // Imports only var and func from the OtherLib
   name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the object name and imports var2 and func2.
 

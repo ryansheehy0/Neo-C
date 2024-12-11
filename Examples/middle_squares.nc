@@ -18,7 +18,7 @@ export class MiddleSquaresRandomNumberGenerator
 		u64 extractMiddle(u64 squaredSeed)
 			string squaredStr = string(squaredSeed).padLeft(_seedLength * 2, '0')
 			i64 start = _seedLength / 2
-			string middle = squaredStr.substr(start, _seedLength)
+			string middle = squaredStr.subStr(start, _seedLength)
 			try u64 newSeed = u64(middle)
 			catch (...) // Won't throw an error
 			return newSeed

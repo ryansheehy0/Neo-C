@@ -32,6 +32,14 @@ void print(string msg, string end = "\n")
 How to print arrays? Spread operator?
   - Convert array to string. (string)array
 
+void print(string msg, string end = "\n")
+void printError(string msg, string end = "\n")
+void setTextColor(Color c)
+void resetTextColor()
+
+string userInput(string msg = "", bool hidden = false, bool tabCompletion = false)
+
+
 | Output Functions                                   | Description                                              |
 |----------------------------------------------------|----------------------------------------------------------|
 | void print(string msg)                             | Prints the message without a new line.                   |

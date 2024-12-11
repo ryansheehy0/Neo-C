@@ -12,9 +12,6 @@
 			"include": "#characters"
 		},
 		{
-			"include": "#libraries"
-		},
-		{
 			"include": "#functions"
 		},
 		{
@@ -43,7 +40,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.neo-c",
-				"match": "\\b(if|while|for|do|return|break|in|export|else|match|case|default|try|catch|throw|continue|init)\\b"
+				"match": "\\b(if|while|for|do|return|break|in|export|import|else|match|case|default|try|catch|throw|continue|init)\\b"
 			}]
 		},
 		"strings": {
@@ -69,16 +66,6 @@
 			"patterns": [{
 				"name": "string.quoted.single.neo-c",
 				"match": "'.{1}'"
-			}]
-		},
-		"libraries": {
-			"patterns": [{
-				"name": "",
-				"match": "(import) .+ (\\<.+\\>)",
-				"captures": {
-					"1": {"name": "keyword.control.neo-c"},
-					"2": {"name": "string.quoted.double.neo-c"}
-				}
 			}]
 		},
 		"functions": {

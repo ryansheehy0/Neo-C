@@ -6,6 +6,7 @@
 	- Return goto's the defer label and is rand, then returns the original value. Defer in odin?
 - Lambdas don't need `[]`s
 	- `(args){body}` -> C++ `[&](args){body}`
+- `_`s to separate numbers instead of `'`s
 
 ## Todo
 - `!` are errors
@@ -448,3 +449,15 @@ Should these things throw errors?
 - Integer division by zero throws an error.
 - Integer overflowing or underflowing throws an error.
 - `[]` indexing out of range.
+
+## Old import code
+	"libraries": {
+		"patterns": [{
+			"name": "",
+			"match": "(import) .+ (\\<.+\\>)",
+			"captures": {
+				"1": {"name": "keyword.control.neo-c"},
+				"2": {"name": "string.quoted.double.neo-c"}
+			}
+		}]
+	},

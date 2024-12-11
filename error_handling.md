@@ -118,3 +118,29 @@ f64 divide(f64 numerator, f64 denominator) : string
 - Use  `catch (...)` to catch every error
 - In classes, when you use `const` it has to be before any specified errors.
   - Ex: `void func() const : ErrorType`
+- One line try statements are special cases where the variable is automatically defined outside of the try scope.
+
+```C++
+// Neo-C
+try i8 test = i8(ui)
+catch (OutOfRange e)
+
+// C++
+int8_t test;
+try {
+  test = i8(ui);
+} catch (OutOfRange e) {}
+```
+
+  - try blocks have an indentation which implies it's its own scope. Therefore it doesn't automatically define outside.
+
+```C++
+try
+  i8 test = i8(ui)
+catch (OutOfRange e)
+
+// C++
+try {
+  int8_t test = i8(ui);
+} catch (OutOfRange e) {}
+```

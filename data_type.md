@@ -1,6 +1,6 @@
 [Back](./Readme.md)
 
-## [Data Types](#neo-c)
+## Data Types
 C++ has some problems with its default data types, which Neo-C corrects.
 
 1. Data types don't have explicitly defined lengths.
@@ -8,7 +8,7 @@ C++ has some problems with its default data types, which Neo-C corrects.
 2. Dynamic arrays and strings aren't built into the language.
 3. There are multiple ways of creating arrays with `std::array` and C-style arrays.
 
-### [Built in data types](#neo-c)
+### [Built in data types](#data-types)
 - `auto`
 - `bool`
 - `i8`, `i16`, `i32`, `i64`
@@ -23,6 +23,8 @@ C++ has some problems with its default data types, which Neo-C corrects.
   - C++: `Array_<type> name(size);` or `Array_<type> name(anotherArray);`
 - `type[dynamic] name`
   - C++: `DynamicArray_<type> name(size);` or `DynamicArray_<type> name(anotherArray);`
+
+### [Other ]
 
 Arrays are set with `[]`s instead of `{}`s
 
@@ -42,8 +44,8 @@ int64_t arr[] = {1, 2, 3, 4, 5};
 |-------------------------------------------|------------------------------------------------------------------------------------|
 | .size() or .length()                      | Gets the size/length.                                                              |
 | .at(index)                                | Allows for negative array indexing. Ex: -1 is the last element.                    |
-| .subarr(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.           |
-| .substr(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.             |
+| .subArr(startIndex, optional endIndex)  | Returns a sub array from startIndex to endIndex or the end of the array.           |
+| .subStr(startIndex, optional endIndex) | Returns a string from startIndex to endIndex or the end of the string.             |
 | .sort(optional function)                  | Returns a sorted array/string from lowest to highest.                              |
 | .reverse()                                | Returns a reversed array/string.                                                   |
 | .contains(value) or .includes(value)      | Does the value exist in the array?                                                 |

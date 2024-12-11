@@ -7,9 +7,8 @@ i32 main()
 		kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
 
 	while (true)
-		print("Enter day of the week (1-7): ", "")
-		string userInput = userInput()
-		try DayOfTheWeek day = enum<DayOfTheWeek>(userInput)
+		string ui = userInput("Enter day of the week (1-7): ")
+		try DayOfTheWeek day = enum<DayOfTheWeek>(ui)
 		catch (OutOfRange error)
 			print("Please make sure your input is between (1-7).")
 			continue
