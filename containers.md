@@ -58,6 +58,7 @@ pt.y = 20;
 The changes Neo-C makes to classes:
 1. `public`, `protected`, and `private` have to be indented when used.
   - `:`s have been removed from these keywords
+  - You have to specify these keywords.
 1. All private or protected member variables have to have `_` in front of them.
 1. The keyword `inherits` is used instead of `:`.
 1. Pure virtual methods have the keyword `pure` instead of assigning them to 0s.
@@ -65,6 +66,7 @@ The changes Neo-C makes to classes:
 1. `init` is used instead of `:`s for initializer lists.
 1. You have to define all methods inside of the class.
 1. You cannot do `Constructor() = default;`. Instead just do `Constructor()`
+1. Their are no `friend` functions in Neo-C
 
 ```C++
 // Neo-C

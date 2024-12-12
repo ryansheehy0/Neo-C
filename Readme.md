@@ -1,7 +1,15 @@
 # Neo-C
 Neo-C is a programming language that tries to solve all of my problems with C++.
-
 It transpiles to C++, so it can be just as efficient and work on all the same platforms.
+- It isn't designed to be backwards compatible with C++ or C++ libraries.
+
+```C++
+import
+  (print) <Terminal>
+
+i32 main()
+  print("Hello World!")
+```
 
 - **Transpiler**:
   - Still in development

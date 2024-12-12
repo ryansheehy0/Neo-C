@@ -7,6 +7,17 @@
 - Lambdas don't need `[]`s
 	- `(args){body}` -> C++ `[&](args){body}`
 - `_`s to separate numbers instead of `'`s
+- Add a `finally` block.
+- Should lambdas not have []s? Would that make them less useful?
+
+## Problems that I might not fix
+- `constructor` keyword
+	- 
+One common problem in C++ is if you have two constructors that take the same arguments, but you want them to do different things. You can either pass a boolean argument to choose between each of the constructors, or you can have a static method that returns an instance of the class. The problem with the static choice is that it can only interact with static variable. Not member variables. In my own custom programming language that I'm making I was thinking of having a constructor keyword that allows you to give constructors distinct names. But the problem is that my programming language transpiles into c++.
+1. Do you think this feature is good?
+2. How can I impliment something like this is c++, so my programming langue can transpile into C++? 
+- You can't call the destructor like any other method.
+	- This would be useful for overloading the =s operator.
 
 ## Todo
 - `!` are errors
