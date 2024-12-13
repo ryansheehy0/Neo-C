@@ -21,7 +21,7 @@ Point pt() // The most vexing parse. The compiler thinks this is a function.
 Point pt(10, 20)
 ```
 
-## [Structs and Unions](#containers)
+## Structs and Unions
 In Neo-C, structs and unions cannot have methods and behave similarly to those in C.
 
 ```C++
@@ -54,7 +54,7 @@ pt.y = 20;
 
 - You cannot use `{}`s to initialize structs in Neo-C
 
-## [Classes](#containers)
+## Classes
 The changes Neo-C makes to classes:
 1. `public`, `protected`, and `private` have to be indented when used.
   - `:`s have been removed from these keywords
@@ -65,26 +65,33 @@ The changes Neo-C makes to classes:
 1. `override` has to be used if you want to override a virtual method and it has to be put in front instead of at the end.
 1. `init` is used instead of `:`s for initializer lists.
 1. You have to define all methods inside of the class.
-1. You cannot do `Constructor() = default;`. Instead just do `Constructor()`
+1. Use `constructor` and `destructor` keywords instead of the name of the class.
+  - This allows you to rename the class without renaming all the constructors and destructor.
+  - You cannot do `constructor() = default;`. Instead just do `constructor()`
 1. Their are no `friend` functions in Neo-C
+1. The body of the method has to be indented on another line.
 
 ```C++
 // Neo-C
 class Animal
   public
-    Animal()
-    Animal(f64 weight) init _weight(weight)
+    constructor()
+    constructor(f64 weight)
+      init _weight(weight)
 
     pure virtual string name() const
-    f64 weight() const return _weight
-    void setWeight(f64 weight) _weight = weight
+    f64 weight() const
+      return _weight
+    void setWeight(f64 weight)
+      _weight = weight
 
   protected
     f64 _weight = 10.0
 
 class Fox inherits public Animal
   public
-    override string name() const return "Fox"
+    override string name() const
+      return "Fox"
 
 // C++
 class Animal {

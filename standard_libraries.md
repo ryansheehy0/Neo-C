@@ -4,7 +4,7 @@
 
 <!-- TOC -->
 
-- [Terminal](#terminal)
+- [Console](#console)
 - [Math](#math)
 - [File](#file)
 - [Time](#time)
@@ -12,21 +12,18 @@
 - [Regex](#regex)
 - [Network](#network)
 - [Encrypt](#encrypt)
-- [LinkedList](#linkedlist)
+- [DataStructure](#datastructure)
 - [Test](#test)
 - [Bash](#bash)
-- [Convert](#convert)
 - [Error](#error)
-- [Arguments](#arguments)
 - [Draw](#draw)
-- [ML](#ml)
-- [Map](#map)
+- [MachineLearning](#machinelearning)
 - [Optional](#optional)
 
 <!-- /TOC -->
 
-## [Terminal](#neo-c-standard-libraries)
-The Terminal library is used to interact with the terminal.
+## Console
+The Console library is used to interact with the console.
 
 void print(string msg, string end = "\n")
 How to print arrays? Spread operator?
@@ -65,7 +62,10 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 | sting[] readCheckbox(string[] list)      | Returns array of checked lists.                                             |
 | string[] readLineCheckbox(string[] list) | Same as readCheckbox, but outputs new line after enter.                     |
 
-## [Math](#neo-c-standard-libraries)
+- Need a way to navigate arguments from the console.
+  - Like flags
+
+## Math
 - abs()
 - sqrt()
 
@@ -78,54 +78,52 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 | f64 asin(f64 x) |             |
 | f64 atan(f64 x) |             |
 
-## [File](#neo-c-standard-libraries)
+## File
 - File
   - getFile(string fileName)
 
-## [Time](#neo-c-standard-libraries)
+## Time
   - currentTime()
   - Date functions as well
 
-## [HTML](#neo-c-standard-libraries)
-- Functions that allow you to interact with HTML
+## HTML
+- Functions that allow you to interact with HTML and CSS
 
-## [Regex](#neo-c-standard-libraries)
+## Regex
 
-## [Network](#neo-c-standard-libraries)
+## Network
 - fetch, json, express like server
 
-## [Encrypt](#neo-c-standard-libraries)
+## Encrypt
 - sha256
 - cryptographic encryption
 - rsa
 - other common encryption algorithms
 - UUID
+- rand()
+  - Returns a f64 between 0 and 1. Cryptographically secure.
 
-## [LinkedList](#neo-c-standard-libraries)
-## [Test](#neo-c-standard-libraries)
+## DataStructure
+- Linked List
+- set
+- map
+
+## Test
 - Library for test driven development.
 - Automatic checks
 - Only fails are printed
 
-## [Bash](#neo-c-standard-libraries)
+## Bash
 Library for running bash commands
 
-## [Convert](#neo-c-standard-libraries)
-- Convert
-  - string typeof(T value)
-
-## [Error](#neo-c-standard-libraries)
+## Error
 - exit()
 - Different error types
 	- OutOfRange
 
-## [Arguments](#neo-c-standard-libraries)
-A library for handling args when the compiled program is called from the terminal
-
-## [Draw](#neo-c-standard-libraries)
+## Draw
 - Pen functions
 
-## [ML](#neo-c-standard-libraries)
+## MachineLearning
 
-## [Map](#neo-c-standard-libraries)
-## [Optional](#neo-c-standard-libraries)
+## Optional

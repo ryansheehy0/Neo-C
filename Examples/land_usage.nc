@@ -1,13 +1,13 @@
 const i64 kRows = 7
 const i64 kCols = 9
 const i64[kRows][kCols] kHouseCounts = [
-   [2, 0, 0, 4, 0, 3, 0, 0, 0],
-   [0, 0, 3, 0, 0, 0, 2, 0, 0],
-   [0, 1, 0, 0, 2, 0, 0, 0, 5],
-   [1, 0, 0, 0, 0, 0, 0, 0, 0],
-   [0, 0, 0, 0, 0, 1, 1, 1, 0],
-   [0, 2, 0, 2, 0, 0, 0, 0, 0],
-   [1, 0, 0, 0, 0, 0, 0, 2, 0],
+	[2, 0, 0, 4, 0, 3, 0, 0, 0],
+	[0, 0, 3, 0, 0, 0, 2, 0, 0],
+	[0, 1, 0, 0, 2, 0, 0, 0, 5],
+	[1, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 1, 1, 1, 0],
+	[0, 2, 0, 2, 0, 0, 0, 0, 0],
+	[1, 0, 0, 0, 0, 0, 0, 2, 0],
 ]
 
 cache i64 houseCountAround(i64 row, i64 col)
@@ -37,11 +37,12 @@ void printMostPopulous()
 				maxHouseCountRow = rowI
 				maxHouseCountCol = colI
 				macHouseCount = houseCountAround(rowI, colI)
-	print("The most populous house is located at " +
-				"${maxHouseCountRow},${maxHouseCountCol}" +
-				" with ${maxHouseCount}" +
-				" ${maxHouseCount == 1 ? "house" : "houses"}" +
-				" around it.")
+	// Tabs for indentation and then spaces for alignment.
+	print("The most populous house is located at \
+	       ${maxHouseCountRow},${maxHouseCountCol}\
+	        with ${maxHouseCount} \
+	       ${maxHouseCount == 1 ? "house" : "houses"}\
+	        around it.")
 
 bool isBuildSite(i64 row, i64 col, i64 maxHouseCount)
 	if (kHouseCounts[row][col] > 0) return false

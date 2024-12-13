@@ -25,7 +25,7 @@ switch (var) {
 }
 ```
 
-### [Ranges](#neo-c)
+### Ranges
 Neo-C allows you to do case ranges with constants. Such as all lowercase characters.
 
 ```C++
@@ -44,7 +44,7 @@ switch (var) {
 }
 ```
 
-### [Fall throughs](#neo-c)
+### Fall throughs
 Since break statements are automatically included, you can use the `fall` keyword to fall through to the next case.
 
 ```C++

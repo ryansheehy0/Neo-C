@@ -144,3 +144,5 @@ try {
   int8_t test = i8(ui);
 } catch (OutOfRange e) {}
 ```
+
+- Use the keyword `throws` instead of `:`. It makes things more clear.

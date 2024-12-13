@@ -1,16 +1,17 @@
 // Animal ----------------------------------------------------------------------
 class Animal
 	public
-		Animal()
-		Animal(f64 weight)
+		constructor()
+		constructor(f64 weight)
 			init _weight(weight)
 
 		f64 weight() const
 			return _weight
 
 		pure virtual string name() const
+
 		virtual bool canEat(const Animal& kAnimal) const
-			return kAnimal.name() == name()
+			return kAnimal.name() != name()
 
 	private
 		f64 _weight
@@ -53,7 +54,8 @@ class Grasshopper inherits public Animal
 
 class Cage
 	public
-		Cage()
+		constructor()
+
 		u64 count() const
 			return _animals.size()
 

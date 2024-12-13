@@ -8,7 +8,7 @@ C++ has some problems with its default data types, which Neo-C corrects.
 2. Dynamic arrays and strings aren't built into the language.
 3. There are multiple ways of creating arrays with `std::array` and C-style arrays.
 
-### [Built in data types](#data-types)
+### Built in data types
 - `auto`
 - `bool`
 - `i8`, `i16`, `i32`, `i64`
@@ -24,7 +24,7 @@ C++ has some problems with its default data types, which Neo-C corrects.
 - `type[dynamic] name`
   - C++: `DynamicArray_<type> name(size);` or `DynamicArray_<type> name(anotherArray);`
 
-### [Other ]
+### Other
 
 Arrays are set with `[]`s instead of `{}`s
 
@@ -38,7 +38,7 @@ int64_t arr[] = {1, 2, 3, 4, 5};
 
 `nullptr` and `null` both are keywords that are the same as 0.
 
-### [Built in string and array methods](#neo-c)
+### Built in string and array methods
 
 | Array, string, and dynamic array methods  | Description                                                                        |
 |-------------------------------------------|------------------------------------------------------------------------------------|

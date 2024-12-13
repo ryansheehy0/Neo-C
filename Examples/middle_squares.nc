@@ -1,6 +1,6 @@
 export class MiddleSquaresRandomNumberGenerator
 	public
-		MiddleSquaresRandomNumberGenerator(u64 seed)
+		constructor(u64 seed)
 			init _seed(seed), _seedLength(string(seed).size())
 
 		void setSeed(u64 seed)

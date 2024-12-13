@@ -4,7 +4,7 @@ struct ListNode
 
 export class LinkedListStack
 	public
-		~LinkedList()
+		destructor()
 			ListNode* curNode = _head
 			while (curNode != nullptr)
 				ListNode* nextNode = curNode->next

@@ -1,5 +1,7 @@
 [Back](./Readme.md)
 
+- Make it very similar to Backus-Naur form grammar
+
 # Templates
 In Neo-C, templates are defined by placing angle brackets `<>`s after the name. The `auto` keyword can be used to define a template argument that accepts any type. This replaces C++'s `typename` and `class`.
 

@@ -1,14 +1,16 @@
 # Neo-C
 Neo-C is a programming language that tries to solve all of my problems with C++.
+
 It transpiles to C++, so it can be just as efficient and work on all the same platforms.
 - It isn't designed to be backwards compatible with C++ or C++ libraries.
 
 ```C++
+// Hello World!
 import
-  (print) <Terminal>
+	(print) <Terminal>
 
 i32 main()
-  print("Hello World!")
+	print("Hello World!")
 ```
 
 - **Transpiler**:
@@ -45,13 +47,12 @@ i32 main()
 
 <!-- /TOC -->
 
-## [Basic syntax](#neo-c)
+## Basic syntax
 - No semicolons
-- Curly brackets replaced by new lines and indentations
-  - Tabs and 2 spaces can be used for indentation
-  - Functions and methods cannot be one one line. Neo-C is designed to work with code folding. If things look too cluttered, then fold code.
+- Curly brackets are replaced by new lines and tab indentation
+  - Extra spaces are ignored by the transpiler, allowing spaces to be used for aligning elements across multiple lines where the transpiler expects them to be on a single line.
 
-### [Enforced naming conventions](#neo-c)
+### Enforced naming conventions
 
 | Category                                                                  | Naming convention |
 |---------------------------------------------------------------------------|-------------------|
@@ -61,13 +62,13 @@ i32 main()
 
 ## [Data Types](./data_type.md)
 
-## [Main function](#neo-c)
+## Main function
 If the main function doesn't return, then it's assumed to return 0.
 
 ```C++
 // Neo-C
 i32 main()
-  // or
+	// or
 i32 main(string[] args)
 
 // C++
@@ -81,9 +82,11 @@ int main(int arg_c, char** arg_v) {
 }
 ```
 
+- Functions have to be one multiple lines.
+
 ## [Match statements](./match_statements.md)
 
-## [Importing and Exporting](#neo-c)
+## Importing and Exporting
 In C++, header files have some problems:
 1. If you make a change to a definition in a cpp file, you have to make the same corresponding change in the header file.
 2. When you include a header file, you are including everything in that file instead of only what you want to use.
@@ -107,7 +110,7 @@ See the [standard libraries](./standard_libraries.md) built into Neo-C.
 
 - Namespaces have been removed from Neo-C.
 
-## [Automatic hoisting](#neo-c)
+## Automatic hoisting
 Neo-C allows for automatic function, class, struct, and union hoisting so that you can use them above where they are defined.
 
 ```C++
@@ -128,7 +131,7 @@ void func() {
 }
 ```
 
-## [For each loops](#neo-c)
+## For each loops
 In C++, it's impossible to include the index in a for each loop. In Neo-C, for each loops can include the index.
 
 ```C++
@@ -151,7 +154,7 @@ for (int64_t i = 0; i < arr.size(); i++) {
 
 ## [Containers](./containers.md)
 
-## [Enums](#neo-c)
+## Enums
 There are 2 main problems with the regular enums that enum classes were designed to solve in C++:
 1. Naming conflicts - You cannot reuse the names defined in the enum.
 1. Implicit int conversion - Enums can be compared to or assigned to integers, which can lead to invalid values.
@@ -172,7 +175,7 @@ enum class DayOfTheWeek : int64_t {
 DayOfTheWeek day = DayOfTheWeek::kMon;
 ```
 
-## [Nested Comments](#neo-c)
+## Nested Comments
 Neo-C allows for nested multi-line comments.
 
 ```javascript
@@ -189,7 +192,7 @@ Neo-C allows for nested multi-line comments.
 */
 ```
 
-## [Do while loops](#neo-c)
+## Do while loops
 In Neo-C, since there are no curly brackets, the ending while statement for do-while loops could be confused with another while loop. So Neo-C, puts the do and while keywords on the same line.
 
 ```C++
@@ -203,7 +206,7 @@ do {
 } while (false);
 ```
 
-## [Breaking out of nested loops](#neo-c)
+## Breaking out of nested loops
 In Neo-C, if you have a loop nested in another loop, you can add an additional break statement to break out of both loops.
 
 ```C++
@@ -226,20 +229,34 @@ for (auto el : arr) {
 
 - These breaks can be strung together to break out of any amount of loops. Ex: `break break break` etc.
 
-## [String Templates](#neo-c)
-Neo-C adds the ability to insert code into strings. Strings can also span multiple lines.
+## String Templates
+Neo-C adds the ability to insert code into strings and to have multi-line strings.
+- When doing multi-line strings, all characters have to be indented the same as the starting `"`.
+  - It doesn't compile if it isn't aligned.
+- The indentation has to start with the same number of tabs as the line above and then use spaces for alignment.
+  - This allows the code to stay aligned even when someone changes the default tab size.
+  - This rule also applies to other single line statements converted into multi-line ones. Such as multi-line `init`s, function arguments, etc.
+- `\`s can be placed at the end of multi-line strings to prevent a new line.
 
 ```C++
 // Neo-C
-i64 x = 10
-string y = "10"
-string str = "x: ${x}
-y: ${y}"
+if (true)
+  i64 a = 10
+  string b = "10"
+  string str = "x: ${x} \
+                y: ${y}"
+/*
+-- tabs
+  -------------- spaces
+*/
 
 // C++
-int64_t x = 10;
-String_ y = "10";
-String_ str = "x: " + to_string(x) + "\ny: " + y;
+if (true) {
+  int64_t x = 10;
+  String_ y = "10";
+  String_ str = "x: " + to_string(x) +
+                "y: " + y;
+}
 ```
 
 - `\${}` allows you to escape.
@@ -254,13 +271,13 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 
 ## [Optimization keywords](./optimization_keywords.md)
 
-## [Other changes](#neo-c)
+## Other changes
 - `**` can be used for exponents.
 - `->` can be used just like in C++
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
 - String literals are converted to a string and not a character array.
 
-### [Removing gotos](#neo-c)
+### Removing gotos
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
 1. Breaking out of nested loops
   - This has been replaced with `break break` etc.
@@ -271,7 +288,7 @@ String_ str = "x: " + to_string(x) + "\ny: " + y;
 
 - Labels cannot be used in Neo-C
 
-## [All Keywords](#neo-c)
+## All Keywords
 Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.
 
 - main
