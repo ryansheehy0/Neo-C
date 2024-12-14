@@ -13,6 +13,22 @@
 	- Pushes onto stack and gets destroyed when it goes out of scope?
 - `operator` keyword
 
+## Multiple return types
+- `out` keyword
+	- Any arguments for out must be non-const and pass by reference or pointer.
+	- Any non-out arguments must be const or pass by value.
+
+```C++
+// Neo-C
+void addAndSquare(out i64& add, out i64& square, i32 a, i32 b)
+	add = a + b
+	square = add * add
+
+i64 add
+i64 square
+addAndSquare(out add, out square, 10, 10)
+```
+
 ## Problems that I might not fix
 - `constructor` keyword
 	- If you rename the class you don't have t rename all the constructors and destructors. Maybe also have a `destructor` keyword.

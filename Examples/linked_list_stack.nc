@@ -18,7 +18,7 @@ export class LinkedListStack
 			})
 			return count
 
-		ListNode* find(i64 value) : string
+		ListNode* find(i64 value) throws string
 			forEachNode((ListNode* curNode){
 				if (curNode->value == value) return curNode
 			})
@@ -32,7 +32,7 @@ export class LinkedListStack
 			else
 				_head = newNode
 
-		i64 pop() : string
+		i64 pop() throws string
 			if (!_head) throw "The linked list is empty."
 			ListNode* tail = nullptr
 			ListNode* prevTail = nullptr

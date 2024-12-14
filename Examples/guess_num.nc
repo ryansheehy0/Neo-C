@@ -1,9 +1,9 @@
 import
-	(print, userInput) <Terminal>
+	(print, userInput) <Console>
 	(rand) <Encrypt>
 	(OutOfRange) <Error>
 
-i32 main()
+void main()
 	i8 randNum = (rand() * 99) + 1
 	i64 numOfGuesses = 0
 	while (true)
@@ -15,7 +15,7 @@ i32 main()
 		if (guess == randNum)
 			print("  ${guess} is the answer!")
 			print("Finished in ${numOfGuesses} ${numOfGuesses == 1 ? "guess" : "guesses"}")
-			return 0
+			return
 		else if (guess < randNum)
 			print("  ${guess} is too low")
 		else

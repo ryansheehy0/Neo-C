@@ -1,7 +1,7 @@
 import
-	(print) <Terminal>
+	(print) <Console>
 
-i32 main()
+void main()
 	u16 x, y, z
 	while (true)
 		x = 0

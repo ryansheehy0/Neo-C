@@ -7,9 +7,9 @@ It transpiles to C++, so it can be just as efficient and work on all the same pl
 ```C++
 // Hello World!
 import
-	(print) <Terminal>
+	(print) <Console>
 
-i32 main()
+void main()
 	print("Hello World!")
 ```
 
@@ -67,9 +67,9 @@ If the main function doesn't return, then it's assumed to return 0.
 
 ```C++
 // Neo-C
-i32 main()
+void main()
 	// or
-i32 main(string[] args)
+void main(string[] args)
 
 // C++
 int main() {}
@@ -82,6 +82,8 @@ int main(int arg_c, char** arg_v) {
 }
 ```
 
+- `void` was chosen for main instead of `i32` because, if `i32` were used, an exception would need to be made to allow main to return nothing, which could be confusing for new programmers.
+  - If you want to exit your application with an error code, then you can use the inbuilt function `exit(i32 errorCode)`.
 - Functions have to be one multiple lines.
 
 ## [Match statements](./match_statements.md)

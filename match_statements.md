@@ -66,7 +66,7 @@ switch (var) {
 }
 ```
 
-### [Multiple cases](#neo-c)
+### Multiple cases
 Instead of always using `fall`, you can use a comma to separate different comparisons.
 
 ```C++
@@ -82,7 +82,7 @@ switch (var) {
 }
 ```
 
-### [Breaks](#neo-c)
+### Breaks
 Breaks can be used in match statements to break out of an outer loop.
 
 ```C++
@@ -103,7 +103,7 @@ while (true) {
 break_loop:
 ```
 
-### [Strings](#neo-c)
+### Strings
 Strings can work in match statements.
 - Ranges(`...`) don't work for strings
 

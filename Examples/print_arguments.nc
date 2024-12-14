@@ -1,6 +1,6 @@
 import
-	(print) <Terminal>
+	(print) <Console>
 
-i32 main(string[] args)
+void main(string[] args)
 	for (string arg, u64 i in args)
 		print("Argument ${i}: ${arg}")

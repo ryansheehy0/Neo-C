@@ -1,8 +1,8 @@
 import
-	(userInput, print) <Terminal>
+	(userInput, print) <Console>
 	(OutOfRange) <Error>
 
-i32 main()
+void main()
 	enum i8 DayOfTheWeek
 		kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
 
