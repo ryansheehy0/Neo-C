@@ -65,9 +65,9 @@ The changes Neo-C makes to classes:
 1. `override` has to be used if you want to override a virtual method and it has to be put in front instead of at the end.
 1. `init` is used instead of `:`s for initializer lists.
 1. You have to define all methods inside of the class.
-1. Use `constructor` and `destructor` keywords instead of the name of the class.
+1. Use `This` and `~This` keywords instead of the name of the class.
   - This allows you to rename the class without renaming all the constructors and destructor.
-  - You cannot do `constructor() = default;`. Instead just do `constructor()`
+  - You cannot do `This() = default;`. Instead just do `This()`
 1. Their are no `friend` functions in Neo-C
 1. The body of the method has to be indented on another line.
 
@@ -75,13 +75,16 @@ The changes Neo-C makes to classes:
 // Neo-C
 class Animal
   public
-    constructor()
-    constructor(f64 weight)
+    This() // Constructors
+    This(f64 weight)
       init _weight(weight)
+    ~This() // Destructors
 
     pure virtual string name() const
+
     f64 weight() const
       return _weight
+
     void setWeight(f64 weight)
       _weight = weight
 

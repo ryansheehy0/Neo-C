@@ -7,18 +7,20 @@
 - [Console](#console)
 - [Math](#math)
 - [File](#file)
+- [DataStructure](#datastructure)
+- [Algorithms](#algorithms)
 - [Time](#time)
 - [HTML](#html)
 - [Regex](#regex)
 - [Network](#network)
 - [Encrypt](#encrypt)
-- [DataStructure](#datastructure)
 - [Test](#test)
 - [Bash](#bash)
 - [Error](#error)
 - [Draw](#draw)
 - [MachineLearning](#machinelearning)
 - [Optional](#optional)
+- [SQLike](#sqlike)
 
 <!-- /TOC -->
 
@@ -82,12 +84,27 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 - File
   - getFile(string fileName)
 
+## DataStructure
+- Linked List
+- set
+- map
+
+## Algorithms
+- `remove(DataStructure<T> dataStructure, T value)` - removes all the occurrences of value in data structure.
+- `sort(DataStructure ds, optional lambda)` - sorts based on less than.
+- `findIndex(DataStructure ds, T value)`
+- `contains
+- `fill
+
+- these are in the data structure class
+
 ## Time
   - currentTime()
   - Date functions as well
 
 ## HTML
 - Functions that allow you to interact with HTML and CSS
+  - This is the main way of creating user interfaces.
 
 ## Regex
 
@@ -103,10 +120,6 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 - rand()
   - Returns a f64 between 0 and 1. Cryptographically secure.
 
-## DataStructure
-- Linked List
-- set
-- map
 
 ## Test
 - Library for test driven development.
@@ -117,7 +130,6 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 Library for running bash commands
 
 ## Error
-- exit()
 - Different error types
 	- OutOfRange
 
@@ -127,3 +139,7 @@ Library for running bash commands
 ## MachineLearning
 
 ## Optional
+
+## SQLike
+- Used to interface with a local SQLike database.
+- Also supports a noSQL section.

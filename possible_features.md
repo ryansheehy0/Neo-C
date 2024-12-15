@@ -13,21 +13,26 @@
 	- Pushes onto stack and gets destroyed when it goes out of scope?
 - `operator` keyword
 
-## Multiple return types
-- `out` keyword
-	- Any arguments for out must be non-const and pass by reference or pointer.
-	- Any non-out arguments must be const or pass by value.
+- Functions that take iterators are annoying because you have to specify .begin() and .end().
+	- These standard functions should take in an instance of the abstract DataStructure class, which has .begin() and .end()
+	- `sort(vec)` instead of `sort(vec.begin(), vec.end())`
+		- `void sort(DataStructure ds)`
+		- These shouldn't be methods because the algo is the same across data structures.
+		- string, [], [dynamic], LinkedList, DoublyLinkedList, 
+		- If you really care about performance, you can pass the iterators directly without needing a v-table.
+		- insert and erase use index instead of iterators.
+		- Maybe just make them classes that can be accessed without importing.
+			- String, Array, DynamicArray, LinkedList, DoublyLinkedList, BalancedBinaryTree
+				- Strings are just an array of characters.
+				- There are also Set versions of these data structures that only allow unique elements in them.
+				- There's a KeyValuePair class which overloads the =s operator. You can create a Map by having an array of KeyValuePairs.
+				- I need to learn about other data structures.
+					- Tree, Heap, Graph, Trie
+		- !!! Have the ability to make template requirements for abstract classes.
+			- `void print<DataStructure DataStructure>(const DataStructure& dataStructure)`
+			- Can you do the same thing inside classes, for methods? Template methods?
+			- `print(arr.begin(), arr.end())` -> `arr.print()`. Why not just `print(arr)`. This seems better.
 
-```C++
-// Neo-C
-void addAndSquare(out i64& add, out i64& square, i32 a, i32 b)
-	add = a + b
-	square = add * add
-
-i64 add
-i64 square
-addAndSquare(out add, out square, 10, 10)
-```
 
 ## Problems that I might not fix
 - `constructor` keyword
@@ -43,6 +48,33 @@ class MyClass
 
 - You can't call the destructor like any other method.
 	- This would be useful for overloading the =s operator.
+
+```C++
+template<Iterable T>
+void print(const T& dataStructure)
+
+requirement Iterable<auto Type>
+	Type.begin()
+	Type.end()
+	// Why can't this be a abstract class?
+
+```
+
+## Multiple return types
+- `out` keyword
+	- Any arguments for out must be non-const and pass by reference or pointer.
+	- Any non-out arguments must be const or pass by value.
+
+```C++
+// Neo-C
+void addAndSquare(out i64& add, out i64& square, i32 a, i32 b)
+	add = a + b
+	square = add * add
+
+i64 add
+i64 square
+addAndSquare(out add, out square, 10, 10)
+```
 
 ## Todo
 - `!` are errors

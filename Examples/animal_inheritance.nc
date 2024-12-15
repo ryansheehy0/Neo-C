@@ -1,8 +1,8 @@
 // Animal ----------------------------------------------------------------------
 class Animal
 	public
-		constructor()
-		constructor(f64 weight)
+		This()
+		This(f64 weight)
 			init _weight(weight)
 
 		f64 weight() const
@@ -54,7 +54,7 @@ class Grasshopper inherits public Animal
 
 class Cage
 	public
-		constructor()
+		This()
 
 		u64 count() const
 			return _animals.size()
