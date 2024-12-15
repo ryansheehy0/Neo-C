@@ -29,6 +29,10 @@ class DataStructure {
 		virtual void erase(int64_t index) = 0;
 
 		// Algorithms
+		void print() {
+			for (auto pos = )
+		}
+
 		void remove(T value) {
 			int64_t i = 0;
 			for (T* ptr = begin(); ptr != end(); ptr += sizeof(T), i++) {
@@ -37,8 +41,6 @@ class DataStructure {
 				}
 			}
 		}
-
-- `remove(DataStructure<T> dataStructure, T value)` - removes all the occurrences of value in data structure.
 
 	protected:
 		int64_t _size = 0;

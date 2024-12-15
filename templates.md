@@ -1,10 +1,5 @@
 [Back](./Readme.md)
 
-- Have templates on their own line. More like C++.
-  - Also have the template keyword
-- Make it very similar to Backus-Naur form grammar
-- Can have classes as requirements
-
 # Templates
 In Neo-C, templates are created very similarly to those in C++, however there are some notable changes.
 - There is no `typename`. Instead just use `auto`.
@@ -12,52 +7,33 @@ In Neo-C, templates are created very similarly to those in C++, however there ar
 
 ```C++
 // Neo-C
-```
-
-
-In Neo-C, templates are defined by placing angle brackets `<>`s after the name. The `auto` keyword can be used to define a template argument that accepts any type. This replaces C++'s `typename` and `class`.
-
-```C++
-auto add<auto Type1, auto Type2>(Type1 value1, Type2 value2)
+template<auto Type>
+Type add(Type value1, Type value2)
   return value1 + value2
 ```
 
-In Neo-C, you can create requirements for template arguments that are checked at compile time. Requirements can only have one template argument defined.
+## Requirements
+In Neo-C, you can create requirements for template arguments that are checked at compile time. These requirements can be combined together using `&&`, `||`, `!`, and parentheses.
+- The requirements can only be classes or built in data types(like `bool`, `i8`, `i16`, etc).
 
 ```C++
-requirement Addable<auto Type>
-  Type + Type
+// Neo-C
+class Addable
+  public
+    Addable operator+(const Addable& rhs)
+    This operator+(const This& rhs) // You can also do this.
 
-auto add<Addable Type1, Addable Type2>(Type1 value1, Type2 value2)
-  return value1 + value2
+class Subtractable
+  public
+    Subtractable operator-(const Subtractable& rhs)
+
+
+template<Addable && Subtractable Type>
+Type someMathFunc(Type value1, Type value2)
+  return value1 + value1 - value2
 ```
 
-The logical operators `&&`, `||`, `!`, and parentheses `()` are supported for combining requirements inside templates.
-
-```C++
-requirement Subtractable<auto Type>
-  Type - Type
-
-requirement Addable<auto Type>
-  Type + Type
-
-auto someMathFunc<Addable && Subtractable Type1, Addable && Subtractable Type2>(Type1 value1, Type2 value2)
-  return value1 + value2 - value1
-```
-
-You can also define specific types required for template arguments.
-
-```C++
-requirement Int<i8 || i16 || i32 || i64 Type>
-  Type
-
-requirement Addable<auto Type>
-  Type + Type
-```
-
-See the [requirement library](./requirement_library.md) for built in requirements.
-
-## Using base classes as template requirements
+## Using classes as template requirements
 Let's say you want to create a function that prints all the elements in any type of data structure. Like this:
 
 ```C++
@@ -67,12 +43,11 @@ void printAll(const DataStructure& dataStructure)
 		print(string(ele))
 ```
 
-The problem with this approach is the run time costs associated with using an abstract class like DataStructure. A virtual table has to be used, therefore slowing down run time performance. To get around this we can pass the iterators as separate arguments. Like this:
+The problem with this approach is the run time costs associated with using a base class like DataStructure. A virtual table has to be used, therefore slowing down run time performance. To get around this we can pass the iterators as separate arguments. Something like this:
 
 ```C++
 // Neo-C
-template<auto T>
-void printAll(T.Iterator begin, T.Iterator end)
+void printAll(Iterator begin, Iterator end)
   for (auto iter = begin; iter != end; iter++)
     print(string(*iter))
 ```
@@ -81,16 +56,13 @@ However, this makes the syntax for calling printAll kind of messy, `printAll(arr
 
 ```C++
 // Neo-C
-template<DataStructure T>
-void printAll(const T& dataStructure)
+template<DataStructure Type>
+void printAll(const Type& dataStructure)
   for (auto ele in dataStructure)
     print(string(ele))
 ```
 
-This removes the run time costs associated with passing abstract classes as arguments, but still allows for the nice syntax of `printAll(arr)`.
-- Any class can be used as a requirement. It's just most useful when that class is an abstract class.
-
-And this feature can be extended further by allowing it to be put into the DataStructure class itself. Like this:
+This removes the run time costs associated with passing base classes as arguments, but still allows for the nice syntax of `printAll(arr)`. And this feature can be extended further by allowing it to be put into the DataStructure class itself. Like this:
 
 ```C++
 class DataStructure
