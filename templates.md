@@ -70,7 +70,7 @@ class DataStructure
     // Other public methods
 
     template<This T>
-    void printAll(T this) // Overwrite the "this" keyword to allow its type to be determined at compile time.
+    void printAll(T* this) // Overwrite the "this" keyword to allow its type to be determined at compile time.
       for (auto ele in this)
         print(string(ele))
 ```

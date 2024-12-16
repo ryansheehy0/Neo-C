@@ -1,182 +1,3 @@
-- Taking the simplicity of the syntax in other languages and applying them to c++.
-	- C++ tends to be very verbose compared to other languages
-- To make the difference between pseudo-code and code as minimal as possible
-
-- `defer:` keyword that gets called when you want to return.
-	- Return goto's the defer label and is rand, then returns the original value. Defer in odin?
-- Lambdas don't need `[]`s
-	- `(args){body}` -> C++ `[&](args){body}`
-- `_`s to separate numbers instead of `'`s
-- Add a `finally` block.
-- Should lambdas not have []s? Would that make them less useful?
-- `defer`
-	- Pushes onto stack and gets destroyed when it goes out of scope?
-- `operator` keyword
-
-- Functions that take iterators are annoying because you have to specify .begin() and .end().
-	- These standard functions should take in an instance of the abstract DataStructure class, which has .begin() and .end()
-	- `sort(vec)` instead of `sort(vec.begin(), vec.end())`
-		- `void sort(DataStructure ds)`
-		- These shouldn't be methods because the algo is the same across data structures.
-		- string, [], [dynamic], LinkedList, DoublyLinkedList, 
-		- If you really care about performance, you can pass the iterators directly without needing a v-table.
-		- insert and erase use index instead of iterators.
-		- Maybe just make them classes that can be accessed without importing.
-			- String, Array, DynamicArray, LinkedList, DoublyLinkedList, BalancedBinaryTree
-				- Strings are just an array of characters.
-				- There are also Set versions of these data structures that only allow unique elements in them.
-				- There's a KeyValuePair class which overloads the =s operator. You can create a Map by having an array of KeyValuePairs.
-				- I need to learn about other data structures.
-					- Tree, Heap, Graph, Trie
-		- !!! Have the ability to make template requirements for abstract classes.
-			- `void print<DataStructure DataStructure>(const DataStructure& dataStructure)`
-			- Can you do the same thing inside classes, for methods? Template methods?
-			- `print(arr.begin(), arr.end())` -> `arr.print()`. Why not just `print(arr)`. This seems better.
-
-
-## Problems that I might not fix
-- `constructor` keyword
-	- If you rename the class you don't have t rename all the constructors and destructors. Maybe also have a `destructor` keyword.
-	- One common problem in C++ is if you have two constructors that take the same arguments, but you want them to do different things. You can either pass a boolean argument to choose between each of the constructors, or you can have a static method that returns an instance of the class. The problem with the static choice is that it can only interact with static variable. Not member variables. In my own custom programming language that I'm making I was thinking of having a constructor keyword that allows you to give constructors distinct names. But the problem is that my programming language transpiles into c++.
-
-```C++
-class MyClass
-	public
-		constructor()
-		destructor()
-```
-
-- You can't call the destructor like any other method.
-	- This would be useful for overloading the =s operator.
-
-```C++
-template<Iterable T>
-void print(const T& dataStructure)
-
-requirement Iterable<auto Type>
-	Type.begin()
-	Type.end()
-	// Why can't this be a abstract class?
-
-```
-
-## Multiple return types
-- `out` keyword
-	- Any arguments for out must be non-const and pass by reference or pointer.
-	- Any non-out arguments must be const or pass by value.
-
-```C++
-// Neo-C
-void addAndSquare(out i64& add, out i64& square, i32 a, i32 b)
-	add = a + b
-	square = add * add
-
-i64 add
-i64 square
-addAndSquare(out add, out square, 10, 10)
-```
-
-## Todo
-- `!` are errors
-- `:` are 
-
-- The cache keyword can be used to cache a function's value for a certain set of inputs.
-	- If the function is called again with the same inputs, the cached value is returned
-
-- Heap
-	- `unique<type>` and `shared<type>`
-	- No `new` and `delete` keywords.
-	- Remove RAII explanation
-- Define casting functions
-	- Why not just use c++ casting? It doesn't throw errors.
-		- Why not check for errors and then use c++ casting?
-			- Could I actually write a better conversion algorithm? Probably not.
-- Force there to be setter and getter methods. No public variables.
-	- Why? Later when you realize your setters need to do more that just set the value, you'll have to change everywhere that property has been used directly.
-	- Interfaces can only have methods
-	- Special syntax like with c#
-	- Any public variables are given two functions with the name of the variable. Ex: `i64 x` has the methods `i64 x() const` to get and `void x(i64 input)`. What if you don't want those to be public? Then make it private and define your own methods. Is there another way?
-
-- Organize possible features
-- Converting/Casting
-- Learn smart points and finish heap
-- Special getters and setters syntax?
-- The big 3? How to do without operator overloading?
-- Double check
-	- std::string was replaced by String_
-	- Syntax highlighting on github
-- Multi-threading with async/await
-- Math library
-- Translate examples into C++
-- Implement different classes in C++
-- Doubly linked list example
-	- Just contains a head pointer
-	- Have a node class
-- LeetCode in Neo-C and C++
-- HolyC
-
-## Function arguments
-- Functions can only have 3 types of arguments.
-	- Pass by value
-	- Pass by const reference
-	- And pass by pointer
-- Types can have `?` after them to make them optional
-
-```C++
-// Neo-C
-void func(i64 a, const i64&? y)
-```
-
-## Heap
-In C++, the new keyword creates memory on the heap and returns a pointer to it. The delete keyword frees that memory. There are 3 main problems with this.
-- Forgetting to delete memory causing a memory leak
-- Deleting the same memory twice
-- Using memory that was deleted
-
-All of these problems would be solved if the freeing/deleting of heap memory could be handled automatically. There are two sort of approaches to do this.
-1. It to keep track of all the references to the heap memory and when there are no more references to it, then free/delete it.
-	- This is garbage collection in most other languages or shared pointers in c++.
-	- This is nice to use, but it has some run time costs.
-2. To only allow one reference to heap memory that gets passed around. If this reference goes out of scope it frees/deletes the heap memory associated with it.
-	- This is unique pointers in c++.
-	- It has very little run time costs, but is annoying to use.
-
-What if you could combine the nice to use part of the first approach with the little run time costs of the second approach?
-
-That's sort of what Neo-C does. It provides a wrapper syntax around unique pointers that make them nice to use.
-
-```C++
-// Neo-C
-int# heapPtr = new int
-```
-
-- The `new` keyword returns a special heap pointer
-	- `#i64 xPtr = new i64` or `#i64* xPtr = new i64` or `i64# xPtr = new i64`
-	- If the value of the pointer is used(not dereference, but just used), then it becomes set to null.
-	- Once it goes out of scope it is automatically dealocated
-		- There is no `delete` keyword
-	- If someone does `&(*xPtr)`, then the user can break the compiler and have memory leaks. Programmers do this only when they know exactly what they are doing.
-	- New should return a special heap pointer: `i64# heapPtr = new i64`
-
-## Templates
-- Just change the syntax for c++ templates. Don't do anything fancy.
-- Templates in Neo-C should have a 1to1 corelation to templates in c++
-
-```C++
-// Neo-C
-void func<auto T>(T arg)
-
-// C++
-template<auto T>
-void func(T arg) {
-
-}
-```
-
-- Templates are used so the same piece of code can be used for different data types. This is only useful if the data types can perform the same operations.
-	- Maybe this is a good argument to allow for operator overloading.
-		- How do you know if a template needs a certain operation? Have conditions.
-
 ## Possible features
 - Have a `copy&paste` keyword and `cache` keyword.
 	- `copy&paste` tells the compiler to copy and paste the value.
@@ -208,7 +29,6 @@ void func(T arg) {
 	- These can be assigned to variables? Yeah.
 - Maybe operator overloading is good. It makes the syntax nice.
 	- But it is often confusing.
-- `?` for optional
 - No operator overloading
 	- Destructors cannot have arguments.
 	- You need to operator overload the =s operator to do a deep copy(copy pointer values instead of the pointer itself).
@@ -257,229 +77,17 @@ void func(T arg) {
 	- Allows for a string called args. Have to be cast to the appropriate values.
 - Functions as arguments.
 
-```C++
-// For strings
-string map(char (*function)(char element, i64 index, string array))
-	string outputStr = ""
-	for char el, i64 i in this->_data
-		outputStr += function(el, i, this->_data)
-	return outputStr
-
-string map(char (*function)(char element, i64 index))
-	string outputStr = ""
-	for char el, i64 i in this->_data
-		outputStr += function(el, i)
-	return outputStr
-
-string map(char (*function)(char element))
-	string outputStr = ""
-	for char el, i64 i in this->_data
-		outputStr += function(el)
-	return outputStr
-
-// -----------------------------
-
-string test = "abc"
-test = test.map(toUpper)
-
-char toUpper(char element)
-	match element
-		case 'a'...'z': return element - 32
-		default: return element
-```
-
-- Templates
-	- Multiple arguments into templates
-		- typename..., sizeof..., args...
-			- compile time if. if constexpr
-	- Possible keywords
-		- `where`, `concept`, `requires`
-	- Sources
-		- https://www.youtube.com/watch?v=HqsEHG0QJXU
-
-Returns true if the body can support those lines.
-
-```C++
-void printValue<HasMultiple Type>(Type value)
-	print(value)
-
-requirement HasMathOperators<auto Type>(Type a, Type b)
-	a ** b
-	a * b
-	a / b
-	a + b
-	a - b
-
-requirement IsArray<auto Type>(Type a)
-	a[0]
-
-requirement HasAddition<auto Type>(Type a, Type b)
-	a + b
-
-requirement HasLessThan<auto Type>(Type a, Type b)
-	a < b
-
-requirement HasMultiple<HasAddition && HasLessThan Type>(Type value)
-	value
-
-requirement IsI8(i8 value)
-	value
-
-requirement IsI16(i16 value)
-	value
-
-requirement IsI32(i32 value)
-	value
-
-requirement IsI64(i64 value)
-	value
-
-requirement IsInt<IsI8 || IsI16 || IsI32 || IsI64 Type>(Type value)
-	value
-```
-
 - Minor syntax enforcements
-	- && for rvalues should not be used?
-		- temp values
 	- You cannot have containers in other containers.
 		- Ex: You can't have a struct defined in a class.
 	- You cannot have functions in other functions.
 	- There is no inline function in Neo-C.
 	- No assigning functions to variables. You can with a pointer?
 
-- Keywords
-	- static
-	- volatile
-		- So compiler doesn't optimize things out
-	- asm keyword?
-		- c++ keyword?
-	- `co_await`, `co_return`, `co_yield`?
-
-- Built into the lang
-	- Use the `?` to wrap things in `std::optional`
-		- Don't use optionals for error handling.
-	- Key value pairs built into the language?
-		- Map
-		- `dictionary`, `keyValuePair`, `key`
-		- map<KeyType, ValueType>
-		- orderedMap
-
-- Libraries
-	- All the types of errors
-		- OutOfRange
-
-- Other
 	- How to do functions as arguments. Lamda arguments.
-	- multi threading
-		- async, await, and promises
-		- Built into the language
-	- Creating libraries
-		- Should be done through the compiler.
-		- Should have 2 settings. Include links or not.
 	- Maybe no reference arguments and instead just use pointers.
 		- Less confusing syntax. Probably not.
 	- Maybe only allow single inheritance? But then I need all of those inheritance keywords.
-
-	- Heap
-		- Built in functions: `move`, `get`, `reset`, `release`, `count`, `swap`, `lock`, `expired`
-			- Maybe make all of these methods.
-		- Weak pointers
-
-```C++
-unique<i64> i = 10
-i.get()
-```
-
-## Most likely not
-- Function like macros
-	- Need a whole new syntax for them to work. This is where metaprogramming is.
-	- It can get very confusing.
-- Maybe have a special syntax that allows you to return multiple values.
-	- They are automatically converted to arguments.
-	- This makes sure that all arguments are only vars being used and not being returned.
-	- Probably not. This diverges too much from C++.
-- functions within functions?
-	- You cannot have a class within a class.
-- Inline functions
-	- Maybe don't include. Could be confusing.
-	- if included, should they be allowed to have curly brackets
-- Assigning functions to variables
-	- Maybe don't include. Could be confusing.
-	- When you create a function you should be able to use it like a variable.
-- Function like macros
-	- This can be done with templates
-
-## Other notes/ideas
-- In C++, I should make variable names have _ in the middle of them so they don't conflict with any of the user defined variables.
-
-### Change how default arguments work
-- Default arguments don't have to be in order
-
-```C++
-// Neo-C
-int func(int a = 0, int b) // init
-func(, b) // calling
-
-// C++
-int func(int a, int b) {} // init
-func(0, b); // int
-```
-
-- You can also do C++ regular default augments
-
-```C++
-// Neo-C
-int func(int a, int b = 0)
-func(a)
-	// or
-func(a,)
-
-// C++
-int func(int a, int b = 0) {}
-func(a);
-```
-
-### Code formatting nazi?
-Probably don't include these. These aren't that big a deal.
-- For pointers and references `*` and `&`s have to be placed in front of the name.
-	- This is allowed:     `int *ptr` and `int &ref`
-	- This is not allowed: `int* ptr` and `int& ref`
-- Function arguments, arrays, and anything that using a comma to separate it must have a space after the comma.
-	- `int arr[] = {1, 2, 3}` and not `int arr[] = { 1,2,3 }`
-
-### Better if statements
-It's annoying to have to write the variable name again. If nothing is provided to the left of the comparator, then it's assumed to be the same as the other left of the comparator.
-`_` uses the last used variable in a conditional
-
-```C++
-// Neo-C
-if (a > 10 && _ < 20)
-
-// C++
-if (a > 10 && a < 20)
-```
-
-## Templates
-- https://www.youtube.com/watch?v=sjsnuirLyKM
-	- use interfaces to define Types?
-	- auto as a function argument and return types.
-
-
-## Need to implement classes
-- String_
-- Array_
-- DynamicArray_
-- Heap_
-
-## Remove namespaces
-- In C++, when you `#include` the compiler simply copies and pastes that file at that location. This could be a problem if different files have the same element names.
-In C++, one of the primary purposes fo namespace is to fix some of the problems that happens with `#include`. In C++
-In C++, namespaces are mainly a result of how C++ does its importing. In C++, when you `#include` a file, the contents of that file get copied and pasted at that location. If you are including multiple files and there's a naming conflict between the files, then that would cause a problem. Namespaces 
-Neo-C doesn't have 
-
-- Explain why namespaces have been removes
-- Librayr names should be camelCase bcause they are objects
-- remove namespaces form ## Enums
 
 ## [Compile time operations](#neo-c)
 This can be automatically done by the compile?
@@ -512,20 +120,45 @@ This maybe needed.
 	- The compiler might not have enough information to know.
 	- Need a keyword for compile time if statements.
 
-### [Things that throw errors](#neo-c)
-Should these things throw errors?
-- Integer division by zero throws an error.
-- Integer overflowing or underflowing throws an error.
-- `[]` indexing out of range.
 
-## Old import code
-	"libraries": {
-		"patterns": [{
-			"name": "",
-			"match": "(import) .+ (\\<.+\\>)",
-			"captures": {
-				"1": {"name": "keyword.control.neo-c"},
-				"2": {"name": "string.quoted.double.neo-c"}
-			}
-		}]
-	},
+## Notes
+- The transpiled C++ should have _s in the middle of var names so they don't conflict with the Neo-C code.
+
+## Need to research
+- Other data structures
+- Multi-threading
+- `volatile`
+- `co_await`, `co_return`, `co_yield`
+
+## Todo
+- `operator` keyword in containers.
+- Heap with unique and shared pointers.
+- Add data structure library
+	- Array, String, DynamicArray, LinkedList, DoublyLinkedList
+- KeyValuePair standard library
+- Castings
+- Creating libraries through the compiler options.
+	- 2 settings. Include all the code or have outside links.
+
+## Possible features
+- `!` for errors.
+- `?` for optionals.
+	- This is useful for optional arguments.
+- Differently named constructors.
+- `defer` keyword - gets called when you return.
+- Lambdas don't need `[]`s?
+- `finally` block
+- Call the destructor like any other method.
+- `i32* ptr` and `i32& ref` over `i32 *ptr` and `i32 &ref`
+- `_` in a condition statement refers to the last used variable.
+	- `if (a > 10 && _ < 20)`
+- Change default arguments
+	- `void func(i64 a = 0, i64 b)` and `func(, 10)`
+	- `void func(i64 a, i64 b = 0)` and `func(10,)` or `func(10)`
+- Imbed asm and c++?
+- Multiple arguments into templates
+- Force all member variables to be private or protected?
+	- Force setters and getters.
+	- Have special syntax for setters and getters.
+- Multi-threading with async/await
+- `&&` for rvalues. Why would this be necessary?

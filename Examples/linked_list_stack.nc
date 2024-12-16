@@ -6,7 +6,7 @@ export class LinkedListStack
 	public
 		~This()
 			ListNode* curNode = _head
-			while (curNode != nullptr)
+			while (curNode != null)
 				ListNode* nextNode = curNode->next
 				delete curNode
 				curNode = nextNode
@@ -25,7 +25,7 @@ export class LinkedListStack
 			throw "Cannot find ${value}."
 
 		void push(i64 value = 0)
-			ListNode* newNode = new ListNode(value, nullptr)
+			ListNode* newNode = new ListNode(value, null)
 			ListNode* tail = tail()
 			if (tail)
 				tail->next = newNode
@@ -34,8 +34,8 @@ export class LinkedListStack
 
 		i64 pop() throws string
 			if (!_head) throw "The linked list is empty."
-			ListNode* tail = nullptr
-			ListNode* prevTail = nullptr
+			ListNode* tail = null
+			ListNode* prevTail = null
 			forEachNode((ListNode* curNode){
 				prevTail = tail
 				tail = curNode
@@ -43,9 +43,9 @@ export class LinkedListStack
 			i64 value = tail->value
 			delete tail
 			if (prevTail)
-				prevTail->next = nullptr
+				prevTail->next = null
 			else // The tail is the head
-				_head = nullptr
+				_head = null
 			return value
 
 	private
@@ -53,14 +53,14 @@ export class LinkedListStack
 
 		void forEachNode(void func(ListNode*))
 			ListNode* curNode = _head
-			while (curNode != nullptr)
+			while (curNode != null)
 				func(curNode)
 				curNode = curNode->next
 
 		ListNode* tail()
 			ListNode* curNode = _head
-			ListNode* prevNode = nullptr
-			while (curNode != nullptr)
+			ListNode* prevNode = null
+			while (curNode != null)
 				prevNode = curNode
 				curNode = curNode->next
 			return prevNode

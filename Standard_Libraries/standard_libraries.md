@@ -4,11 +4,10 @@
 
 <!-- TOC -->
 
+- [Data Structures](#data-structures)
 - [Console](#console)
 - [Math](#math)
 - [File](#file)
-- [DataStructure](#datastructure)
-- [Algorithms](#algorithms)
 - [Time](#time)
 - [HTML](#html)
 - [Regex](#regex)
@@ -21,8 +20,13 @@
 - [MachineLearning](#machinelearning)
 - [Optional](#optional)
 - [SQLike](#sqlike)
+- [Other Data Structures](#other-data-structures)
+	- [LinkedList](#linkedlist)
+	- [DoublyLinkedList](#doublylinkedlist)
 
 <!-- /TOC -->
+
+## [Data Structures](./data_structure.nc)
 
 ## Console
 The Console library is used to interact with the console.
@@ -84,20 +88,6 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 - File
   - getFile(string fileName)
 
-## DataStructure
-- Linked List
-- set
-- map
-
-## Algorithms
-- `remove(DataStructure<T> dataStructure, T value)` - removes all the occurrences of value in data structure.
-- `sort(DataStructure ds, optional lambda)` - sorts based on less than.
-- `findIndex(DataStructure ds, T value)`
-- `contains
-- `fill
-
-- these are in the data structure class
-
 ## Time
   - currentTime()
   - Date functions as well
@@ -139,7 +129,19 @@ Library for running bash commands
 ## MachineLearning
 
 ## Optional
+- This isn't really necessary because you could just use error handling.
 
 ## SQLike
 - Used to interface with a local SQLike database.
 - Also supports a noSQL section.
+
+## Other Data Structures
+- All of these inherit from the DataStructure class.
+- BalancedBinaryTree
+- There are set versions of other data types.
+- KeyValuePair
+	- Overloads the =s operator
+- Tree, Heap, Graph, Trie
+
+### LinkedList
+### DoublyLinkedList

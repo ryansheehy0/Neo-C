@@ -30,6 +30,7 @@ void main()
 - [Importing and Exporting](#importing-and-exporting)
 - [Automatic hoisting](#automatic-hoisting)
 - [For each loops](#for-each-loops)
+- [Multiple return types from functions](#multiple-return-types-from-functions)
 - [Containers](#containers)
 - [Enums](#enums)
 - [Nested Comments](#nested-comments)
@@ -108,9 +109,9 @@ export void func()
   // Function body
 ```
 
-See the [standard libraries](./standard_libraries.md) built into Neo-C.
+See the [standard libraries](./Standard_Libraries/standard_libraries.md) built into Neo-C.
 
-- Namespaces have been removed from Neo-C.
+- Namespaces have been removed from Neo-C because there isn;t the problem of overlapping names.
 
 ## Automatic hoisting
 Neo-C allows for automatic function, class, struct, and union hoisting so that you can use them above where they are defined.
@@ -152,6 +153,33 @@ for (int64_t el : arr) {}
 for (int64_t i = 0; i < arr.size(); i++) {
   int64_t el = arr[i];
 }
+```
+
+## Multiple return types from functions
+In C++, it isn't always clear which arguments are being used as outputs. To solve this, Neo-C introduces the `out` keyword, along with some additional rules so that it's clear which arguments are being used as an output.
+- Rule 1: Any arguments that have `out` must be non-const and pass by reference/pointer.
+- Rule 2: Any argument that don't have `out` must be const or pass by value.
+- Rule 3: When calling a function with an `out` keyword on one of its arguments, that argument also needs an `out` keyword.
+
+```C++
+// Neo-C
+void addAndSquare(out i64& add, out i64& square, i32 a, i32 b)
+	add = a + b
+	square = add * add
+
+i64 add
+i64 square
+addAndSquare(out add, out square, 10, 10)
+
+// C++
+void addAndSquare(i64& add, i64& square, i32 a, i32 b) {
+	add = a + b;
+	square = add * add;
+}
+
+i64 add;
+i64 square;
+addAndSquare(add, square, 10, 10);
 ```
 
 ## [Containers](./containers.md)
@@ -295,7 +323,7 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 
 - main
 - bool, i8, i16, i32, i64, u8, char, u16, u32, u64, f32, f64, string, dynamic
-- auto, void
+- auto, void, null
 - const, true, false
 - Control flow
   - if, else
@@ -315,3 +343,4 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++
 
 
 - cache, inline, compile
+- out
