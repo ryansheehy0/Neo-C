@@ -40,6 +40,8 @@ void printError(string msg, string end = "\n")
 void setTextColor(Color c)
 void resetTextColor()
 
+string userInput(string message = "")
+
 string userInput(string msg = "", bool hidden = false, bool tabCompletion = false)
 
 
@@ -86,7 +88,19 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 
 ## File
 - File
-  - getFile(string fileName)
+  - This(string filePath, FileMode fileMode = FileMode.kReadAndWrite, bool createNewFile = false)
+
+```C++
+// Neo-C
+enum i8 FileMode
+  kReadAndWrite,
+  kRead,
+  kWrite,
+  kAppend,
+```
+  - void changeFileMode(FileMode newFileMode)
+  - void append(string value)
+  - void clear()
 
 ## Time
   - currentTime()
