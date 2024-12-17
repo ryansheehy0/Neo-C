@@ -8,7 +8,7 @@
 <!-- /TOC -->
 
 # Containers
-To prevent the most vexing parsing, Neo-C only allows you to create structs, unions, and class instances with these specific syntaxes.
+To prevent the most vexing parsing, Neo-C only allows you to create struct, union, and class instances with this specific syntaxes.
 
 ```C++
 // Neo-C
@@ -16,7 +16,7 @@ Point pt
 Point pt = Point()
 Point pt = Point(10, 20)
 
-// Not allowed
+// This is not allowed
 Point pt() // The most vexing parse. The compiler thinks this is a function.
 Point pt(10, 20)
 ```
@@ -52,33 +52,34 @@ pt.x = 10;
 pt.y = 20;
 ```
 
-- You cannot use `{}`s to initialize structs in Neo-C
+- You cannot use `{}`s to initialize structs in Neo-C.
 
 ## Classes
 The changes Neo-C makes to classes:
-1. `public`, `protected`, and `private` have to be indented when used.
-  - `:`s have been removed from these keywords
-  - You have to specify these keywords.
-1. All private or protected member variables have to have `_` in front of them.
-1. The keyword `inherits` is used instead of `:`.
-1. Pure virtual methods have the keyword `pure` instead of assigning them to 0s.
-1. `override` has to be used if you want to override a virtual method and it has to be put in front instead of at the end.
-1. `init` is used instead of `:`s for initializer lists.
-1. You have to define all methods inside of the class.
-1. Use `This` and `~This` keywords instead of the name of the class.
-  - This allows you to rename the class without renaming all the constructors and destructor.
-  - You cannot do `This() = default;`. Instead just do `This()`
-1. Their are no `friend` functions in Neo-C
-1. The body of the method has to be indented on another line.
+1. Access specifiers
+  - `public`, `protected`, and `private` must be indented.
+  - Colons(`:`) have been removed.
+  - You must explicitly specify these keywords. There is not default access.
+2. All private or protected member variables must start with an underscore(`_`).
+3. Use `inherits` instead of `:`.
+4. Use the `pure` keyword instead of assigning it to `0`.
+5. The `override` keyword is requirement and must be put in front.
+6. Use the `init` keyword indented on its own line instead of `:`s for initializer lists.
+7. All methods have to be defined inside the class.
+8. Constructors and Destructors
+  - Use `This` for constructors and `~This` for destructors.
+    - This allows you to rename the class without renaming all the constructors and destructor.
+  - Default constructors don't require `= default`, instead do `This()`.
+9. You cannot have single line methods. The body has to be indented and placed on its own line.
 
 ```C++
 // Neo-C
 class Animal
   public
-    This() // Constructors
+    This()
     This(f64 weight)
       init _weight(weight)
-    ~This() // Destructors
+    ~This()
 
     pure virtual string name() const
 
@@ -101,10 +102,17 @@ class Animal {
   public:
     Animal() {}
     Animal(double weight) : _weight(weight) {}
+    ~Animal() {}
 
-    virtual String_ name() const = 0;
-    double weight() const { return _weight; }
-    void setWeight(double weight) { _weight = weight; }
+    virtual NeoC_String name() const = 0;
+
+    double weight() const {
+      return _weight;
+    }
+
+    void setWeight(double weight) {
+      _weight = weight;
+    }
 
   protected:
     double _weight = 10.0;
@@ -112,6 +120,8 @@ class Animal {
 
 class Fox : public Animal {
   public:
-    String_ name() const override { return "Fox"; }
+    NeoC_String name() const override {
+      return "Fox";
+    }
 };
 ```
