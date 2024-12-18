@@ -72,6 +72,16 @@ The main function returns `void` instead of `i32` because it's common to not ret
 void main()
 	// or
 void main(string[] args)
+
+// C++
+int main()
+	// or
+int main(int NeoC_argc, char* NeoC_args[]) {
+	NeoC_Array<NeoC_String> args(NeoC_argc);
+	for (int i = 0; i < NeoC_argc; i++) {
+		args[i] = NeoC_args[i];
+	}
+}
 ```
 
 ## [Match statements](./match_statements.md)
@@ -105,7 +115,7 @@ Neo-C allows for automatic function, class, struct, and union hoisting so that y
 
 ```C++
 // Neo-C
-i32 main()
+void main()
 	func()
 
 void func()
@@ -133,7 +143,7 @@ for (i64 el in arr)
 for (i64 el, i64 i in arr)
 
 // C++
-Array_<int64_t> arr({1, 2, 3, 4});
+NeoC_Array<int64_t> arr({1, 2, 3, 4});
 
 for (int64_t el : arr) {}
 	// or
@@ -290,12 +300,12 @@ if (true) {
 
 ## Other changes
 - `**` can be used for exponents.
-- `->` can be used just like in C++
+- `->` can be used to dereference just like in C++
 - You have to put `const` before the data type. Ex: `const i64 var` and not `i64 const var`
-- String literals are converted to a string and not a character array.
+- String literals are converted to a string and not a const character array/pointer.
 
 ### Removing gotos
-`goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
+`goto`s, and likewise labels, are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
 1. Breaking out of nested loops
 	- This has been replaced with `break break` etc.
 2. Breaking out of a loop from a switch statement that is in that loop.
@@ -303,31 +313,20 @@ if (true) {
 3. Error handling in a scalable way
 	- This is address with Neo-C error handling features.
 
-- Labels cannot be used in Neo-C
-
 ## All Keywords
-Neo-C simplifies C++ by removing many unnecessary keywords and features. Any C++ keyword or concept not listed here is not part of Neo-C.
+Neo-C simplifies C++ by removing many unnecessary keywords and features. Any keyword not listed here is not part of Neo-C.
 
-- main
+- main, exit
 - bool, i8, i16, i32, i64, u8, char, u16, u32, u64, f32, f64, string, dynamic
-- auto, void, null
+- auto, null, void
 - const, true, false
-- Control flow
-  - if, else
-  - for, in
-  - do, while
-  - match, case, default, fall
-  - break, continue
+- if, else, for, in, do, while, match, case, fall, break, continue
 - import, export
-- return
-- class, init, struct, union, this
-- interface
+- out, return
+- struct, union, class, public, private, protected, this, This, init, inherits, pure, virtual, override, operator
 - enum
-- requirement
-- pointer
-- try, catch, throw
-- unique, shared
-
-
+- try, catch, throw, throws
 - cache, inline, compile
-- out
+- template
+
+- unique, shared

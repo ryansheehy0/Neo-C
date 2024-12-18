@@ -21,7 +21,7 @@ Neo-C removes the `new` and `delete` keywords and only allows heap memory to be 
 ```C++
 // Neo-C
 #i64 mem = 10
-printLine(mem)
+print(mem)
 
 // C++
 Heap_<int64_t> mem = Heap_(10);

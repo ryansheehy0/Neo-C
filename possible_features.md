@@ -10,8 +10,6 @@
 ## Todo
 - `operator` keyword in containers.
 - Heap with unique and shared pointers.
-- Add data structure library
-	- Array, String, DynamicArray, LinkedList, DoublyLinkedList
 - KeyValuePair standard library
 - Castings
 - Creating libraries through the compiler options.

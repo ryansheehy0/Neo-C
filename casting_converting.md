@@ -14,19 +14,19 @@ bool bool<Int || UInt || Float || Pointer || String Type>(Type value)
 Converting to an **integer**:
 
 ```C++
-i8 i8<(Int && !i8) || UInt || Float || Pointer || String Type>(Type value) : OutOfRange
+i8 i8<(Int && !i8) || UInt || Float || Pointer || string Type>(Type value) : OutOfRange
 ```
 
 Converting to an **unsigned integer**:
 
 ```C++
-u8 u8<Int || (UInt && !u8) || Float || Pointer || String Type>(Type value) : OutOfRange
+u8 u8<Int || (UInt && !u8) || Float || Pointer || string Type>(Type value) : OutOfRange
 ```
 
 Converting to a **float**:
 
 ```C++
-f32 f32<Int || UInt || (Float && ! f32) || Pointer || String Type>(Type value) : OutOfRange
+f32 f32<Int || UInt || (Float && ! f32) || Pointer || string Type>(Type value) : OutOfRange
 ```
 
 

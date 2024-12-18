@@ -2,25 +2,28 @@
 
 # Match Statements
 In C++, switch statements take up more lines because of the mandatory break statements. Neo-C replaces switch statements with match statements, which don't require the breaks.
+- Code cannot be placed on the same line as the case statement itself. It has to be indented on its own line.
 
 ```C++
 // Neo-C
 match (var)
-	case (1) printLine(1)
+	case (1)
+		print("one")
 	case (2)
-		printLine(2)
-	case (...): printLine("default")
-	printLine("default")
+		print("two")
+	case (...)
+		print("default")
 
 // C++
 switch (var) {
-	case 1: std::cout << 1 << "\n";
+	case 1:
+		print("one");
 		break;
 	case 2:
-		std::cout << 2 << "\n";
+		print("two");
 		break;
-	default: std::cout << "default" << "\n";
-		std::cout << "default" << "\n";
+	default:
+		print("default");
 		break;
 }
 ```
@@ -83,7 +86,7 @@ switch (var) {
 ```
 
 ### Breaks
-Breaks can be used in match statements to break out of an outer loop.
+`break`s can be used in match statements to break out of an outer loop.
 
 ```C++
 // Neo-C
