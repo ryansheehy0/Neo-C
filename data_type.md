@@ -4,9 +4,9 @@
 C++ has some problems with its default data types, which Neo-C corrects.
 
 1. Data types don't have explicitly defined lengths.
-    - Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if the code expects `int` to be 64 bits, but the platform only supports 32 bits.
+	- Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if the code expects `int` to be 64 bits, but the platform only supports 32 bits.
 2. Strings and dynamic arrays aren't built into the language.
-    - These are so commonly used that they should be built into the language.
+	- These are so commonly used that they should be built into the language.
 3. There are multiple ways of creating arrays with `std::array` and C-style arrays.
 
 ## Built in data types
@@ -23,10 +23,12 @@ Under the hood, strings and arrays are inherited from the abstract class DataStr
 
 You can view the DataStructure class [here](./Standard_Libraries/standard_libraries.md).
 
+- The classes are named `NeoC_String`, `NeoC_Array`, and `NeoC_DynamicArray`.
+
 ## Other notes
 - `auto` can be used to get the type based on its initialized value.
 - `null` is a keyword which is the same as 0.
-    - There is no `nullptr` keyword. Use `null` instead.
+	- There is no `nullptr` keyword. Use `null` instead.
 - Arrays work similarly to those in C++. They don't need a size if they are initialized.
 - `""`s return a string and not a const char[].
 - Arrays are set with `[]`s instead of `{}`s

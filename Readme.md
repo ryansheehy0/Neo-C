@@ -14,9 +14,9 @@ void main()
 ```
 
 - **Transpiler**:
-  - Still in development
+	- Still in development
 - **Syntax Highlighting in VS Code**:
-  - Copy and paste `Neo_C_Syntax_Highlighter` folder in `~/.vscode/extensions/`
+	- Copy and paste `Neo_C_Syntax_Highlighter` folder in `~/.vscode/extensions/`
 
 <img src="./neo_c_logo.svg" width=400>
 
@@ -51,7 +51,7 @@ void main()
 ## Basic syntax
 - No semicolons
 - Curly brackets are replaced by new lines and tab indentation
-  - Extra spaces are ignored by the transpiler, allowing spaces to be used for aligning elements across multiple lines where the transpiler expects them to be on a single line.
+	- Extra spaces are ignored by the transpiler, allowing spaces to be used for aligning elements across multiple lines where the transpiler expects them to be on a single line.
 
 ### Enforced naming conventions
 
@@ -64,28 +64,15 @@ void main()
 ## [Data Types](./data_type.md)
 
 ## Main function
-If the main function doesn't return, then it's assumed to return 0.
+The main function returns `void` instead of `i32` because it's common to not return anything from main. Having a special exception for main, like in C++, could be confusing for new programmers.
+- If you want to exit with an error code, then use the inbuilt function `exit(i32 errorCode)`.
 
 ```C++
 // Neo-C
 void main()
 	// or
 void main(string[] args)
-
-// C++
-int main() {}
-  // or
-int main(int arg_c, char** arg_v) {
-  String_ args[arg_c];
-  for (int i = 0; i < arg_c; i++) {
-    args[i] = arg_v[i];
-  }
-}
 ```
-
-- `void` was chosen for main instead of `i32` because, if `i32` were used, an exception would need to be made to allow main to return nothing, which could be confusing for new programmers.
-  - If you want to exit your application with an error code, then you can use the inbuilt function `exit(i32 errorCode)`.
-- Functions have to be one multiple lines.
 
 ## [Match statements](./match_statements.md)
 
@@ -99,14 +86,14 @@ In Neo-C, there are no header files.
 
 ```C++
 import
-  libName <Library> // Imports all exported things form Library under the object libName
-  fileName "./file.nc"
-  (var, func) <Lib> // Imports only var and func from the OtherLib
-  name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the object name and imports var2 and func2.
+	libName <Library> // Imports all exported things form Library under the object libName
+	fileName "./file.nc"
+	(var, func) <Lib> // Imports only var and func from the OtherLib
+	name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the object name and imports var2 and func2.
 
 export i64 var = 0
 export void func()
-  // Function body
+	// Function body
 ```
 
 See the [standard libraries](./Standard_Libraries/standard_libraries.md) built into Neo-C.
@@ -119,7 +106,7 @@ Neo-C allows for automatic function, class, struct, and union hoisting so that y
 ```C++
 // Neo-C
 i32 main()
-  func()
+	func()
 
 void func()
 
@@ -127,7 +114,7 @@ void func()
 void func();
 
 int main() {
-  func();
+	func();
 }
 
 void func() {
@@ -142,16 +129,16 @@ In C++, it's impossible to include the index in a for each loop. In Neo-C, for e
 i64[] arr = [1, 2, 3, 4]
 
 for (i64 el in arr)
-  // or
+	// or
 for (i64 el, i64 i in arr)
 
 // C++
 Array_<int64_t> arr({1, 2, 3, 4});
 
 for (int64_t el : arr) {}
-  // or
+	// or
 for (int64_t i = 0; i < arr.size(); i++) {
-  int64_t el = arr[i];
+	int64_t el = arr[i];
 }
 ```
 
@@ -195,12 +182,12 @@ Because of these problems, Neo-C doesn't have a regular enums like in C++. Enums
 ```C++
 // Neo-C
 enum i64 DayOfTheWeek
-  kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
+	kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
 DayOfTheWeek day = DayOfTheWeek.kMon
 
 // C++
 enum class DayOfTheWeek : int64_t {
-  kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
+	kMon = 1, kTue, kWed, kThu, kFri, kSat, kSun
 };
 DayOfTheWeek day = DayOfTheWeek::kMon;
 ```
@@ -211,14 +198,14 @@ Neo-C allows for nested multi-line comments.
 ```javascript
 // Neo-C
 /*
-  /*Inner comment*/
-  This is also a comment
+	/*Inner comment*/
+	This is also a comment
 */
 
 // C++
 /*
-  /*Inner comment
-  This is also a comment
+	/*Inner comment
+	This is also a comment
 */
 ```
 
@@ -228,11 +215,11 @@ In Neo-C, since there are no curly brackets, the ending while statement for do-w
 ```C++
 // Neo-C
 do while (false)
-  // Do something at least once
+	// Do something at least once
 
 // C++
 do {
-  // Do something at least once
+	// Do something at least once
 } while (false);
 ```
 
@@ -242,18 +229,18 @@ In Neo-C, if you have a loop nested in another loop, you can add an additional b
 ```C++
 // Neo-C
 for (auto el in arr)
-  for (auto el2 in arr2)
-    for (auto el3 in arr3)
-      break break
+	for (auto el2 in arr2)
+		for (auto el3 in arr3)
+			break break
 
 // C++
 for (auto el : arr) {
-  for (auto el2 : arr2) {
-    for (auto el3 : arr3) {
-      goto break_loops;
-    }
-  }
-  break_loops:
+	for (auto el2 : arr2) {
+		for (auto el3 : arr3) {
+			goto break_loops;
+		}
+	}
+	break_loops:
 }
 ```
 
@@ -262,30 +249,30 @@ for (auto el : arr) {
 ## String Templates
 Neo-C adds the ability to insert code into strings and to have multi-line strings.
 - When doing multi-line strings, all characters have to be indented the same as the starting `"`.
-  - It doesn't compile if it isn't aligned.
+	- It doesn't compile if it isn't aligned.
 - The indentation has to start with the same number of tabs as the line above and then use spaces for alignment.
-  - This allows the code to stay aligned even when someone changes the default tab size.
-  - This rule also applies to other single line statements converted into multi-line ones. Such as multi-line `init`s, function arguments, etc.
+	- This allows the code to stay aligned even when someone changes the default tab size.
+	- This rule also applies to other single line statements converted into multi-line ones. Such as multi-line `init`s, function arguments, etc.
 - `\`s can be placed at the end of multi-line strings to prevent a new line.
 
 ```C++
 // Neo-C
 if (true)
-  i64 a = 10
-  string b = "10"
-  string str = "x: ${x} \
-                y: ${y}"
+	i64 a = 10
+	string b = "10"
+	string str = "x: ${x} \
+	              y: ${y}"
 /*
 -- tabs
-  -------------- spaces
+	-------------- spaces
 */
 
 // C++
 if (true) {
-  int64_t x = 10;
-  String_ y = "10";
-  String_ str = "x: " + to_string(x) +
-                "y: " + y;
+	int64_t x = 10;
+	NeoC_String y = "10";
+	NeoC_String str = "x: " + to_string(x) +
+	                  "y: " + y;
 }
 ```
 
@@ -310,11 +297,11 @@ if (true) {
 ### Removing gotos
 `goto`s are removed from Neo-C because they can create very confusing code. However, there are some legitimate use cases for `goto`s, but these have been addressed with Neo-C other features.
 1. Breaking out of nested loops
-  - This has been replaced with `break break` etc.
+	- This has been replaced with `break break` etc.
 2. Breaking out of a loop from a switch statement that is in that loop.
-  - This has been replaced by allowing `break`s to work in match statements.
+	- This has been replaced by allowing `break`s to work in match statements.
 3. Error handling in a scalable way
-  - This is address with Neo-C error handling features.
+	- This is address with Neo-C error handling features.
 
 - Labels cannot be used in Neo-C
 

@@ -33,7 +33,7 @@ The Console library is used to interact with the console.
 
 void print(string msg, string end = "\n")
 How to print arrays? Spread operator?
-  - Convert array to string. (string)array
+	- Convert array to string. (string)array
 
 void print(string msg, string end = "\n")
 void printError(string msg, string end = "\n")
@@ -71,7 +71,7 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 | string[] readLineCheckbox(string[] list) | Same as readCheckbox, but outputs new line after enter.                     |
 
 - Need a way to navigate arguments from the console.
-  - Like flags
+	- Like flags
 
 ## Math
 - abs()
@@ -88,27 +88,27 @@ string userInput(string msg = "", bool hidden = false, bool tabCompletion = fals
 
 ## File
 - File
-  - This(string filePath, FileMode fileMode = FileMode.kReadAndWrite, bool createNewFile = false)
+	- This(string filePath, FileMode fileMode = FileMode.kReadAndWrite, bool createNewFile = false)
+	- void changeFileMode(FileMode newFileMode)
+	- void append(string value)
+	- void clear()
 
 ```C++
 // Neo-C
 enum i8 FileMode
-  kReadAndWrite,
-  kRead,
-  kWrite,
-  kAppend,
+	kReadAndWrite,
+	kRead,
+	kWrite,
+	kAppend,
 ```
-  - void changeFileMode(FileMode newFileMode)
-  - void append(string value)
-  - void clear()
 
 ## Time
-  - currentTime()
-  - Date functions as well
+- currentTime()
+- Date functions as well
 
 ## HTML
 - Functions that allow you to interact with HTML and CSS
-  - This is the main way of creating user interfaces.
+	- This is the main way of creating user interfaces.
 
 ## Regex
 
@@ -122,8 +122,7 @@ enum i8 FileMode
 - other common encryption algorithms
 - UUID
 - rand()
-  - Returns a f64 between 0 and 1. Cryptographically secure.
-
+	- Returns a f64 between 0 and 1. Cryptographically secure.
 
 ## Test
 - Library for test driven development.

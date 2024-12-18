@@ -9,7 +9,7 @@ In Neo-C, templates are created very similarly to those in C++, however there ar
 // Neo-C
 template<auto Type>
 Type add(Type value1, Type value2)
-  return value1 + value2
+	return value1 + value2
 ```
 
 ## Requirements
@@ -19,18 +19,18 @@ In Neo-C, you can create requirements for template arguments that are checked at
 ```C++
 // Neo-C
 class Addable
-  public
-    Addable operator+(const Addable& rhs)
-    This operator+(const This& rhs) // You can also do this.
+	public
+		Addable operator+(const Addable& rhs)
+		This operator+(const This& rhs) // You can also do this.
 
 class Subtractable
-  public
-    Subtractable operator-(const Subtractable& rhs)
+	public
+		Subtractable operator-(const Subtractable& rhs)
 
 
 template<Addable && Subtractable Type>
 Type someMathFunc(Type value1, Type value2)
-  return value1 + value1 - value2
+	return value1 + value1 - value2
 ```
 
 ## Using classes as template requirements
@@ -48,8 +48,8 @@ The problem with this approach is the run time costs associated with using a bas
 ```C++
 // Neo-C
 void printAll(Iterator begin, Iterator end)
-  for (auto iter = begin; iter != end; iter++)
-    print(string(*iter))
+	for (auto iter = begin; iter != end; iter++)
+		print(string(*iter))
 ```
 
 However, this makes the syntax for calling printAll kind of messy, `printAll(arr.begin(), arr.end())`. It would be nice to be able to just do `printAll(arr)`. To solve this problem, Neo-C allows you to make a class a requirement into a template. Like this:
@@ -58,21 +58,21 @@ However, this makes the syntax for calling printAll kind of messy, `printAll(arr
 // Neo-C
 template<DataStructure Type>
 void printAll(const Type& dataStructure)
-  for (auto ele in dataStructure)
-    print(string(ele))
+	for (auto ele in dataStructure)
+		print(string(ele))
 ```
 
 This removes the run time costs associated with passing base classes as arguments, but still allows for the nice syntax of `printAll(arr)`. And this feature can be extended further by allowing it to be put into the DataStructure class itself. Like this:
 
 ```C++
 class DataStructure
-  public
-    // Other public methods
+	public
+		// Other public methods
 
-    template<This T>
-    void printAll(T* this) // Overwrite the "this" keyword to allow its type to be determined at compile time.
-      for (auto ele in this)
-        print(string(ele))
+		template<This T>
+		void printAll(T* this) // Overwrite the "this" keyword to allow its type to be determined at compile time.
+			for (auto ele in this)
+			print(string(ele))
 ```
 
 This allows for the syntax of `arr.printAll()` with no run time penalties.
