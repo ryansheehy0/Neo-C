@@ -125,3 +125,5 @@ class Fox : public Animal {
 		}
 };
 ```
+
+- `operator` overloading also works in Neo-C.

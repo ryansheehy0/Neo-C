@@ -8,7 +8,6 @@
 - `co_await`, `co_return`, `co_yield`
 
 ## Todo
-- `operator` keyword in containers.
 - Heap with unique and shared pointers.
 - KeyValuePair standard library
 - Castings

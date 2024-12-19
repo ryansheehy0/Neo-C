@@ -319,7 +319,7 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any key
 - main, exit
 - bool, i8, i16, i32, i64, u8, char, u16, u32, u64, f32, f64, string, dynamic
 - auto, null, void
-- const, true, false
+- const, true, false, pointer
 - if, else, for, in, do, while, match, case, fall, break, continue
 - import, export
 - out, return

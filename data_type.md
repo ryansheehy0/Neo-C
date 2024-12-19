@@ -25,6 +25,22 @@ You can view the DataStructure class [here](./Standard_Libraries/standard_librar
 
 - The classes are named `NeoC_String`, `NeoC_Array`, and `NeoC_DynamicArray`.
 
+## Casting/Converting
+In Neo-C, casting is done by calling the type as a function, like `type()`.
+- There is no implicit casting/converting because castings can throw errors.
+- Float literals have to have decimal points. Ex: `f64 x = 10.0`
+- Integer literals cannot have decimal points. Ex: `i64 x = 10`
+
+In Neo-C, the `pointer` keyword allows you to cast to a pointer type while preserving the underlying bits.
+
+```C++
+f32 a = 1.5
+// Change the underlying bits
+i32 b = i32(a) // 1
+// Keep the underlying bits the same
+i32 c = *pointer<i32>(&a) // 1069547520
+```
+
 ## Other notes
 - `auto` can be used to get the type based on its initialized value.
 - `null` is a keyword which is the same as 0.
