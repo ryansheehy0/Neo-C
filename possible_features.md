@@ -6,11 +6,20 @@
 - Multi-threading
 - `volatile`
 - `co_await`, `co_return`, `co_yield`
+- `constexpr` - function can run at compile time if possible or else run time.
+	- Variables which are constexpr are const because they can't be changed at run time.
+- `consteval` - function can only run at compile time.
+- `constinit` - Guarantees the value of a variable is initialized at compile time instead of run time.
+	- Cannot have a constinit function. Only a variable.
+	- Cannot be used in any scope. Has to be global/above main func.
+- `std::is_constant_evaluated()` - returns true if the constexpr is being run at compile time, and false if being run at run time.
+	- Used to have different code that runs at compile time and run time.
+
+- Function initialization vs variable initialization
 
 ## Todo
 - Heap with unique and shared pointers.
 - KeyValuePair standard library
-- Castings
 - Creating libraries through the compiler options.
 	- 2 settings. Include all the code or have outside links.
 - Having functions as arguments are the same as creating functions without argument names. `void print(string)`
@@ -33,6 +42,8 @@
 	- `void func(i64 a = 0, i64 b)` and `func(, 10)`
 	- `void func(i64 a, i64 b = 0)` and `func(10,)` or `func(10)`
 - Imbed asm and c++?
+	- Yes to allow people to use c++ libraries.
+	- Have a `C++` keyword. Or allow c++ files?
 - Multiple arguments into templates
 - Force all member variables to be private or protected?
 	- Force setters and getters.
@@ -43,3 +54,7 @@
 	- `func(arr...)` or `func(...arr)` is the same as `func(arr[0], arr[1], arr[2])`
 - Variadic arguments(`...`)
 	- Allows for a string called args. Have to be cast to the appropriate values.
+- `mutable` - Make something logically const, but not actually const.
+	- Have a method be const, but be able to change mutable member variables.
+	- Is this only useful for multithreading?
+	- Not sure this is necessary.

@@ -41,6 +41,9 @@ i32 b = i32(a) // 1
 i32 c = *pointer<i32>(&a) // 1069547520
 ```
 
+- You can perform a `pointer` cast on a `const` type because it doesn't alter the underlying bits. However, other types of casts aren't allowed.
+	- You cannot remove const like you can in C++.
+
 ## Other notes
 - `auto` can be used to get the type based on its initialized value.
 - `null` is a keyword which is the same as 0.

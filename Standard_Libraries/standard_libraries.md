@@ -23,6 +23,7 @@
 - [Other Data Structures](#other-data-structures)
 	- [LinkedList](#linkedlist)
 	- [DoublyLinkedList](#doublylinkedlist)
+- [Templates](#templates)
 
 <!-- /TOC -->
 
@@ -158,3 +159,12 @@ Library for running bash commands
 
 ### LinkedList
 ### DoublyLinkedList
+
+## Templates
+Common classes that can be used in order to specify constraints for templates.
+
+- Movable
+- Addable
+- Subtractable
+- etc.
+

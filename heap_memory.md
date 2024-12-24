@@ -63,3 +63,10 @@ int# heapPtr = new int
 - Built in functions: `move`, `get`, `reset`, `release`, `count`, `swap`, `lock`, `expired`
 	- Maybe make all of these methods.
 - Weak pointers
+
+Raw pointer problems:
+- single object or array
+- pointer owners the memory it points to
+	- Can the pointer free the memory or should it never free it
+- nullable or not?
+	- Can the pointer be null or not?

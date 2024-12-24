@@ -33,6 +33,7 @@ void main()
 - [Multiple return types from functions](#multiple-return-types-from-functions)
 - [Containers](#containers)
 - [Enums](#enums)
+- [Optional](#optional)
 - [Nested Comments](#nested-comments)
 - [Do while loops](#do-while-loops)
 - [Breaking out of nested loops](#breaking-out-of-nested-loops)
@@ -202,6 +203,8 @@ enum class DayOfTheWeek : int64_t {
 DayOfTheWeek day = DayOfTheWeek::kMon;
 ```
 
+## [Optional](./optional.md)
+
 ## Nested Comments
 Neo-C allows for nested multi-line comments.
 
@@ -328,5 +331,6 @@ Neo-C simplifies C++ by removing many unnecessary keywords and features. Any key
 - try, catch, throw, throws
 - cache, inline, compile
 - template
+- optional
 
 - unique, shared
