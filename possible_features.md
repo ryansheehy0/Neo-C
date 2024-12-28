@@ -27,9 +27,10 @@
 	- OverRange, UnderRange, and OutOfRange errors.
 
 ## Possible features
-- `!` for errors.
-- `?` for optionals.
-	- This is useful for optional arguments.
+- Make `optional` work better for optional arguments.
+	- maybe change how it works to assign the _hasValue with =s?
+	- or a special keyword like `null` that sets the _hasValue to false. This might be confusing though.
+	- Maybe assign optional to an empty `{}`. What does this mean in c++?
 - Differently named constructors.
 - `defer` keyword - gets called when you return.
 - Removing the capture list(`[]`s) from lambdas.

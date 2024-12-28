@@ -60,7 +60,7 @@ void main()
 |---------------------------------------------------------------------------|-------------------|
 | Variables, Functions                                                      | camelCase         |
 | Constants, Enum values                                                    | kConsts           |
-| Classes, Structs, Unions, Enums, Interfaces, Template types, Requirements | PascalCase        |
+| Classes, Structs, Unions, Enums, Interfaces, Template types, Requirements, Imported names | PascalCase        |
 
 ## [Data Types](./data_type.md)
 
@@ -97,10 +97,10 @@ In Neo-C, there are no header files.
 
 ```C++
 import
-	libName <Library> // Imports all exported things form Library under the object libName
-	fileName "./file.nc"
+	LibName <Library> // Imports all exported things from Library under the class LibName
+	FileName "./file.nc" // Imports all exported things from file.nc under the class FileName
 	(var, func) <Lib> // Imports only var and func from the OtherLib
-	name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the object name and imports var2 and func2.
+	Name, (var2, func2) <Lib2> // Imports all exported things from Lib2 under the class Name and imports var2 and func2.
 
 export i64 var = 0
 export void func()
@@ -109,7 +109,7 @@ export void func()
 
 See the [standard libraries](./Standard_Libraries/standard_libraries.md) built into Neo-C.
 
-- Namespaces have been removed from Neo-C because there isn;t the problem of overlapping names.
+- Namespaces have been removed from Neo-C because there isn't the problem of overlapping names.
 
 ## Automatic hoisting
 Neo-C allows for automatic function, class, struct, and union hoisting so that you can use them above where they are defined.

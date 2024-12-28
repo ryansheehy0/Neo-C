@@ -9,10 +9,10 @@ The `optional` keyword has a similar interface to this:
 template<auto T>
 class optional
 	public
-		Optional()
-		Optional(const T& value)
+		This()
+		This(const T& value)
 			init _value(value), _hasValue(true)
-		Optional(T&& value)
+		This(T&& value)
 			init _value(value), _hasValue(true)
 
 		void removeValue()
@@ -32,6 +32,8 @@ class optional
 			_hasValue = true
 			_value = value
 			return _value;
+
+		optional
 
 	private
 		bool _hasValue = false

@@ -51,6 +51,10 @@ That's sort of what Neo-C does. It provides a wrapper syntax around unique point
 int# heapPtr = new int
 ```
 
+Have `unique` and `shared` built in keywords.
+`unique<auto T> name = unique<auto T>()`
+`shared<auto T> name = shared<auto T>()`
+
 - The `new` keyword returns a special heap pointer
 	- `#i64 xPtr = new i64` or `#i64* xPtr = new i64` or `i64# xPtr = new i64`
 	- If the value of the pointer is used(not dereference, but just used), then it becomes set to null.
@@ -64,9 +68,61 @@ int# heapPtr = new int
 	- Maybe make all of these methods.
 - Weak pointers
 
+Maybe have an `owner` keyword which specifies that the pointer owns the memory it points to. Therefore, it's necessary to free that memory.
+- How could this solve the 3 problems with regular pointers?
+
+```C++
+owner<int> ownerPtr = new int(10)
+
+ownerPtr.delete() // Automatically assigned to null/0
+```
+
+## Example problems
+
+```C++ Forgetting to free
+int* needToFree() {
+	int* ptr = new int(10);
+	return ptr;
+}
+
+int* ptr = needToFree();
+// Forgetting to free
+```
+
+```C++ Freeing twice/Using memory that was freed
+void frees(int* ptr) {
+	delete ptr;
+}
+
+int* ptr = new int(10);
+frees(ptr);
+// Using memory that was freed
+*ptr = 20;
+// Freeing twice
+delete ptr;
+```
+
+What's the problem with unique and shared pointers in c++, that I can solve/make better in Neo-C?
+
+## Notes from video
+
 Raw pointer problems:
 - single object or array
 - pointer owners the memory it points to
 	- Can the pointer free the memory or should it never free it
 - nullable or not?
 	- Can the pointer be null or not?
+
+- Smart pointers can be dereferenced
+
+unique_ptr
+- Assumes it's the only owner of the memory
+- Automatically deleted the memory
+- Move only type
+	- No copy constructor or copy assignment operator
+- `unique_ptr<typename T>` - T is the type the pointer points to
+- When it goes out of scope, it it automatically freed
+- Useful for RAII
+
+shared_ptr
+- Automatically deletes the memory when the last shared pointer goes out of scope
