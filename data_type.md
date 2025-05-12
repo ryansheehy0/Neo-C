@@ -3,6 +3,9 @@
 # Data Types
 C++ has some problems with its default data types, which Neo-C corrects.
 
+- Maybe don't allow for the creation of concrete data types, only implementations of abstract data types.
+	- Ex: Instead of creating an array, you can only create a ArrayList, ArrayStack, ArrayQueue, etc.
+
 1. Data types don't have explicitly defined lengths.
 	- Ex: An `int` can be 32 bits, or 64 bits depending upon the platform. This can be a problem if the code expects `int` to be 64 bits, but the platform only supports 32 bits.
 2. Strings and dynamic arrays aren't built into the language.

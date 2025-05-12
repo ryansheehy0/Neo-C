@@ -4,6 +4,7 @@
 
 - [Structs and Unions](#structs-and-unions)
 - [Classes](#classes)
+- [Other](#other)
 
 <!-- /TOC -->
 
@@ -127,3 +128,24 @@ class Fox : public Animal {
 ```
 
 - `operator` overloading also works in Neo-C.
+
+## Other
+- It is better to have default values for constructor arguments, then to assign the member variables directly.
+	- Don't allow member variables to be assigned. What sort of consequences would this have?
+
+```C++
+// This is better because you can init the object with 1 argument.
+class MyClass {
+    int x, y;
+public:
+    MyClass(int x = 0, int y = 0) : x(x), y(y) {}
+};
+
+// vs
+
+class MyClass {
+    int x = 0, y = 0;
+public:
+    MyClass(int x, int y) : x(x), y(y) {}
+};
+```

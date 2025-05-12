@@ -1,6 +1,9 @@
 [Back](./Readme.md)
 
 # Optional
+- Don't use `?` for optionals because I want to discourage them being used for error handling.
+	- Instead just make them a template class.
+
 `optional` is a built in keyword that allows you to make your type optional.
 
 The `optional` keyword has a similar interface to this:

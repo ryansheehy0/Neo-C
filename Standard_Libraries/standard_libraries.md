@@ -1,5 +1,7 @@
 # Neo-C Standard Libraries
 
+Standard libraries prioritize speed and code clarity over minimizing memory.
+
 **Not Done**
 
 <!-- TOC -->
@@ -24,10 +26,25 @@
 	- [LinkedList](#linkedlist)
 	- [DoublyLinkedList](#doublylinkedlist)
 - [Templates](#templates)
+- [Unicode](#unicode)
 
 <!-- /TOC -->
 
 ## [Data Structures](./data_structure.nc)
+
+- SinglyLinkedList
+	- Inheritance and makes certain methods private.
+	- SinglyLinkedQueue
+	- SinglyLinkedStack
+- DoubleLinkedList
+	- DoubleLinkedQueue
+	- DoubleLinkedStack
+- ArrayList
+	- ArrayQueue
+	- ArrayStack
+- DynamicArrayList
+	- DynamicArrayQueue
+	- DynamicArrayStack
 
 ## Console
 The Console library is used to interact with the console.
@@ -168,3 +185,4 @@ Common classes that can be used in order to specify constraints for templates.
 - Subtractable
 - etc.
 
+## Unicode

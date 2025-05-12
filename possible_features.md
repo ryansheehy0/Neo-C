@@ -59,3 +59,5 @@
 	- Have a method be const, but be able to change mutable member variables.
 	- Is this only useful for multithreading?
 	- Not sure this is necessary.
+- Don't use `delete`, but `release`
+	- Will this be necessary for smart pointers?
