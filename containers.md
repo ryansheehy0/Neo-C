@@ -61,7 +61,8 @@ The changes Neo-C makes to classes:
 	- `public`, `protected`, and `private` must be indented.
 	- Colons(`:`) have been removed.
 	- You must explicitly specify these keywords. There is not default access.
-2. All private or protected member variables must start with an underscore(`_`).
+2. All private  member variables must start with an underscore(`_`).
+	- All protected member variables must start with 2 underscores(`__`)
 3. Use `inherits` instead of `:`.
 4. Use the `pure` keyword instead of assigning it to `0`.
 5. The `override` keyword is requirement and must be put in front.

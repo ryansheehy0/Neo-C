@@ -1,0 +1,26 @@
+# Data structures
+- Built in data structures
+	- int[] x
+	- int[dynamic] x
+		- trim(T value) - Removes value from front and back.
+		- char[dynamic] string
+
+- * means it's a pure class
+- DataStructure*
+	- LinkedList*
+		- SinglyLinkedList
+			- Stack
+			- Queue
+		- DoublyLinkedList
+			- Deque
+	- BinaryTree
+		- BinarySearchTree
+			- AVLTree
+			- RBTree
+	- HashTable
+		- Set
+	- Heap*
+		- MinHeap
+		- MaxHeap
+	- PriorityQueue
+	- Graph
