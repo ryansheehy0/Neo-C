@@ -26,6 +26,7 @@ void main()
 	- [Enforced naming conventions](#enforced-naming-conventions)
 - [Data Types](#data-types)
 - [Main function](#main-function)
+- [Named function arguments](#named-function-arguments)
 - [Match statements](#match-statements)
 - [Importing and Exporting](#importing-and-exporting)
 - [Automatic hoisting](#automatic-hoisting)
@@ -83,6 +84,17 @@ int main(int NeoC_argc, char* NeoC_args[]) {
 		args[i] = NeoC_args[i];
 	}
 }
+```
+
+## Named function arguments
+All literal arguments to functions have to be named in order to avoid magic numbers.
+
+```C++
+// Neo-C
+add(a: 10, b: 10)
+
+// C++
+add(10, 10);
 ```
 
 ## [Match statements](./match_statements.md)

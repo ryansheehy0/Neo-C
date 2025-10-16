@@ -27,6 +27,8 @@ Standard libraries prioritize speed and code clarity over minimizing memory.
 	- [DoublyLinkedList](#doublylinkedlist)
 - [Templates](#templates)
 - [Unicode](#unicode)
+- [BigInt](#bigint)
+- [BigFloat](#bigfloat)
 
 <!-- /TOC -->
 
@@ -186,3 +188,9 @@ Common classes that can be used in order to specify constraints for templates.
 - etc.
 
 ## Unicode
+
+## BigInt
+- Used for integers that are larger than 64 bits.
+
+## BigFloat
+- Used for floats that are larger than 64 bits.
